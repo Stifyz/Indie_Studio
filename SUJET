@@ -1,0 +1,113 @@
+
+/* HYPER_SPRINT */
+
+- Jeu de course
+- Un jeu multijoueur ( De un à quatre joueurs ( plus si on parvient à lier plus de contrôleurs))
+- On doit ajouter des power-ups sur le circuit (Bananes, turbos, etc..)
+
+
+/* LEMMINGS */
+
+- Jeu de puzzle
+- Jeu à un joueur
+
+
+/* WORMS */
+
+- Références : Worms 2 / Worms Armaggedon
+- Jeu multijoueurs / Solo vs IA
+- Maps générées aleatoirement.
+
+/* BOMBERMAN */
+
+- Multijoueurs / Solo vs IA
+- Maps générées aléatoirement
+- Graphique 3D, Jeu 2D
+
+/* GAUNTLET */
+
+- Multijoueurs -> 1 à 4 joueurs
+- Version 3D -> Vue Top-Down
+
+
+====== RESSOURCE ======
+
+1. Librairies
+
+   - Ogre 3D
+   - Irrlicht
+
+2. Assets
+
+====== CONTRAINTES =======
+
+1. Linux
+   - Le programme doit pouvoir être installé sur un nouveau dump. Si le Makefile est lancée avec "install", il doit installer des bibliothéques et un jeu sur le dump.
+
+2. Windows
+
+   - Le programme doit inclure un ".exe". une compilation pour windows est nécessaire.
+
+3. Géneralités
+
+   - Nous devons recoder l'un des jeux présents dans la liste
+
+   - Le jeu doit inclure une intro, un menu, des modes et des options (pause, ...)
+
+   - On doit également implémenter la sauvegarde ( Enregistrez, Reprendre ), la victoire et défaite et un score avec classement.
+
+   - Un minimum de 2 joueurs ( Sur le même clavier pour les jeux multijoueurs )
+
+   - Nous devons conserver les gameplay original du jeu, mais le transformer en 3D ( Assets, fx )
+
+   - La vue original du jeu doit être conservée.
+
+   - Une réduction des performances est tolérée uniquement pour les grandes maps avec beaucoup de players
+
+   - Sur les jeux multijoueurs, le programme doit être capable de gérer au moins 2 joueurs humain, et la possibilité d'avoir des IA.
+
+   - Chaque joueurs doit présenter une couleur différente.
+
+   - Au moins 3 powerups doivent être disponible pour le Bomberman, Gauntlet et Hyper Sprint.
+
+   - Au moins 5 outils ou armes doivent être disponible pour le Lemmings et Worms.
+
+   - Les IA doivent être scénariser, elle peuvent avoir plusieur comportement.
+
+   - On doit enregistrer les scores et les afficher dans un tableau de scores.
+
+   - Les jeux doivent être sauvegarder et restaurer sans limite.
+
+   - Notre jeu doit être multi-thread grâçe à la bibliothéque pthread ou std::thread
+
+   - Notre jeu doit avoir des effets de musique et de sons
+
+   - Notre jeu doit afficher un écran de démarrage
+
+
+
+====== INSTRUCTIONS ======
+
+   - Les seules fonctions de libc qui sont autorisées sont celles qui encapsulent les appels systéme et qui n'ont pas d'équivalent en C++
+
+   - Une bibliothéque qui n'est pas explicitement autorisé est interdite. ( Dans les limites du projet )
+
+   - Chaque réponse à un probléme doit être une approche par Objet
+
+   - Chaque valeur passée par copie au lieu d'être passée par référence ou par pointeur doit être jsutifiée.
+
+   - Chaque valeur non constante passée comme paramètre doit être justifiée.
+
+   - Chaque fonction membre ou méthode qui ne modifie aucun instance et qui n'est pas constante doit être justifiée.
+
+   - Pas de normes, mais si le code n'est pas propre il sera pénalisé.
+
+   - il est interdit de depasser la limite conditionnel des "if" "else" --> if ... else if ... else ... --> Factorisation.
+
+   - Seul le code push avant l'heure du rendu sera pris en compte.
+
+   
+
+
+
+
