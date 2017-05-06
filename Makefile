@@ -10,7 +10,8 @@ RM		= rm -f
 
 NAME		= indie_studio
 
-SRCS		= srcs/main.cpp
+SRCS		= srcs/main.cpp \
+		  srcs/indie.cpp
 
 OBJS		= $(SRCS:.cpp=.o)
 
