@@ -19,6 +19,18 @@ void		Indie::SetName(std::string new_name)
   _session_name = new_name;
 }
 
+std::string	Indie::GetMap(std::string search)
+{
+  if (strcmp("_map_one", search.c_str()) == 0)
+    return (_map_one);
+  else if (strcmp("_map_two", search.c_str()) == 0)
+    return (_map_two);
+  else if (strcmp("_map_three", search.c_str()) == 0)
+    return (_map_three);
+  else
+    return (NULL);
+}
+
 void		Indie::SetMap()
 {
   std::stringstream	tmp;
