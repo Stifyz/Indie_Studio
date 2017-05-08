@@ -3,12 +3,14 @@
 */
 
 #include "indie.hpp"
+#include "player.hpp"
 
 int	main()
 {
   Indie	New("New game");
+  Player Tmp("Loris");
 
-  New.SetMap();
+  Tmp.GetPosition();
   std::cout << New.GetMap("_map_two");
   return (0);
 }

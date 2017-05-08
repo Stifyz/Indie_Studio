@@ -11,7 +11,8 @@ RM		= rm -f
 NAME		= indie_studio
 
 SRCS		= srcs/main.cpp \
-		  srcs/indie.cpp
+		  srcs/indie.cpp \
+		  srcs/player.cpp
 
 OBJS		= $(SRCS:.cpp=.o)
 
