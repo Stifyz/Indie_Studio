@@ -12,6 +12,7 @@ Player::Player(std::string name) : Indie(name)
   _pos.z = 0;
   _is_living = YES;
   _health = 100;
+  _score = 0;
 }
 
 std::string	Player::GetName()
@@ -60,4 +61,17 @@ void		Player::SetHealth(int points)
     IsDead(1);
   else
     _health = _health + points;
+}
+
+void		Player::SetScore(int add)
+{
+  if (_score + add <= 0)
+    _score = 0;
+  else
+    _score = _score + add;
+}
+
+int		Player::GetScore()
+{
+  return (_score);
 }

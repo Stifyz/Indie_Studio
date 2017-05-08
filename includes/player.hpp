@@ -32,11 +32,14 @@ public:
   void		IsDead(int);
   int		GetHealth();
   void		SetHealth(int);
+  void		SetScore(int);
+  int		GetScore();
 protected:
   std::string	_player_name;
   t_pos		_pos;
   bool		_is_living;
   int		_health;
+  int		_score;
 };
 
 #endif /* !_PLAYER_HPP */
