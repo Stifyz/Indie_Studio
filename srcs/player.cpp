@@ -10,6 +10,7 @@ Player::Player(std::string name)
   _pos.x = 0;
   _pos.y = 0;
   _pos.z = 0;
+  _is_living = YES;
 }
 
 std::string	Player::GetName()
@@ -34,4 +35,13 @@ void		Player::SetPosition(t_pos new_pos)
   _pos.x = new_pos.x;
   _pos.y = new_pos.y;
   _pos.z = new_pos.z;
+}
+
+void		Player::IsDead(int life)
+{
+  _is_living = life;
+  if (_is_living == NO)
+    std::cout << "The player is dead." << std::endl, exit(0);
+  else
+    std::cout << "The player is living." << std::endl;
 }

@@ -14,6 +14,12 @@ typedef struct	s_pos
   int		z;
 }		t_pos;
 
+enum	IsLiving
+  {
+    YES = 0,
+    NO = 1
+  };
+
 class	Player
 {
 public:
@@ -23,9 +29,11 @@ public:
   void		SetName(std::string);
   t_pos		GetPosition();
   void		SetPosition(t_pos);
+  void		IsDead(int);
 protected:
   std::string	_player_name;
   t_pos		_pos;
+  bool		_is_living;
 };
 
 #endif /* !_PLAYER_HPP */
