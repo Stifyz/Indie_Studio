@@ -7,13 +7,11 @@
 
 int	main()
 {
-  Indie	New("New game");
   Player Tmp("Loris");
 
   Tmp.GetPosition();
-  std::cout << New.GetMap("_map_two");
-  Tmp.SetHealth(-40);
-  Tmp.SetHealth(50);
-  Tmp.SetHealth(-400);
+  Tmp.SetMap();
+  std::cout << Tmp.GetMap("_map_one");
+  
   return (0);
 }

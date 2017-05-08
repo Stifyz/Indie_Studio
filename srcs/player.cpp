@@ -4,7 +4,7 @@
 
 #include "player.hpp"
 
-Player::Player(std::string name)
+Player::Player(std::string name) : Indie(name)
 {
   _player_name = name;
   _pos.x = 0;
@@ -26,7 +26,7 @@ void		Player::SetName(std::string name)
 
 t_pos		Player::GetPosition()
 {
-  std::cout << "the player " << _player_name << "is in : ";
+  std::cout << "the player " << _player_name << " is in : ";
   std::cout << _pos.x << " in x, " << _pos.y << " in y and " << _pos.z << " in z.\n";
   return (_pos);
 }

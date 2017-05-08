@@ -6,7 +6,7 @@
 # define  _PLAYER_HPP_
 
 # include <iostream>
-
+# include "indie.hpp"
 typedef struct	s_pos
 {
   int		x;
@@ -20,7 +20,7 @@ enum	IsLiving
     NO = 1
   };
 
-class	Player
+class	Player : public Indie
 {
 public:
   Player(std::string);
