@@ -25,13 +25,25 @@ class	Player : public Indie
 public:
   Player(std::string);
   ~Player(){}
+  /* 
+  **Name
+  */
   std::string	GetName();
   void		SetName(std::string);
+  /*
+  **Position
+  */
   t_pos		GetPosition();
   void		SetPosition(t_pos);
+  /*
+  **Life
+  */
   void		IsDead(int);
   int		GetHealth();
   void		SetHealth(int);
+  /*
+  **Score
+  */
   void		SetScore(int);
   int		GetScore();
 protected:

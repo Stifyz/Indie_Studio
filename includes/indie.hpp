@@ -15,8 +15,14 @@ class	Indie
 public:
   Indie(std::string);
   ~Indie(){}
+  /* 
+  ** Name
+  */
   std::string	GetName();
   void		SetName(std::string);
+  /*
+  ** Map
+  */
   std::string	GetMap(std::string);
   void		SetMap();
 protected:
