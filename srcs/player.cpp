@@ -11,6 +11,7 @@ Player::Player(std::string name)
   _pos.y = 0;
   _pos.z = 0;
   _is_living = YES;
+  _health = 100;
 }
 
 std::string	Player::GetName()
@@ -44,4 +45,19 @@ void		Player::IsDead(int life)
     std::cout << "The player is dead." << std::endl, exit(0);
   else
     std::cout << "The player is living." << std::endl;
+}
+
+int		Player::GetHealth()
+{
+  return (_health);
+}
+
+void		Player::SetHealth(int points)
+{
+  if (_health + points >= 100)
+    _health = 100;
+  else if (_health + points <= 0)
+    IsDead(1);
+  else
+    _health = _health + points;
 }

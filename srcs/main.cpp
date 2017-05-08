@@ -12,7 +12,8 @@ int	main()
 
   Tmp.GetPosition();
   std::cout << New.GetMap("_map_two");
-  Tmp.IsDead(0);
-  Tmp.IsDead(1);
+  Tmp.SetHealth(-40);
+  Tmp.SetHealth(50);
+  Tmp.SetHealth(-400);
   return (0);
 }

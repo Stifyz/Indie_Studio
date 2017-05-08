@@ -30,10 +30,13 @@ public:
   t_pos		GetPosition();
   void		SetPosition(t_pos);
   void		IsDead(int);
+  int		GetHealth();
+  void		SetHealth(int);
 protected:
   std::string	_player_name;
   t_pos		_pos;
   bool		_is_living;
+  int		_health;
 };
 
 #endif /* !_PLAYER_HPP */
