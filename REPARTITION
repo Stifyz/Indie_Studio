@@ -1,0 +1,81 @@
+
+--> Communication via discord
+
+Gauntlet :
+
+	 --> Multiplayer ( Dont 2 sur la même machine )
+	 --> Irrlicht + Bullet
+
+|-----1-----|
+|  Irrlicht |
+|  Reseau   |
+|  ECS      |
+|-----------|
+
+
+|------2------|
+|  Gameplay   |
+|  Inputs     |
+|  Procédural |
+|  UI         |
+|  Assets     |
+|-------------|
+
+
+
+
+    Boubou	 |     Maison    |      Syp  	|    Loris	|     Bunel	|    Zimmer	|     Da-sil	  |	Bazin
+---------------------------------------------------------------------------------------------------------------------------------
+	         |               |              |               |               |               |                 |
+- Irrlicht       | - Reseaux     | - Irrlicht   |  - Reseaux    |  - Irrlicht   |  - ECS        |   - Reseaux     |   - ECS
+	         |               |              |               |               |               |                 |
+- Inputs         | - Gameplay    | - Gameplay   |  - Assets     |  - UI         |  - Procédural |   - Gameplay    |   - Procédural
+	         |               |              |               |               |               |                 |
+
+
+/*** NORME COMMUNE ***/
+
+Class		: PascalCase
+Variable	: camelCase
+Enum		: PascalCase
+Namespace	: camelCase
+
+Membres privés	: m_camelCase
+Static privées	: s_camelCase
+Fonctions	: camelCase
+Getters		: camelCase
+Setters		: setCamelCase
+
+Espaces entre opérateurs (ex: a + b)
+Interdiction "#pragma once"
+
+class	Name {
+	public:
+		Name();
+
+	protected:
+		_______
+
+	private:
+		_______
+};
+
+Indentation:	TABS
+Alignement:	SPACES
+
+ex :
+
+int	add(int a,
+	    int b) {
+	    
+    return (a + b);
+}
+
+override / find
+= default
+= delete
+
+
+Constructeur par déplacement	--> ex: Truc(Truc &&)
+pointeurs intelligents		
+std::function
