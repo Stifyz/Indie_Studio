@@ -68,10 +68,11 @@ Ex:
 
 int add(int a,
 	    int b) {
-    return (a + b);
+	return (a + b);
 }
 
-override / find
+Méthodes virtuelles : Toujours utiliser 'override' quand applicable
+
 = default
 = delete
 
