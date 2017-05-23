@@ -1,0 +1,15 @@
+\#*#
+.#*
+*~
+*.o
+*.a
+*.d
+test*
+Notes
+build
+TODO
+a.out
+vgcore.*
+.gdb_history
+*.so
+indie_studio
