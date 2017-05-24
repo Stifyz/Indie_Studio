@@ -27,12 +27,3 @@ Ce fichier sera une source d'information au même titre que Discord.
 - **UI**: Bunel
 - **Assets**: Loris
 
-## Features C++ à connaître et à utiliser
-
-- Constructeur par déplacement (ex: `Truc(Truc &&)`)
-- Pointeurs intelligents (`std::unique_ptr`, `std::shared_ptr`)
-- `std::function` + lambdas
-- `std::initializer_list`
-  - Surtout utile pour passer un tableau en paramètre à une fonction (ex: `myFunc("truc", {1, 23, 21}, 23)`)
-  - Cette syntaxe d'appel de fonction fonctionne aussi avec d'autres conteneurs comme `std::vector`
-
