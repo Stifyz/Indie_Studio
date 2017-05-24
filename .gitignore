@@ -6,8 +6,8 @@
 *.d
 test*
 Notes
-build
 TODO
+build
 a.out
 vgcore.*
 .gdb_history
