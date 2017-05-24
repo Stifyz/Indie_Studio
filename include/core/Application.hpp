@@ -14,18 +14,23 @@
 #ifndef APPLICATION_HPP_
 #define APPLICATION_HPP_
 
+#include "ApplicationStateStack.hpp"
 #include "GameClock.hpp"
 
 class Application {
 	public:
 		Application(int argc, char **argv);
 
+		void handleEvents();
+
 		void run();
 
 	private:
-		bool m_isRunning = true;
+		ApplicationStateStack m_stateStack;
 
 		GameClock m_clock;
+
+		// Window m_window;
 };
 
 #endif // APPLICATION_HPP_

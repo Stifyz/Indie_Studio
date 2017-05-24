@@ -15,23 +15,31 @@
 #include <ctime>
 
 #include "Application.hpp"
+#include "GameState.hpp"
 
-Application::Application(int, char **) {
+Application::Application(int, char **) : m_stateStack(ApplicationStateStack::getInstance()) {
 	srand(time(NULL));
+
+	m_stateStack.push<GameState>();
 }
 
-void Application::run() { // FIXME
+void Application::handleEvents() {
+	// TODO
+}
+
+// TODO: Add Window
+void Application::run() {
 	while (false /* m_window.isOpen() */) {
-		// handleEvents();
+		handleEvents();
 
 		m_clock.updateGame([&] {
-			// m_stateStack.top()->update();
+			m_stateStack.top()->update();
 		});
 
 		m_clock.drawGame([&] {
 			// m_window.clear();
 
-			// m_stateStack.top()->draw();
+			m_stateStack.top()->draw();
 
 			// m_window.update();
 		});

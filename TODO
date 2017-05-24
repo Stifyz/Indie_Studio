@@ -13,8 +13,8 @@ TODO
    ◦ DONE: Système de gestion des entités
       ◦ `OPTIONAL:` _Améliorer la gestion des System_
    ◦ DONE: Système de temps simulé (GameClock)
-   ◦ TODO: Système d’états de jeu
-      ◦ TODO: ApplicationStateStack et ApplicationState
+   ◦ DONE: Système d’états de jeu
+      ◦ DONE: ApplicationStateStack et ApplicationState
    ◦ TODO: Système de gestion de ressource
       ◦ TODO: ResourceHandler et ResourceLoader
       ◦ TODO: Améliorer la construction du système de loaders
@@ -23,9 +23,10 @@ TODO
       ◦ TODO: Envoi de paquets et création automatique d’un hôte
       ◦ TODO: Sérialisation des entités pour l’envoi sur le réseau
    ◦ TODO: Affichage (dépend d’Irrlicht)
+      ◦ TODO: Ouverture d’une fenêtre
+      ◦ TODO: RectangleShape + CubeShape
       ◦ TODO: Chargement/affichage d’un modèle 3D
       ◦ TODO: Map
-      ◦ TODO: RectangleShape
    ◦ TODO: Entrées utilisateur (dépend d’Irrlicht)
       ◦ TODO: Réfléchir à un moyen d’avoir un InputHandler par joueur
       ◦ TODO: Mouse
