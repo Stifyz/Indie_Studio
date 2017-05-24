@@ -14,6 +14,8 @@
 #ifndef APPLICATION_HPP_
 #define APPLICATION_HPP_
 
+#include "GameClock.hpp"
+
 class Application {
 	public:
 		Application(int argc, char **argv);
@@ -22,6 +24,8 @@ class Application {
 
 	private:
 		bool m_isRunning = true;
+
+		GameClock m_clock;
 };
 
 #endif // APPLICATION_HPP_

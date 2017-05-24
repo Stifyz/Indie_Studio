@@ -16,10 +16,25 @@
 
 #include "Application.hpp"
 
-Application::Application(int argc, char **argv) {
+Application::Application(int, char **) {
 	srand(time(NULL));
 }
 
-void Application::run() {
+void Application::run() { // FIXME
+	while (false /* m_window.isOpen() */) {
+		// handleEvents();
+
+		m_clock.updateGame([&] {
+			// m_stateStack.top()->update();
+		});
+
+		m_clock.drawGame([&] {
+			// m_window.clear();
+
+			// m_stateStack.top()->draw();
+
+			// m_window.update();
+		});
+	}
 }
 
