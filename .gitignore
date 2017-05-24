@@ -6,7 +6,6 @@
 *.d
 test*
 Notes
-TODO
 build
 a.out
 vgcore.*

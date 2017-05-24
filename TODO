@@ -1,0 +1,56 @@
+TODO
+
+# TODO list
+
+• TODO: Finir de remplir cette liste
+• TODO: Récupérerer des infos sur Irrlicht, on aura besoin de savoir:
+   ◦ TODO: Récupérer le temps actuel en millisecondes. Comme `SDL_GetTicks`
+   ◦ TODO: Ouvrir une fenêtre et dessiner un rectangle et un cube
+   ◦ TODO: Gérer les events clavier / souris
+   ◦ TODO: Charger un modèle 3D depuis un fichier et le dessiner
+   ◦ TODO: Appliquer une texture à un modèle 3D
+• TODO: Engine
+   ◦ DONE: Système de gestion des entités
+      ◦ `OPTIONAL:` _Améliorer la gestion des System_
+   ◦ DONE: Système de temps simulé (GameClock)
+   ◦ TODO: Système d’états de jeu
+      ◦ TODO: ApplicationStateStack et ApplicationState
+   ◦ TODO: Système de gestion de ressource
+      ◦ TODO: ResourceHandler et ResourceLoader
+      ◦ TODO: Améliorer la construction du système de loaders
+   ◦ TODO: Adapter l’engine au multi-threading
+   ◦ TODO: Réseau
+      ◦ TODO: Envoi de paquets et création automatique d’un hôte
+      ◦ TODO: Sérialisation des entités pour l’envoi sur le réseau
+   ◦ TODO: Affichage (dépend d’Irrlicht)
+      ◦ TODO: Chargement/affichage d’un modèle 3D
+      ◦ TODO: Map
+      ◦ TODO: RectangleShape
+   ◦ TODO: Entrées utilisateur (dépend d’Irrlicht)
+      ◦ TODO: Réfléchir à un moyen d’avoir un InputHandler par joueur
+      ◦ TODO: Mouse
+      ◦ TODO: Joystick
+      ◦ TODO: InputHandler et KeyboardHandler
+      ◦ TODO: GamePad et GameKey
+   ◦ TODO: User Interface
+      ◦ TODO: Boutons et labels
+      ◦ TODO: HUD et minimap
+      ◦ TODO: Chat
+      ◦ TODO: Menu in-game
+      ◦ TODO: Menu principal
+   ◦ TODO: Système de génération procédurale
+• TODO: Gameplay
+   ◦ TODO: Mouvements
+   ◦ TODO: Actions de collision
+   ◦ TODO: Projectiles
+• TODO: Trouver les assets
+   ◦ TODO: Modèles 3D
+   ◦ TODO: Textures
+   ◦ TODO: Audio
+• TODO: Intégrer les assets
+
+# FIXMEs
+
+• FIXME: _empty_
+
+> vim:ft=notes
