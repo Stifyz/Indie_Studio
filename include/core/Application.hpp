@@ -16,6 +16,7 @@
 
 #include "ApplicationStateStack.hpp"
 #include "GameClock.hpp"
+#include "ResourceHandler.hpp"
 
 class Application {
 	public:
@@ -29,6 +30,8 @@ class Application {
 		ApplicationStateStack m_stateStack;
 
 		GameClock m_clock;
+
+		ResourceHandler m_resourceHandler;
 
 		// Window m_window;
 };

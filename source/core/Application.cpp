@@ -17,10 +17,12 @@
 #include "Application.hpp"
 #include "GameState.hpp"
 
-Application::Application(int, char **) : m_stateStack(ApplicationStateStack::getInstance()) {
+Application::Application(int, char **) {
 	srand(time(NULL));
 
 	m_stateStack.push<GameState>();
+
+	ResourceHandler::setInstance(&m_resourceHandler);
 }
 
 void Application::handleEvents() {

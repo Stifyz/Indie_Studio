@@ -15,10 +15,13 @@ TODO
    ◦ DONE: Système de temps simulé (GameClock)
    ◦ DONE: Système d’états de jeu
       ◦ DONE: ApplicationStateStack et ApplicationState
-   ◦ TODO: Système de gestion de ressource
-      ◦ TODO: ResourceHandler et ResourceLoader
+   ◦  WIP: Système de gestion de ressource
+      ◦ DONE: ResourceHandler et ResourceLoader
+      ◦ TODO: Trouver un format de fichier (si possible géré par Irrlicht)
       ◦ TODO: Améliorer la construction du système de loaders
    ◦ TODO: Adapter l’engine au multi-threading
+      ◦ TODO: Faire un thread séparé pour l’affichage
+      ◦ TODO: Répartir les systèmes sur plusieurs threads
    ◦ TODO: Réseau
       ◦ TODO: Envoi de paquets et création automatique d’un hôte
       ◦ TODO: Sérialisation des entités pour l’envoi sur le réseau
@@ -34,7 +37,10 @@ TODO
       ◦ TODO: InputHandler et KeyboardHandler
       ◦ TODO: GamePad et GameKey
    ◦ TODO: User Interface
-      ◦ TODO: Boutons et labels
+      ◦ TODO: Widgets
+         ▸ TODO: Bouton
+         ▸ TODO: Label
+         ▸ TODO: Champ de texte éditable
       ◦ TODO: HUD et minimap
       ◦ TODO: Chat
       ◦ TODO: Menu in-game

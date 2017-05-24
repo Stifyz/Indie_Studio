@@ -36,15 +36,7 @@ class ApplicationStateStack {
 
 		std::size_t size() const { return m_states.size(); }
 
-		// FIXME: To remove. Used in NPC (DialogState), ChestObject (ChestOpenedState) and DoorObject (TransitionState).
-		static ApplicationStateStack &getInstance() {
-			static ApplicationStateStack instance;
-			return instance;
-		}
-
 	private:
-		ApplicationStateStack() = default;
-
 		std::stack<std::shared_ptr<ApplicationState>> m_states;
 };
 
