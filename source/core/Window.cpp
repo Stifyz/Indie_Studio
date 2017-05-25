@@ -25,7 +25,7 @@ Window::Window() {
 }
 
 void Window::clear() {
-	m_driver->beginScene(true, true, irr::video::SColor(255, 255, 255, 255));
+	m_driver->beginScene(true, true, irr::video::SColor(50, 153, 204, 255));
 }
 
 void Window::refresh() {

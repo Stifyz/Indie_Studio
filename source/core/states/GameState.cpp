@@ -20,6 +20,7 @@ void GameState::init() {
 
 	irr::scene::IMeshSceneNode *cube = m_sceneManager->addCubeSceneNode(10.0f, 0, -1, irr::core::vector3df(0.0f, 0.0f, 20.0f));
 	cube->setMaterialFlag(irr::video::EMF_WIREFRAME, true);
+	// cube->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 
 	irr::SKeyMap keyMap[5];
 	keyMap[0].Action = irr::EKA_MOVE_FORWARD;
