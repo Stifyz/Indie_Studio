@@ -13,3 +13,4 @@ vgcore.*
 *.so
 indie_studio
 wiki
+.DS_Store
