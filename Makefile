@@ -28,18 +28,12 @@ INCLUDES	=	include external $(call find_rec,include)
 #---------------------------------------------------------------------------------
 # Libraries
 #---------------------------------------------------------------------------------
-LIBS		=
-
-ifeq ($(shell uname), Darwin)
-	LIBS	+=	-framework OpenGL
-else
-	LIBS	+=	-lGL
-endif
+LIBS		= -lIrrlicht
 
 #---------------------------------------------------------------------------------
 # Additional folders for libraries
 #---------------------------------------------------------------------------------
-LIBDIRS		= 	external/libegdt
+LIBDIRS		=
 
 ifneq ($(BUILD),$(notdir $(CURDIR)))
 

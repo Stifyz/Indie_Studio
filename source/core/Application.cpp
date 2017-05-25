@@ -20,6 +20,7 @@
 Application::Application(int, char **) {
 	srand(time(NULL));
 
+	m_stateStack.setIrrlichtDevice(m_window.device());
 	m_stateStack.push<GameState>();
 
 	ResourceHandler::setInstance(&m_resourceHandler);
@@ -29,22 +30,26 @@ void Application::handleEvents() {
 	// TODO
 }
 
-// TODO: Add Window
 void Application::run() {
-	while (false /* m_window.isOpen() */) {
-		handleEvents();
+	while (m_window.isOpen()) {
+		if (m_window.device()->isWindowActive()) {
+			handleEvents();
 
-		m_clock.updateGame([&] {
-			m_stateStack.top()->update();
-		});
+			// m_clock.updateGame([&] {
+				m_stateStack.top()->update();
+			// });
 
-		m_clock.drawGame([&] {
-			// m_window.clear();
+			// m_clock.drawGame([&] {
+				m_window.clear();
 
-			m_stateStack.top()->draw();
+				m_stateStack.top()->draw();
 
-			// m_window.update();
-		});
+				m_window.refresh();
+			// });
+		}
+		else {
+			m_window.device()->yield();
+		}
 	}
 }
 

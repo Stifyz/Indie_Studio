@@ -25,6 +25,8 @@ class ApplicationStateStack {
 		T &push(Args &&...args) {
 			m_states.push(std::make_shared<T>(std::forward<Args>(args)...));
 			m_states.top()->setStateStack(this);
+			m_states.top()->setIrrlichtDevice(m_irrlichtDevice);
+			m_states.top()->init();
 			return *static_cast<T*>(top());
 		}
 
@@ -36,8 +38,12 @@ class ApplicationStateStack {
 
 		std::size_t size() const { return m_states.size(); }
 
+		void setIrrlichtDevice(irr::IrrlichtDevice *irrlichtDevice) { m_irrlichtDevice = irrlichtDevice; }
+
 	private:
 		std::stack<std::shared_ptr<ApplicationState>> m_states;
+
+		irr::IrrlichtDevice *m_irrlichtDevice;
 };
 
 #endif // APPLICATIONSTATESTACK_HPP_
