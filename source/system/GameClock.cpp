@@ -13,14 +13,14 @@
  */
 #include "GameClock.hpp"
 
-u32 GameClock::ticks = 0;
+u32 GameClock::s_ticks = 0;
+irr::IrrlichtDevice *GameClock::s_irrlichtDevice = nullptr;
 
 u32 GameClock::getTicks(bool realTime) {
-	if(realTime) {
-		// return SDL_GetTicks();
-		return 0; // FIXME
+	if (realTime) {
+		return s_irrlichtDevice->getTimer()->getTime();
 	} else {
-		return ticks;
+		return s_ticks;
 	}
 }
 
@@ -31,7 +31,7 @@ void GameClock::measureLastFrameDuration() {
 	m_lastFrameDate = now;
 	m_lag += lastFrameDuration;
 
-	if(m_lag >= 200) {
+	if (m_lag >= 200) {
 		m_timeDropped += m_lag - m_timestep;
 		m_lag = m_timestep;
 		m_lastFrameDate = getTicks(true) - m_timeDropped;
@@ -41,8 +41,8 @@ void GameClock::measureLastFrameDuration() {
 void GameClock::updateGame(std::function<void(void)> updateFunc) {
 	m_numUpdates = 0;
 
-	while(m_lag >= m_timestep && m_numUpdates < 10) {
-		ticks += m_timestep;
+	while (m_lag >= m_timestep && m_numUpdates < 10) {
+		s_ticks += m_timestep;
 
 		updateFunc();
 
@@ -52,14 +52,14 @@ void GameClock::updateGame(std::function<void(void)> updateFunc) {
 }
 
 void GameClock::drawGame(std::function<void(void)> drawFunc) {
-	if(m_numUpdates > 0) {
+	if (m_numUpdates > 0) {
 		drawFunc();
 	}
 
 	u32 lastFrameDuration = getTicks(true) - m_timeDropped - m_lastFrameDate;
 
-	if(lastFrameDuration < m_timestep) {
-		// FIXME: SDL_Delay(m_timestep - lastFrameDuration);
+	if (lastFrameDuration < m_timestep) {
+		s_irrlichtDevice->sleep(m_timestep - lastFrameDuration);
 	}
 
 	measureLastFrameDuration();

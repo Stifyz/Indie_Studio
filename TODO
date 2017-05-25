@@ -3,13 +3,13 @@ TODO
 # TODO list
 
 • TODO: Finir de remplir cette liste
-• TODO: Récupérerer des infos sur Irrlicht, on aura besoin de savoir:
-   ◦ TODO: Récupérer le temps actuel en millisecondes. Comme `SDL_GetTicks`
-   ◦ TODO: Ouvrir une fenêtre et dessiner un rectangle et un cube
+•  WIP: Récupérerer des infos sur Irrlicht, on aura besoin de savoir:
+   ◦ DONE: Récupérer le temps actuel en millisecondes. Comme `SDL_GetTicks`
+   ◦ DONE: Ouvrir une fenêtre et dessiner un rectangle et un cube
    ◦ TODO: Gérer les events clavier / souris
    ◦ TODO: Charger un modèle 3D depuis un fichier et le dessiner
    ◦ TODO: Appliquer une texture à un modèle 3D
-• TODO: Engine
+•  WIP: Engine
    ◦ DONE: Système de temps simulé (GameClock)
    ◦ DONE: Système d’états de jeu
       ◦ DONE: ApplicationStateStack et ApplicationState
@@ -19,19 +19,20 @@ TODO
       ◦ `OPTIONAL:` _Améliorer la gestion des System_
    ◦  WIP: Système de gestion de ressource
       ◦ DONE: ResourceHandler et ResourceLoader
-      ◦ TODO: Trouver un format de fichier (si possible géré par Irrlicht)
+      ◦ TODO: Trouver un format de fichier de configuration (si possible géré par Irrlicht)
       ◦ TODO: Améliorer la construction du système de loaders
    ◦  WIP: Affichage (dépend d’Irrlicht)
       ◦ DONE: Ouverture d’une fenêtre
       ◦ TODO: RectangleShape + CubeShape
+      ◦ TODO: Texture
       ◦ TODO: Chargement/affichage d’un modèle 3D
       ◦ TODO: Map
    ◦ TODO: Entrées utilisateur (dépend d’Irrlicht)
       ◦ TODO: Réfléchir à un moyen d’avoir un InputHandler par joueur
-      ◦ TODO: Mouse
-      ◦ TODO: Joystick
       ◦ TODO: InputHandler et KeyboardHandler
       ◦ TODO: GamePad et GameKey
+      ◦ TODO: Gestion de la souris
+      ◦ TODO: Gestion du joystick
    ◦ TODO: Adapter l’engine au multi-threading
       ◦ TODO: Faire un thread séparé pour l’affichage
       ◦ TODO: Répartir les systèmes sur plusieurs threads
@@ -44,7 +45,7 @@ TODO
          ▸ TODO: Label
          ▸ TODO: Champ de texte éditable
       ◦ TODO: HUD et minimap
-      ◦ TODO: Chat
+      ◦ TODO: Tchat
       ◦ TODO: Menu in-game
       ◦ TODO: Menu principal
    ◦ TODO: Système de génération procédurale

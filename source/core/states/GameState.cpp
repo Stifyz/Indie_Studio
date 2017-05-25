@@ -38,9 +38,12 @@ void GameState::init() {
 }
 
 void GameState::update() {
+	m_scene.update();
 }
 
 void GameState::draw() {
 	m_sceneManager->drawAll();
+
+	m_scene.draw();
 }
 
