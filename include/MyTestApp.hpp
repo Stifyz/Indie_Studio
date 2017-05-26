@@ -21,11 +21,18 @@
 #include <OgreInput.h>
 #include <OgreTrays.h>
 
+#include "MyTestRoom.hpp"
+#include "SinbadCharacterController.hpp"
+
 class MyTestApp : public OgreBites::ApplicationContext, public OgreBites::InputListener {
 	public:
 		MyTestApp();
 
-		bool keyPressed(const OgreBites::KeyboardEvent& evt) override;;
+		bool keyPressed(const OgreBites::KeyboardEvent& evt) override;
+		bool keyReleased(const OgreBites::KeyboardEvent& evt) override;
+		bool mouseMoved(const OgreBites::MouseMotionEvent& evt) override;
+		bool mouseWheelRolled(const OgreBites::MouseWheelEvent& evt) override;
+		bool mousePressed(const OgreBites::MouseButtonEvent& evt) override;
 
 		bool frameRenderingQueued(const Ogre::FrameEvent& evt) override;
 
@@ -33,6 +40,9 @@ class MyTestApp : public OgreBites::ApplicationContext, public OgreBites::InputL
 
 	private:
 		OgreBites::TrayManager *m_trayMgr = nullptr;
+
+		MyTestRoom m_room;
+		SinbadCharacterController *m_chara = nullptr;
 };
 
 #endif // MYTESTAPP_HPP_

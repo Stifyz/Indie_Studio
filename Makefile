@@ -150,6 +150,33 @@ source/MyTestApp.cpp.s:
 	$(MAKE) -f CMakeFiles/indie_studio.dir/build.make CMakeFiles/indie_studio.dir/source/MyTestApp.cpp.s
 .PHONY : source/MyTestApp.cpp.s
 
+source/MyTestRoom.o: source/MyTestRoom.cpp.o
+
+.PHONY : source/MyTestRoom.o
+
+# target to build an object file
+source/MyTestRoom.cpp.o:
+	$(MAKE) -f CMakeFiles/indie_studio.dir/build.make CMakeFiles/indie_studio.dir/source/MyTestRoom.cpp.o
+.PHONY : source/MyTestRoom.cpp.o
+
+source/MyTestRoom.i: source/MyTestRoom.cpp.i
+
+.PHONY : source/MyTestRoom.i
+
+# target to preprocess a source file
+source/MyTestRoom.cpp.i:
+	$(MAKE) -f CMakeFiles/indie_studio.dir/build.make CMakeFiles/indie_studio.dir/source/MyTestRoom.cpp.i
+.PHONY : source/MyTestRoom.cpp.i
+
+source/MyTestRoom.s: source/MyTestRoom.cpp.s
+
+.PHONY : source/MyTestRoom.s
+
+# target to generate assembly for a file
+source/MyTestRoom.cpp.s:
+	$(MAKE) -f CMakeFiles/indie_studio.dir/build.make CMakeFiles/indie_studio.dir/source/MyTestRoom.cpp.s
+.PHONY : source/MyTestRoom.cpp.s
+
 source/core/Application.o: source/core/Application.cpp.o
 
 .PHONY : source/core/Application.o
@@ -405,6 +432,9 @@ help:
 	@echo "... source/MyTestApp.o"
 	@echo "... source/MyTestApp.i"
 	@echo "... source/MyTestApp.s"
+	@echo "... source/MyTestRoom.o"
+	@echo "... source/MyTestRoom.i"
+	@echo "... source/MyTestRoom.s"
 	@echo "... source/core/Application.o"
 	@echo "... source/core/Application.i"
 	@echo "... source/core/Application.s"

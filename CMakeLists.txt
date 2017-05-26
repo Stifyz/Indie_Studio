@@ -48,9 +48,6 @@ find_package(OGRE 1.10 REQUIRED)
 include_directories(${OGRE_INCLUDE_DIRS})
 link_directories(${OGRE_LIBRARY_DIRS})
 
-file(COPY ${OGRE_CONFIG_DIR}/plugins.cfg ${OGRE_CONFIG_DIR}/resources.cfg
-     DESTINATION ${CMAKE_BINARY_DIR})
-
 #------------------------------------------------------------------------------
 # Link options
 #------------------------------------------------------------------------------

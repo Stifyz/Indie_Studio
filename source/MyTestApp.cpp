@@ -26,10 +26,32 @@ bool MyTestApp::keyPressed(const OgreBites::KeyboardEvent &evt) {
 		getRoot()->queueEndRendering();
 	}
 
+	m_chara->injectKeyDown(evt);
+	return true;
+}
+
+bool MyTestApp::keyReleased(const OgreBites::KeyboardEvent& evt) {
+	m_chara->injectKeyUp(evt);
+	return true;
+}
+
+bool MyTestApp::mouseMoved(const OgreBites::MouseMotionEvent& evt) {
+	m_chara->injectMouseMove(evt);
+	return true;
+}
+
+bool MyTestApp::mouseWheelRolled(const OgreBites::MouseWheelEvent& evt) {
+	m_chara->injectMouseWheel(evt);
+	return true;
+}
+
+bool MyTestApp::mousePressed(const OgreBites::MouseButtonEvent& evt) {
+	m_chara->injectMouseDown(evt);
 	return true;
 }
 
 bool MyTestApp::frameRenderingQueued(const Ogre::FrameEvent &evt) {
+	m_chara->addTime(evt.timeSinceLastFrame);
 	m_trayMgr->frameRendered(evt);
 
 	return true;
@@ -41,32 +63,32 @@ void MyTestApp::setup() {
 
 	// get a pointer to the already created root
 	Ogre::Root *root = getRoot();
-	Ogre::SceneManager *scnMgr = root->createSceneManager(Ogre::ST_GENERIC);
+	Ogre::SceneManager *sceneMgr = root->createSceneManager(Ogre::ST_GENERIC);
 
 	m_trayMgr = new OgreBites::TrayManager("TrayManager", mWindow);
 	m_trayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
 	m_trayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
-	// m_trayMgr->toggleAdvancedFrameStats();
-	m_trayMgr->hideCursor();
+	m_trayMgr->showCursor();
 
-	scnMgr->addRenderQueueListener(mOverlaySystem);
+	sceneMgr->addRenderQueueListener(mOverlaySystem);
 
 	// register our scene with the RTSS
 	Ogre::RTShader::ShaderGenerator* shadergen = Ogre::RTShader::ShaderGenerator::getSingletonPtr();
-	shadergen->addSceneManager(scnMgr);
+	shadergen->addSceneManager(sceneMgr);
 
 	// without light we would just get a black screen
-	Ogre::Light* light = scnMgr->createLight("MainLight");
-	light->setPosition(0, 10, 15);
+	// Ogre::Light* light = sceneMgr->createLight("MainLight");
+	// light->setType(Light::LT_POINT);
+	// light->setPosition(-10, 40, 20);
+	// light->setSpecularColour(ColourValue::White);
 
 	// also need to tell where we are
-	Ogre::SceneNode* camNode = scnMgr->getRootSceneNode()->createChildSceneNode();
+	Ogre::SceneNode* camNode = sceneMgr->getRootSceneNode()->createChildSceneNode();
 	camNode->setPosition(0, 0, 15);
 	camNode->lookAt(Ogre::Vector3(0, 0, -1), Ogre::Node::TS_PARENT);
 
 	// create the camera
-	Ogre::Camera* cam = scnMgr->createCamera("myCam");
-	cam->setNearClipDistance(5); // specific to this sample
+	Ogre::Camera* cam = sceneMgr->createCamera("myCam");
 	cam->setAutoAspectRatio(true);
 	camNode->attachObject(cam);
 
@@ -74,8 +96,8 @@ void MyTestApp::setup() {
 	getRenderWindow()->addViewport(cam);
 
 	// finally something to render
-	Ogre::Entity* ent = scnMgr->createEntity("Sinbad.mesh");
-	Ogre::SceneNode* node = scnMgr->getRootSceneNode()->createChildSceneNode();
-	node->attachObject(ent);
+	m_room.init(sceneMgr);
+
+	m_chara = new SinbadCharacterController(cam);
 }
 
