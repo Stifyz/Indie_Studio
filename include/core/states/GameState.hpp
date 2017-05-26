@@ -19,15 +19,11 @@
 
 class GameState : public ApplicationState {
 	public:
-		void init() override;
-
 		void update() override;
 
 		void draw() override;
 
 	private:
-		irr::scene::ISceneManager *m_sceneManager = nullptr;
-
 		Scene m_scene;
 };
 

@@ -6,10 +6,13 @@
 *.d
 test*
 Notes
-build
 a.out
 vgcore.*
 .gdb_history
 *.so
 indie_studio
 wiki
+CMakeCache.txt
+CMakeFiles
+cmake_install.cmake
+compile_commands.json

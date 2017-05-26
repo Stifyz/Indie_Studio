@@ -11,21 +11,23 @@
  *
  * =====================================================================================
  */
-#include <cstdlib>
-#include <ctime>
-
 #include "Application.hpp"
 #include "GameState.hpp"
 
+#include "MyTestApp.hpp"
+
 Application::Application(int, char **) {
-	srand(time(NULL));
+	// m_clock.setIrrlichtDevice(m_window.device());
+    //
+	// m_stateStack.setIrrlichtDevice(m_window.device());
+	// m_stateStack.push<GameState>();
+    //
+	// ResourceHandler::setInstance(&m_resourceHandler);
 
-	m_clock.setIrrlichtDevice(m_window.device());
-
-	m_stateStack.setIrrlichtDevice(m_window.device());
-	m_stateStack.push<GameState>();
-
-	ResourceHandler::setInstance(&m_resourceHandler);
+	MyTestApp app;
+	app.initApp();
+	app.getRoot()->startRendering();
+	app.closeApp();
 }
 
 void Application::handleEvents() {
@@ -33,25 +35,25 @@ void Application::handleEvents() {
 }
 
 void Application::run() {
-	while (m_window.isOpen()) {
-		if (m_window.device()->isWindowActive()) {
-			handleEvents();
-
-			m_clock.updateGame([&] {
-				m_stateStack.top()->update();
-			});
-
-			m_clock.drawGame([&] {
-				m_window.clear();
-
-				m_stateStack.top()->draw();
-
-				m_window.refresh();
-			});
-		}
-		else {
-			m_window.device()->yield();
-		}
-	}
+	// while (m_window.isOpen()) {
+	// 	if (m_window.device()->isWindowActive()) {
+	// 		handleEvents();
+    //
+	// 		m_clock.updateGame([&] {
+	// 			m_stateStack.top()->update();
+	// 		});
+    //
+	// 		m_clock.drawGame([&] {
+	// 			m_window.clear();
+    //
+	// 			m_stateStack.top()->draw();
+    //
+	// 			m_window.refresh();
+	// 		});
+	// 	}
+	// 	else {
+	// 		m_window.device()->yield();
+	// 	}
+	// }
 }
 

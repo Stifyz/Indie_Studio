@@ -18,7 +18,8 @@ irr::IrrlichtDevice *GameClock::s_irrlichtDevice = nullptr;
 
 u32 GameClock::getTicks(bool realTime) {
 	if (realTime) {
-		return s_irrlichtDevice->getTimer()->getTime();
+		return 0; // FIXME
+		// return s_irrlichtDevice->getTimer()->getRealTime();
 	} else {
 		return s_ticks;
 	}
@@ -59,7 +60,8 @@ void GameClock::drawGame(std::function<void(void)> drawFunc) {
 	u32 lastFrameDuration = getTicks(true) - m_timeDropped - m_lastFrameDate;
 
 	if (lastFrameDuration < m_timestep) {
-		s_irrlichtDevice->sleep(m_timestep - lastFrameDuration);
+		// FIXME
+		// s_irrlichtDevice->sleep(m_timestep - lastFrameDuration);
 	}
 
 	measureLastFrameDuration();
