@@ -64,6 +64,7 @@ void MyTestApp::setup() {
 	// get a pointer to the already created root
 	Ogre::Root *root = getRoot();
 	Ogre::SceneManager *sceneMgr = root->createSceneManager(Ogre::ST_GENERIC);
+	// sceneMgr->setAmbientLight(Ogre::ColourValue(0.2, 0.2, 0.2, 1.0));
 
 	m_trayMgr = new OgreBites::TrayManager("TrayManager", mWindow);
 	m_trayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);

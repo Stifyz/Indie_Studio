@@ -16,8 +16,6 @@
 
 #include <functional>
 
-#include <irrlicht/irrlicht.h>
-
 #include "IntTypes.hpp"
 
 class GameClock {
@@ -30,13 +28,10 @@ class GameClock {
 
 		void drawGame(std::function<void(void)> drawFunc);
 
-		void setIrrlichtDevice(irr::IrrlichtDevice *irrlichtDevice) { s_irrlichtDevice = irrlichtDevice; }
-
 	private:
 		static u32 s_ticks;
-		static irr::IrrlichtDevice *s_irrlichtDevice;
 
-		u32 m_lastFrameDate = 0;
+		u32 m_lastFrameBegin = 0;
 		u32 m_lag = 0;
 		u32 m_timeDropped = 0;
 

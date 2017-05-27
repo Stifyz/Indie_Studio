@@ -14,24 +14,24 @@
 #ifndef APPLICATION_HPP_
 #define APPLICATION_HPP_
 
-#include "ApplicationStateStack.hpp"
-#include "GameClock.hpp"
-#include "ResourceHandler.hpp"
+// #include "ApplicationStateStack.hpp"
+// #include "GameClock.hpp"
+// #include "ResourceHandler.hpp"
 
 class Application {
 	public:
 		Application(int argc, char **argv);
 
-		void handleEvents();
+		// void handleEvents();
 
 		void run();
 
 	private:
-		ApplicationStateStack m_stateStack;
+		// ApplicationStateStack m_stateStack;
+        //
+		// GameClock m_clock;
 
-		GameClock m_clock;
-
-		ResourceHandler m_resourceHandler;
+		// ResourceHandler m_resourceHandler;
 };
 
 #endif // APPLICATION_HPP_

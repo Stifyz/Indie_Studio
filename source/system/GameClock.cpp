@@ -14,7 +14,6 @@
 #include "GameClock.hpp"
 
 u32 GameClock::s_ticks = 0;
-irr::IrrlichtDevice *GameClock::s_irrlichtDevice = nullptr;
 
 u32 GameClock::getTicks(bool realTime) {
 	if (realTime) {
@@ -27,15 +26,15 @@ u32 GameClock::getTicks(bool realTime) {
 
 void GameClock::measureLastFrameDuration() {
 	u32 now = getTicks(true) - m_timeDropped;
-	u32 lastFrameDuration = now - m_lastFrameDate;
+	u32 lastFrameDuration = now - m_lastFrameBegin;
 
-	m_lastFrameDate = now;
+	m_lastFrameBegin = now;
 	m_lag += lastFrameDuration;
 
 	if (m_lag >= 200) {
 		m_timeDropped += m_lag - m_timestep;
 		m_lag = m_timestep;
-		m_lastFrameDate = getTicks(true) - m_timeDropped;
+		m_lastFrameBegin = getTicks(true) - m_timeDropped;
 	}
 }
 
@@ -57,7 +56,7 @@ void GameClock::drawGame(std::function<void(void)> drawFunc) {
 		drawFunc();
 	}
 
-	u32 lastFrameDuration = getTicks(true) - m_timeDropped - m_lastFrameDate;
+	u32 lastFrameDuration = getTicks(true) - m_timeDropped - m_lastFrameBegin;
 
 	if (lastFrameDuration < m_timestep) {
 		// FIXME

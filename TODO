@@ -3,31 +3,30 @@ TODO
 # TODO list
 
 • TODO: Finir de remplir cette liste
-•  WIP: Récupérerer des infos sur Irrlicht, on aura besoin de savoir:
+• DONE: Récupérerer des infos sur Ogre3D, on aura besoin de savoir:
    ◦ DONE: Récupérer le temps actuel en millisecondes. Comme `SDL_GetTicks`
    ◦ DONE: Ouvrir une fenêtre et dessiner un rectangle et un cube
-   ◦ TODO: Gérer les events clavier / souris
-   ◦ TODO: Charger un modèle 3D depuis un fichier et le dessiner
-   ◦ TODO: Appliquer une texture à un modèle 3D
-•  WIP: Engine
-   ◦ DONE: Système de temps simulé (GameClock)
-   ◦ DONE: Système d’états de jeu
-      ◦ DONE: ApplicationStateStack et ApplicationState
-   ◦  WIP: Système de gestion des entités
-      ◦ DONE: Scene et SceneObject
+   ◦ DONE: Gérer les events clavier / souris
+   ◦ DONE: Charger un modèle 3D depuis un fichier et le dessiner
+   ◦ DONE: Appliquer une texture à un modèle 3D
+• TODO: Engine
+   ◦ TODO: Système de temps simulé (GameClock)
+   ◦ TODO: Système d’états de jeu
+      ◦ TODO: ApplicationStateStack et ApplicationState
+   ◦ TODO: Système de gestion des entités
+      ◦ TODO: Scene et SceneObject
       ◦ TODO: Trouver un moyen d’adapter l’ECS à Irrlicht qui utilise un graphe de scène
       ◦ `OPTIONAL:` _Améliorer la gestion des System_
-   ◦  WIP: Système de gestion de ressource
-      ◦ DONE: ResourceHandler et ResourceLoader
+   ◦ TODO: Système de gestion de ressource
+      ◦ TODO: ResourceHandler et ResourceLoader
       ◦ TODO: Trouver un format de fichier de configuration (si possible géré par Irrlicht)
       ◦ TODO: Améliorer la construction du système de loaders
-   ◦  WIP: Affichage (dépend d’Irrlicht)
-      ◦ DONE: Ouverture d’une fenêtre
-      ◦ TODO: RectangleShape + CubeShape
+   ◦ TODO: Affichage
+      ◦ TODO: Ouverture d’une fenêtre
       ◦ TODO: Texture
       ◦ TODO: Chargement/affichage d’un modèle 3D
       ◦ TODO: Map
-   ◦ TODO: Entrées utilisateur (dépend d’Irrlicht)
+   ◦ TODO: Entrées utilisateur
       ◦ TODO: Réfléchir à un moyen d’avoir un InputHandler par joueur
       ◦ TODO: InputHandler et KeyboardHandler
       ◦ TODO: GamePad et GameKey

@@ -30,9 +30,9 @@ Application::Application(int, char **) {
 	app.closeApp();
 }
 
-void Application::handleEvents() {
+// void Application::handleEvents() {
 	// TODO
-}
+// }
 
 void Application::run() {
 	// while (m_window.isOpen()) {

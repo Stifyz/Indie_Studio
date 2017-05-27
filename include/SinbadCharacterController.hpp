@@ -8,7 +8,7 @@ using namespace Ogre;
 using namespace OgreBites;
 
 #define NUM_ANIMS 13           // number of animations the character has
-#define CHAR_HEIGHT 5          // height of character's center of mass above ground
+#define CHAR_HEIGHT (5 / 1.8)    // height of character's center of mass above ground
 #define CAM_HEIGHT 2           // height of camera above character's center of mass
 #define RUN_SPEED 17           // character running speed in units per second
 #define TURN_SPEED 500.0f      // character turning in degrees per second
@@ -174,6 +174,7 @@ private:
         mSwordTrail->setVisible(false);
         sceneMgr->getRootSceneNode()->attachObject(mSwordTrail);
 
+		mBodyNode->setScale(0.5, 0.5, 0.5);
 
         for (int i = 0; i < 2; i++)
         {

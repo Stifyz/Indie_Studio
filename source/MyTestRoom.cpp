@@ -61,8 +61,8 @@ void MyTestRoom::init(Ogre::SceneManager *sceneManager) {
 				// ent->setMaterialName("Test");
 
 				Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
-				node->setPosition(tileSize * x, 0.001, tileSize * y);
 				node->setScale(4, 4, 4);
+				node->setPosition(tileSize * x, 0.001, tileSize * y);
 				node->attachObject(ent);
 			}
 		}
@@ -70,12 +70,12 @@ void MyTestRoom::init(Ogre::SceneManager *sceneManager) {
 
 	Ogre::Light* light = sceneManager->createLight("RoomLight");
 	light->setType(Ogre::Light::LT_POINT);
-	light->setPosition(mapWidth * tileSize / 2, 40, mapHeight * tileSize / 2);
+	light->setPosition(mapWidth * tileSize / 2, 60, mapHeight * tileSize / 2);
 	light->setSpecularColour(Ogre::ColourValue::White);
 
 	// create a floor mesh resource
 	Ogre::MeshManager::getSingleton().createPlane("floor", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-			Ogre::Plane(Ogre::Vector3(0, 1, 0), 0), 100, 100, 10, 10, true, 1, 10, 10, Ogre::Vector3::UNIT_Z);
+			Ogre::Plane(Ogre::Vector3::UNIT_Y, 0), mapWidth * tileSize, mapHeight * tileSize, 10, 10, true, 1, 10, 10, Ogre::Vector3::UNIT_Z);
 
 	// create a floor entity, give it a material, and place it at the origin
 	Ogre::Entity* floor = sceneManager->createEntity("Floor", "floor");
@@ -83,7 +83,7 @@ void MyTestRoom::init(Ogre::SceneManager *sceneManager) {
 	floor->setCastShadows(false);
 
 	Ogre::SceneNode* floorNode = sceneManager->getRootSceneNode()->createChildSceneNode();
-	floorNode->setPosition(mapWidth * tileSize / 2, 0, mapHeight * tileSize / 2);
+	floorNode->setPosition(round(mapWidth * tileSize / 2.0), 0, round(mapHeight * tileSize / 2.0));
 	floorNode->attachObject(floor);
 
 	// Ogre::Entity* ent = sceneManager->createEntity("Claimed_10000011.mesh");
