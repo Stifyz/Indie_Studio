@@ -123,33 +123,6 @@ indie_studio/fast:
 	$(MAKE) -f CMakeFiles/indie_studio.dir/build.make CMakeFiles/indie_studio.dir/build
 .PHONY : indie_studio/fast
 
-source/MyTestApp.o: source/MyTestApp.cpp.o
-
-.PHONY : source/MyTestApp.o
-
-# target to build an object file
-source/MyTestApp.cpp.o:
-	$(MAKE) -f CMakeFiles/indie_studio.dir/build.make CMakeFiles/indie_studio.dir/source/MyTestApp.cpp.o
-.PHONY : source/MyTestApp.cpp.o
-
-source/MyTestApp.i: source/MyTestApp.cpp.i
-
-.PHONY : source/MyTestApp.i
-
-# target to preprocess a source file
-source/MyTestApp.cpp.i:
-	$(MAKE) -f CMakeFiles/indie_studio.dir/build.make CMakeFiles/indie_studio.dir/source/MyTestApp.cpp.i
-.PHONY : source/MyTestApp.cpp.i
-
-source/MyTestApp.s: source/MyTestApp.cpp.s
-
-.PHONY : source/MyTestApp.s
-
-# target to generate assembly for a file
-source/MyTestApp.cpp.s:
-	$(MAKE) -f CMakeFiles/indie_studio.dir/build.make CMakeFiles/indie_studio.dir/source/MyTestApp.cpp.s
-.PHONY : source/MyTestApp.cpp.s
-
 source/MyTestRoom.o: source/MyTestRoom.cpp.o
 
 .PHONY : source/MyTestRoom.o
@@ -429,9 +402,6 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... indie_studio"
-	@echo "... source/MyTestApp.o"
-	@echo "... source/MyTestApp.i"
-	@echo "... source/MyTestApp.s"
 	@echo "... source/MyTestRoom.o"
 	@echo "... source/MyTestRoom.i"
 	@echo "... source/MyTestRoom.s"

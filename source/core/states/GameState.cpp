@@ -14,23 +14,60 @@
 #include <Ogre.h>
 
 #include "GameState.hpp"
+#include "OgreData.hpp"
 
-void GameState::init() {
-	Ogre::SceneNode* cameraNode = m_sceneManager->getRootSceneNode()->createChildSceneNode();
+GameState::GameState() {
+	Ogre::RenderWindow *renderWindow = OgreData::getInstance().renderWindow();
+	Ogre::SceneManager *sceneManager = OgreData::getInstance().sceneManager();
+
+	OgreData::getInstance().app()->addInputListener(this);
+	OgreData::getInstance().root()->addFrameListener(this);
+
+	Ogre::Camera* camera = sceneManager->createCamera("myCam");
+	camera->setAutoAspectRatio(true);
+
+	Ogre::SceneNode* cameraNode = sceneManager->getRootSceneNode()->createChildSceneNode();
 	cameraNode->setPosition(0, 0, 15);
 	cameraNode->lookAt(Ogre::Vector3(0, 0, -1), Ogre::Node::TS_PARENT);
-
-	Ogre::Camera* camera = m_sceneManager->createCamera("myCam");
-	camera->setAutoAspectRatio(true);
 	cameraNode->attachObject(camera);
 
-	Ogre::Root::getSingletonPtr()->getAutoCreatedWindow()->addViewport(camera);
+	renderWindow->addViewport(camera);
 
-	m_room.init(m_sceneManager);
+	m_room.init(sceneManager);
 	m_chara.init(camera);
 }
 
 void GameState::update() {
 	m_scene.update();
+}
+
+bool GameState::frameRenderingQueued(const Ogre::FrameEvent &evt) {
+	m_chara.addTime(evt.timeSinceLastFrame);
+	return true;
+}
+
+bool GameState::keyPressed(const OgreBites::KeyboardEvent &evt) {
+	m_chara.injectKeyDown(evt);
+	return true;
+}
+
+bool GameState::keyReleased(const OgreBites::KeyboardEvent& evt) {
+	m_chara.injectKeyUp(evt);
+	return true;
+}
+
+bool GameState::mouseMoved(const OgreBites::MouseMotionEvent& evt) {
+	m_chara.injectMouseMove(evt);
+	return true;
+}
+
+bool GameState::mouseWheelRolled(const OgreBites::MouseWheelEvent& evt) {
+	m_chara.injectMouseWheel(evt);
+	return true;
+}
+
+bool GameState::mousePressed(const OgreBites::MouseButtonEvent& evt) {
+	m_chara.injectMouseDown(evt);
+	return true;
 }
 

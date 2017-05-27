@@ -20,15 +20,15 @@
 
 class GameClock {
 	public:
-		static u32 getTicks(bool realTime = false);
-
-		void measureLastFrameDuration();
-
 		void updateGame(std::function<void(void)> updateFunc);
 
 		void drawGame(std::function<void(void)> drawFunc);
 
+		static u32 getTicks(bool realTime = false);
+
 	private:
+		void measureLastFrameDuration();
+
 		static u32 s_ticks;
 
 		u32 m_lastFrameBegin = 0;

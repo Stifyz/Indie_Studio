@@ -15,7 +15,6 @@
 #define APPLICATION_HPP_
 
 #include <OgreApplicationContext.h>
-#include <OgreRenderWindow.h>
 #include <OgreInput.h>
 #include <OgreTrays.h>
 
@@ -25,7 +24,7 @@
 
 class Application : public OgreBites::ApplicationContext, public OgreBites::InputListener {
 	public:
-		Application() : OgreBites::ApplicationContext("Indie Studio: Gauntlet") {}
+		Application();
 
 		void setup() override;
 
@@ -46,8 +45,7 @@ class Application : public OgreBites::ApplicationContext, public OgreBites::Inpu
 
 		ResourceHandler m_resourceHandler;
 
-		OgreBites::TrayManager *m_trayMgr = nullptr;
-		Ogre::RenderWindow *m_window = nullptr;
+		OgreBites::TrayManager *m_trayManager = nullptr;
 };
 
 #endif // APPLICATION_HPP_

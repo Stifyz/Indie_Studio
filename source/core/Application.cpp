@@ -13,30 +13,29 @@
  */
 #include "Application.hpp"
 #include "GameState.hpp"
+#include "OgreData.hpp"
 
-#include "MyTestApp.hpp"
+Application::Application() : OgreBites::ApplicationContext("Indie Studio") {
+	addInputListener(this);
+}
 
 void Application::setup() {
-	// MyTestApp app;
-	// app.initApp();
-	// app.getRoot()->startRendering();
-	// app.closeApp();
-
 	OgreBites::ApplicationContext::setup();
 	Ogre::Root *root = getRoot();
-	m_window = getRenderWindow();
 
-	Ogre::SceneManager *sceneMgr = root->createSceneManager(Ogre::ST_GENERIC);
-	sceneMgr->addRenderQueueListener(mOverlaySystem);
-	// sceneMgr->setAmbientLight(Ogre::ColourValue(0.2, 0.2, 0.2, 1.0));
+	Ogre::SceneManager *sceneManager = root->createSceneManager(Ogre::ST_GENERIC);
+	sceneManager->addRenderQueueListener(mOverlaySystem);
+	// sceneManager->setAmbientLight(Ogre::ColourValue(0.2, 0.2, 0.2, 1.0));
+
+	m_trayManager = new OgreBites::TrayManager("TrayManager", mWindow);
+	m_trayManager->showFrameStats(OgreBites::TL_BOTTOMLEFT);
+	m_trayManager->showLogo(OgreBites::TL_BOTTOMRIGHT);
+	m_trayManager->showCursor();
 
 	Ogre::RTShader::ShaderGenerator* shadergen = Ogre::RTShader::ShaderGenerator::getSingletonPtr();
-	shadergen->addSceneManager(sceneMgr);
+	shadergen->addSceneManager(sceneManager);
 
-	m_trayMgr = new OgreBites::TrayManager("TrayManager", mWindow);
-	m_trayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
-	m_trayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
-	m_trayMgr->showCursor();
+	OgreData::getInstance().init(root, mWindow, sceneManager, this);
 
 	m_stateStack.push<GameState>();
 
@@ -44,20 +43,26 @@ void Application::setup() {
 }
 
 void Application::run() {
-	while (!m_window->isClosed()) {
+	getRoot()->startRendering();
+	return;
+
+	Ogre::Root *root = getRoot();
+	root->getRenderSystem()->_initRenderTargets();
+	root->clearEventTimes();
+
+	bool isRunning = true;
+	while (isRunning && !root->endRenderingQueued()) {
+		Ogre::WindowEventUtilities::messagePump();
+
 		m_clock.updateGame([&] {
 			m_stateStack.top()->update();
 		});
 
 		m_clock.drawGame([&] {
-			getRoot()->renderOneFrame();
-
-			// m_window.clear();
-
-			// m_stateStack.top()->draw();
-
-			// m_window.refresh();
-		});
+			if (mWindow && mWindow->isActive() && !root->renderOneFrame())
+				isRunning = false;
+			}
+		);
 	}
 }
 
@@ -66,29 +71,29 @@ bool Application::keyPressed(const OgreBites::KeyboardEvent &evt) {
 		getRoot()->queueEndRendering();
 	}
 
-	return OgreBites::InputListener::keyPressed(evt);
+	return true;
 }
 
 bool Application::keyReleased(const OgreBites::KeyboardEvent& evt) {
-	return OgreBites::InputListener::keyReleased(evt);
+	return true;
 }
 
 bool Application::mouseMoved(const OgreBites::MouseMotionEvent& evt) {
-	return OgreBites::InputListener::mouseMoved(evt);
+	return true;
 }
 
 bool Application::mouseWheelRolled(const OgreBites::MouseWheelEvent& evt) {
-	return OgreBites::InputListener::mouseWheelRolled(evt);
+	return true;
 }
 
 bool Application::mousePressed(const OgreBites::MouseButtonEvent& evt) {
-	return OgreBites::InputListener::mousePressed(evt);
+	return true;
 }
 
 bool Application::frameRenderingQueued(const Ogre::FrameEvent &evt) {
-	m_trayMgr->frameRendered(evt);
+	m_trayManager->frameRendered(evt);
 
-	return OgreBites::ApplicationContext::frameRenderingQueued(evt);
+	return true;
 }
 
 

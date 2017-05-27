@@ -27,9 +27,9 @@ Du coup j'ai essayé de repenser la répartion des tâches (c'est la dernière f
 - **Bunel:** Ogre3D, Game Design, Assets
 - **Boubou:** Ogre3D, Assets, UI
 - **Loris:** Ogre3D, Assets, UI
-- **Maison:** Game Design, Réseau
-- **Da-sil:** Game Design, Réseau
-- **Syp:** Game Design, Réseau
+- **Maison:** Ogre3D, Game Design, Réseau
+- **Da-sil:** Ogre3D, Game Design, Réseau
+- **Syp:** Ogre3D, Game Design, Réseau
 
 Je m'explique un peu sur les changements. On va avoir besoin que **tout le monde** se renseigne en pronfondeur sur Ogre. Je sais pas encore comment je vais réussir à architecturer le bordel, mais quoi qu'il en soit, il faut que vous puissiez tous compiler le projet et comprendre comment il fonctionne.
 

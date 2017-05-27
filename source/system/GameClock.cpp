@@ -17,28 +17,6 @@
 
 u32 GameClock::s_ticks = 0;
 
-u32 GameClock::getTicks(bool realTime) {
-	if (realTime) {
-		return SDL_GetTicks();
-	} else {
-		return s_ticks;
-	}
-}
-
-void GameClock::measureLastFrameDuration() {
-	u32 now = getTicks(true) - m_timeDropped;
-	u32 lastFrameDuration = now - m_lastFrameBegin;
-
-	m_lastFrameBegin = now;
-	m_lag += lastFrameDuration;
-
-	if (m_lag >= 200) {
-		m_timeDropped += m_lag - m_timestep;
-		m_lag = m_timestep;
-		m_lastFrameBegin = getTicks(true) - m_timeDropped;
-	}
-}
-
 void GameClock::updateGame(std::function<void(void)> updateFunc) {
 	m_numUpdates = 0;
 
@@ -64,5 +42,27 @@ void GameClock::drawGame(std::function<void(void)> drawFunc) {
 	}
 
 	measureLastFrameDuration();
+}
+
+u32 GameClock::getTicks(bool realTime) {
+	if (realTime) {
+		return SDL_GetTicks();
+	} else {
+		return s_ticks;
+	}
+}
+
+void GameClock::measureLastFrameDuration() {
+	u32 now = getTicks(true) - m_timeDropped;
+	u32 lastFrameDuration = now - m_lastFrameBegin;
+
+	m_lastFrameBegin = now;
+	m_lag += lastFrameDuration;
+
+	if (m_lag >= 200) {
+		m_timeDropped += m_lag - m_timestep;
+		m_lag = m_timestep;
+		m_lastFrameBegin = getTicks(true) - m_timeDropped;
+	}
 }
 

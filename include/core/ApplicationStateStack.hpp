@@ -24,9 +24,7 @@ class ApplicationStateStack {
 		template<typename T, typename... Args>
 		T &push(Args &&...args) {
 			m_states.emplace(std::make_shared<T>(std::forward<Args>(args)...));
-			m_states.top()->setSceneManager(m_sceneManager);
 			m_states.top()->setStateStack(this);
-			m_states.top()->init();
 			return *static_cast<T*>(top());
 		}
 
@@ -39,12 +37,8 @@ class ApplicationStateStack {
 
 		std::size_t size() const { return m_states.size(); }
 
-		void setSceneManager(Ogre::SceneManager *sceneManager) { m_sceneManager = sceneManager; }
-
 	private:
 		std::stack<std::shared_ptr<ApplicationState>> m_states;
-
-		Ogre::SceneManager *m_sceneManager;
 };
 
 #endif // APPLICATIONSTATESTACK_HPP_
