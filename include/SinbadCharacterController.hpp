@@ -42,7 +42,7 @@ private:
 
 public:
 
-    SinbadCharacterController(Camera* cam)
+    void init(Camera* cam)
     {
         setupBody(cam->getSceneManager());
         setupCamera(cam);

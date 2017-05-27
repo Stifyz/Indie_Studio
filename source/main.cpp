@@ -18,9 +18,11 @@
 
 int main(int argc, char **argv) {
 	try {
-		Application app(argc, argv);
+		Application app;
 
+		app.initApp();
 		app.run();
+		app.closeApp();
 	}
 	catch(const Exception &e) {
 		std::cerr << "Fatal error " << e.what() << std::endl;

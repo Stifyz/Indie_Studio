@@ -17,13 +17,19 @@
 #include "ApplicationState.hpp"
 #include "Scene.hpp"
 
+#include "MyTestRoom.hpp"
+#include "SinbadCharacterController.hpp"
+
 class GameState : public ApplicationState {
 	public:
+		void init() override;
+
 		void update() override;
 
-		void draw() override;
-
 	private:
+		MyTestRoom m_room;
+		SinbadCharacterController m_chara;
+
 		Scene m_scene;
 };
 

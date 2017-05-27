@@ -42,7 +42,7 @@ class MyTestApp : public OgreBites::ApplicationContext, public OgreBites::InputL
 		OgreBites::TrayManager *m_trayMgr = nullptr;
 
 		MyTestRoom m_room;
-		SinbadCharacterController *m_chara = nullptr;
+		SinbadCharacterController m_chara;
 };
 
 #endif // MYTESTAPP_HPP_

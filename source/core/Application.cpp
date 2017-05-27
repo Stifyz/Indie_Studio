@@ -16,44 +16,79 @@
 
 #include "MyTestApp.hpp"
 
-Application::Application(int, char **) {
-	// m_clock.setIrrlichtDevice(m_window.device());
-    //
-	// m_stateStack.setIrrlichtDevice(m_window.device());
-	// m_stateStack.push<GameState>();
-    //
-	// ResourceHandler::setInstance(&m_resourceHandler);
+void Application::setup() {
+	// MyTestApp app;
+	// app.initApp();
+	// app.getRoot()->startRendering();
+	// app.closeApp();
 
-	MyTestApp app;
-	app.initApp();
-	app.getRoot()->startRendering();
-	app.closeApp();
+	OgreBites::ApplicationContext::setup();
+	Ogre::Root *root = getRoot();
+	m_window = getRenderWindow();
+
+	Ogre::SceneManager *sceneMgr = root->createSceneManager(Ogre::ST_GENERIC);
+	sceneMgr->addRenderQueueListener(mOverlaySystem);
+	// sceneMgr->setAmbientLight(Ogre::ColourValue(0.2, 0.2, 0.2, 1.0));
+
+	Ogre::RTShader::ShaderGenerator* shadergen = Ogre::RTShader::ShaderGenerator::getSingletonPtr();
+	shadergen->addSceneManager(sceneMgr);
+
+	m_trayMgr = new OgreBites::TrayManager("TrayManager", mWindow);
+	m_trayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
+	m_trayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
+	m_trayMgr->showCursor();
+
+	m_stateStack.push<GameState>();
+
+	ResourceHandler::setInstance(&m_resourceHandler);
 }
-
-// void Application::handleEvents() {
-	// TODO
-// }
 
 void Application::run() {
-	// while (m_window.isOpen()) {
-	// 	if (m_window.device()->isWindowActive()) {
-	// 		handleEvents();
-    //
-	// 		m_clock.updateGame([&] {
-	// 			m_stateStack.top()->update();
-	// 		});
-    //
-	// 		m_clock.drawGame([&] {
-	// 			m_window.clear();
-    //
-	// 			m_stateStack.top()->draw();
-    //
-	// 			m_window.refresh();
-	// 		});
-	// 	}
-	// 	else {
-	// 		m_window.device()->yield();
-	// 	}
-	// }
+	while (!m_window->isClosed()) {
+		m_clock.updateGame([&] {
+			m_stateStack.top()->update();
+		});
+
+		m_clock.drawGame([&] {
+			getRoot()->renderOneFrame();
+
+			// m_window.clear();
+
+			// m_stateStack.top()->draw();
+
+			// m_window.refresh();
+		});
+	}
 }
+
+bool Application::keyPressed(const OgreBites::KeyboardEvent &evt) {
+	if (evt.keysym.sym == SDLK_ESCAPE) {
+		getRoot()->queueEndRendering();
+	}
+
+	return OgreBites::InputListener::keyPressed(evt);
+}
+
+bool Application::keyReleased(const OgreBites::KeyboardEvent& evt) {
+	return OgreBites::InputListener::keyReleased(evt);
+}
+
+bool Application::mouseMoved(const OgreBites::MouseMotionEvent& evt) {
+	return OgreBites::InputListener::mouseMoved(evt);
+}
+
+bool Application::mouseWheelRolled(const OgreBites::MouseWheelEvent& evt) {
+	return OgreBites::InputListener::mouseWheelRolled(evt);
+}
+
+bool Application::mousePressed(const OgreBites::MouseButtonEvent& evt) {
+	return OgreBites::InputListener::mousePressed(evt);
+}
+
+bool Application::frameRenderingQueued(const Ogre::FrameEvent &evt) {
+	m_trayMgr->frameRendered(evt);
+
+	return OgreBites::ApplicationContext::frameRenderingQueued(evt);
+}
+
 

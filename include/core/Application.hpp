@@ -14,24 +14,40 @@
 #ifndef APPLICATION_HPP_
 #define APPLICATION_HPP_
 
-// #include "ApplicationStateStack.hpp"
-// #include "GameClock.hpp"
-// #include "ResourceHandler.hpp"
+#include <OgreApplicationContext.h>
+#include <OgreRenderWindow.h>
+#include <OgreInput.h>
+#include <OgreTrays.h>
 
-class Application {
+#include "ApplicationStateStack.hpp"
+#include "GameClock.hpp"
+#include "ResourceHandler.hpp"
+
+class Application : public OgreBites::ApplicationContext, public OgreBites::InputListener {
 	public:
-		Application(int argc, char **argv);
+		Application() : OgreBites::ApplicationContext("Indie Studio: Gauntlet") {}
 
-		// void handleEvents();
+		void setup() override;
 
 		void run();
 
-	private:
-		// ApplicationStateStack m_stateStack;
-        //
-		// GameClock m_clock;
+		bool keyPressed(const OgreBites::KeyboardEvent& evt) override;
+		bool keyReleased(const OgreBites::KeyboardEvent& evt) override;
+		bool mouseMoved(const OgreBites::MouseMotionEvent& evt) override;
+		bool mouseWheelRolled(const OgreBites::MouseWheelEvent& evt) override;
+		bool mousePressed(const OgreBites::MouseButtonEvent& evt) override;
 
-		// ResourceHandler m_resourceHandler;
+		bool frameRenderingQueued(const Ogre::FrameEvent& evt) override;
+
+	private:
+		ApplicationStateStack m_stateStack;
+
+		GameClock m_clock;
+
+		ResourceHandler m_resourceHandler;
+
+		OgreBites::TrayManager *m_trayMgr = nullptr;
+		Ogre::RenderWindow *m_window = nullptr;
 };
 
 #endif // APPLICATION_HPP_

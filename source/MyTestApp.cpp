@@ -26,32 +26,32 @@ bool MyTestApp::keyPressed(const OgreBites::KeyboardEvent &evt) {
 		getRoot()->queueEndRendering();
 	}
 
-	m_chara->injectKeyDown(evt);
+	m_chara.injectKeyDown(evt);
 	return true;
 }
 
 bool MyTestApp::keyReleased(const OgreBites::KeyboardEvent& evt) {
-	m_chara->injectKeyUp(evt);
+	m_chara.injectKeyUp(evt);
 	return true;
 }
 
 bool MyTestApp::mouseMoved(const OgreBites::MouseMotionEvent& evt) {
-	m_chara->injectMouseMove(evt);
+	m_chara.injectMouseMove(evt);
 	return true;
 }
 
 bool MyTestApp::mouseWheelRolled(const OgreBites::MouseWheelEvent& evt) {
-	m_chara->injectMouseWheel(evt);
+	m_chara.injectMouseWheel(evt);
 	return true;
 }
 
 bool MyTestApp::mousePressed(const OgreBites::MouseButtonEvent& evt) {
-	m_chara->injectMouseDown(evt);
+	m_chara.injectMouseDown(evt);
 	return true;
 }
 
 bool MyTestApp::frameRenderingQueued(const Ogre::FrameEvent &evt) {
-	m_chara->addTime(evt.timeSinceLastFrame);
+	m_chara.addTime(evt.timeSinceLastFrame);
 	m_trayMgr->frameRendered(evt);
 
 	return true;
@@ -98,7 +98,6 @@ void MyTestApp::setup() {
 
 	// finally something to render
 	m_room.init(sceneMgr);
-
-	m_chara = new SinbadCharacterController(cam);
+	m_chara.init(cam);
 }
 

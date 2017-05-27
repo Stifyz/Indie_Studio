@@ -11,14 +11,15 @@
  *
  * =====================================================================================
  */
+#include <SDL2/SDL.h>
+
 #include "GameClock.hpp"
 
 u32 GameClock::s_ticks = 0;
 
 u32 GameClock::getTicks(bool realTime) {
 	if (realTime) {
-		return 0; // FIXME
-		// return s_irrlichtDevice->getTimer()->getRealTime();
+		return SDL_GetTicks();
 	} else {
 		return s_ticks;
 	}
@@ -59,8 +60,7 @@ void GameClock::drawGame(std::function<void(void)> drawFunc) {
 	u32 lastFrameDuration = getTicks(true) - m_timeDropped - m_lastFrameBegin;
 
 	if (lastFrameDuration < m_timestep) {
-		// FIXME
-		// s_irrlichtDevice->sleep(m_timestep - lastFrameDuration);
+		SDL_Delay(m_timestep - lastFrameDuration);
 	}
 
 	measureLastFrameDuration();
