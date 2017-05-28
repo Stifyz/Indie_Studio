@@ -21,7 +21,6 @@ class Scene {
 	public:
 		void reset();
 		void update();
-		void draw();
 
 		SceneObject &addObject(SceneObject &&object);
 

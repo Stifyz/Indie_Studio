@@ -123,6 +123,33 @@ indie_studio/fast:
 	$(MAKE) -f CMakeFiles/indie_studio.dir/build.make CMakeFiles/indie_studio.dir/build
 .PHONY : indie_studio/fast
 
+external/tinyxml2.o: external/tinyxml2.cpp.o
+
+.PHONY : external/tinyxml2.o
+
+# target to build an object file
+external/tinyxml2.cpp.o:
+	$(MAKE) -f CMakeFiles/indie_studio.dir/build.make CMakeFiles/indie_studio.dir/external/tinyxml2.cpp.o
+.PHONY : external/tinyxml2.cpp.o
+
+external/tinyxml2.i: external/tinyxml2.cpp.i
+
+.PHONY : external/tinyxml2.i
+
+# target to preprocess a source file
+external/tinyxml2.cpp.i:
+	$(MAKE) -f CMakeFiles/indie_studio.dir/build.make CMakeFiles/indie_studio.dir/external/tinyxml2.cpp.i
+.PHONY : external/tinyxml2.cpp.i
+
+external/tinyxml2.s: external/tinyxml2.cpp.s
+
+.PHONY : external/tinyxml2.s
+
+# target to generate assembly for a file
+external/tinyxml2.cpp.s:
+	$(MAKE) -f CMakeFiles/indie_studio.dir/build.make CMakeFiles/indie_studio.dir/external/tinyxml2.cpp.s
+.PHONY : external/tinyxml2.cpp.s
+
 source/MyTestRoom.o: source/MyTestRoom.cpp.o
 
 .PHONY : source/MyTestRoom.o
@@ -176,6 +203,87 @@ source/core/Application.s: source/core/Application.cpp.s
 source/core/Application.cpp.s:
 	$(MAKE) -f CMakeFiles/indie_studio.dir/build.make CMakeFiles/indie_studio.dir/source/core/Application.cpp.s
 .PHONY : source/core/Application.cpp.s
+
+source/core/XMLFile.o: source/core/XMLFile.cpp.o
+
+.PHONY : source/core/XMLFile.o
+
+# target to build an object file
+source/core/XMLFile.cpp.o:
+	$(MAKE) -f CMakeFiles/indie_studio.dir/build.make CMakeFiles/indie_studio.dir/source/core/XMLFile.cpp.o
+.PHONY : source/core/XMLFile.cpp.o
+
+source/core/XMLFile.i: source/core/XMLFile.cpp.i
+
+.PHONY : source/core/XMLFile.i
+
+# target to preprocess a source file
+source/core/XMLFile.cpp.i:
+	$(MAKE) -f CMakeFiles/indie_studio.dir/build.make CMakeFiles/indie_studio.dir/source/core/XMLFile.cpp.i
+.PHONY : source/core/XMLFile.cpp.i
+
+source/core/XMLFile.s: source/core/XMLFile.cpp.s
+
+.PHONY : source/core/XMLFile.s
+
+# target to generate assembly for a file
+source/core/XMLFile.cpp.s:
+	$(MAKE) -f CMakeFiles/indie_studio.dir/build.make CMakeFiles/indie_studio.dir/source/core/XMLFile.cpp.s
+.PHONY : source/core/XMLFile.cpp.s
+
+source/core/input/GamePad.o: source/core/input/GamePad.cpp.o
+
+.PHONY : source/core/input/GamePad.o
+
+# target to build an object file
+source/core/input/GamePad.cpp.o:
+	$(MAKE) -f CMakeFiles/indie_studio.dir/build.make CMakeFiles/indie_studio.dir/source/core/input/GamePad.cpp.o
+.PHONY : source/core/input/GamePad.cpp.o
+
+source/core/input/GamePad.i: source/core/input/GamePad.cpp.i
+
+.PHONY : source/core/input/GamePad.i
+
+# target to preprocess a source file
+source/core/input/GamePad.cpp.i:
+	$(MAKE) -f CMakeFiles/indie_studio.dir/build.make CMakeFiles/indie_studio.dir/source/core/input/GamePad.cpp.i
+.PHONY : source/core/input/GamePad.cpp.i
+
+source/core/input/GamePad.s: source/core/input/GamePad.cpp.s
+
+.PHONY : source/core/input/GamePad.s
+
+# target to generate assembly for a file
+source/core/input/GamePad.cpp.s:
+	$(MAKE) -f CMakeFiles/indie_studio.dir/build.make CMakeFiles/indie_studio.dir/source/core/input/GamePad.cpp.s
+.PHONY : source/core/input/GamePad.cpp.s
+
+source/core/input/KeyboardHandler.o: source/core/input/KeyboardHandler.cpp.o
+
+.PHONY : source/core/input/KeyboardHandler.o
+
+# target to build an object file
+source/core/input/KeyboardHandler.cpp.o:
+	$(MAKE) -f CMakeFiles/indie_studio.dir/build.make CMakeFiles/indie_studio.dir/source/core/input/KeyboardHandler.cpp.o
+.PHONY : source/core/input/KeyboardHandler.cpp.o
+
+source/core/input/KeyboardHandler.i: source/core/input/KeyboardHandler.cpp.i
+
+.PHONY : source/core/input/KeyboardHandler.i
+
+# target to preprocess a source file
+source/core/input/KeyboardHandler.cpp.i:
+	$(MAKE) -f CMakeFiles/indie_studio.dir/build.make CMakeFiles/indie_studio.dir/source/core/input/KeyboardHandler.cpp.i
+.PHONY : source/core/input/KeyboardHandler.cpp.i
+
+source/core/input/KeyboardHandler.s: source/core/input/KeyboardHandler.cpp.s
+
+.PHONY : source/core/input/KeyboardHandler.s
+
+# target to generate assembly for a file
+source/core/input/KeyboardHandler.cpp.s:
+	$(MAKE) -f CMakeFiles/indie_studio.dir/build.make CMakeFiles/indie_studio.dir/source/core/input/KeyboardHandler.cpp.s
+.PHONY : source/core/input/KeyboardHandler.cpp.s
 
 source/core/states/GameState.o: source/core/states/GameState.cpp.o
 
@@ -284,6 +392,33 @@ source/scene/Scene.s: source/scene/Scene.cpp.s
 source/scene/Scene.cpp.s:
 	$(MAKE) -f CMakeFiles/indie_studio.dir/build.make CMakeFiles/indie_studio.dir/source/scene/Scene.cpp.s
 .PHONY : source/scene/Scene.cpp.s
+
+source/scene/factories/SinbadFactory.o: source/scene/factories/SinbadFactory.cpp.o
+
+.PHONY : source/scene/factories/SinbadFactory.o
+
+# target to build an object file
+source/scene/factories/SinbadFactory.cpp.o:
+	$(MAKE) -f CMakeFiles/indie_studio.dir/build.make CMakeFiles/indie_studio.dir/source/scene/factories/SinbadFactory.cpp.o
+.PHONY : source/scene/factories/SinbadFactory.cpp.o
+
+source/scene/factories/SinbadFactory.i: source/scene/factories/SinbadFactory.cpp.i
+
+.PHONY : source/scene/factories/SinbadFactory.i
+
+# target to preprocess a source file
+source/scene/factories/SinbadFactory.cpp.i:
+	$(MAKE) -f CMakeFiles/indie_studio.dir/build.make CMakeFiles/indie_studio.dir/source/scene/factories/SinbadFactory.cpp.i
+.PHONY : source/scene/factories/SinbadFactory.cpp.i
+
+source/scene/factories/SinbadFactory.s: source/scene/factories/SinbadFactory.cpp.s
+
+.PHONY : source/scene/factories/SinbadFactory.s
+
+# target to generate assembly for a file
+source/scene/factories/SinbadFactory.cpp.s:
+	$(MAKE) -f CMakeFiles/indie_studio.dir/build.make CMakeFiles/indie_studio.dir/source/scene/factories/SinbadFactory.cpp.s
+.PHONY : source/scene/factories/SinbadFactory.cpp.s
 
 source/scene/system/CollisionSystem.o: source/scene/system/CollisionSystem.cpp.o
 
@@ -402,12 +537,24 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... indie_studio"
+	@echo "... external/tinyxml2.o"
+	@echo "... external/tinyxml2.i"
+	@echo "... external/tinyxml2.s"
 	@echo "... source/MyTestRoom.o"
 	@echo "... source/MyTestRoom.i"
 	@echo "... source/MyTestRoom.s"
 	@echo "... source/core/Application.o"
 	@echo "... source/core/Application.i"
 	@echo "... source/core/Application.s"
+	@echo "... source/core/XMLFile.o"
+	@echo "... source/core/XMLFile.i"
+	@echo "... source/core/XMLFile.s"
+	@echo "... source/core/input/GamePad.o"
+	@echo "... source/core/input/GamePad.i"
+	@echo "... source/core/input/GamePad.s"
+	@echo "... source/core/input/KeyboardHandler.o"
+	@echo "... source/core/input/KeyboardHandler.i"
+	@echo "... source/core/input/KeyboardHandler.s"
 	@echo "... source/core/states/GameState.o"
 	@echo "... source/core/states/GameState.i"
 	@echo "... source/core/states/GameState.s"
@@ -420,6 +567,9 @@ help:
 	@echo "... source/scene/Scene.o"
 	@echo "... source/scene/Scene.i"
 	@echo "... source/scene/Scene.s"
+	@echo "... source/scene/factories/SinbadFactory.o"
+	@echo "... source/scene/factories/SinbadFactory.i"
+	@echo "... source/scene/factories/SinbadFactory.s"
 	@echo "... source/scene/system/CollisionSystem.o"
 	@echo "... source/scene/system/CollisionSystem.i"
 	@echo "... source/scene/system/CollisionSystem.s"

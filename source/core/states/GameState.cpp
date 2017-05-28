@@ -15,6 +15,7 @@
 
 #include "GameState.hpp"
 #include "OgreData.hpp"
+#include "SinbadFactory.hpp"
 
 GameState::GameState() {
 	Ogre::RenderWindow *renderWindow = OgreData::getInstance().renderWindow();
@@ -35,6 +36,8 @@ GameState::GameState() {
 
 	m_room.init(sceneManager);
 	m_chara.init(camera);
+
+	m_scene.addObject(SinbadFactory::create());
 }
 
 void GameState::update() {
@@ -51,22 +54,22 @@ bool GameState::keyPressed(const OgreBites::KeyboardEvent &evt) {
 	return true;
 }
 
-bool GameState::keyReleased(const OgreBites::KeyboardEvent& evt) {
+bool GameState::keyReleased(const OgreBites::KeyboardEvent &evt) {
 	m_chara.injectKeyUp(evt);
 	return true;
 }
 
-bool GameState::mouseMoved(const OgreBites::MouseMotionEvent& evt) {
+bool GameState::mouseMoved(const OgreBites::MouseMotionEvent &evt) {
 	m_chara.injectMouseMove(evt);
 	return true;
 }
 
-bool GameState::mouseWheelRolled(const OgreBites::MouseWheelEvent& evt) {
+bool GameState::mouseWheelRolled(const OgreBites::MouseWheelEvent &evt) {
 	m_chara.injectMouseWheel(evt);
 	return true;
 }
 
-bool GameState::mousePressed(const OgreBites::MouseButtonEvent& evt) {
+bool GameState::mousePressed(const OgreBites::MouseButtonEvent &evt) {
 	m_chara.injectMouseDown(evt);
 	return true;
 }

@@ -11,9 +11,8 @@
  *
  * =====================================================================================
  */
-#include <SDL2/SDL.h>
-
 #include "GameClock.hpp"
+#include "SDLHeaders.hpp"
 
 u32 GameClock::s_ticks = 0;
 

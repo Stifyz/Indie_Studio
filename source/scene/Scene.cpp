@@ -29,12 +29,6 @@ void Scene::update() {
 	if(player) SceneSystem::updateObject(*player);
 }
 
-void Scene::draw() {
-	SceneSystem::draw(m_objects);
-
-	if(player) SceneSystem::drawObject(*player);
-}
-
 SceneObject &Scene::addObject(SceneObject &&object) {
 	SceneObject &obj = m_objects.addObject(std::move(object));
 
