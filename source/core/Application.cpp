@@ -45,7 +45,7 @@ void Application::setup() {
 void Application::run() {
 	// getRoot()->startRendering();
 	// return;
-    //
+
 	Ogre::Root *root = getRoot();
 	root->getRenderSystem()->_initRenderTargets();
 	root->clearEventTimes();

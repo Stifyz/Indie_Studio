@@ -86,8 +86,8 @@ SceneObject SinbadFactory::create() {
 	}
 
 	animationListComponent.enableAnimation("HandsRelaxed");
-	animationListComponent.setupActiveAnimation(0, "IdleBase");
-	animationListComponent.setupActiveAnimation(1, "IdleTop");
+	animationListComponent.setActiveAnimation(0, "IdleBase");
+	animationListComponent.setActiveAnimation(1, "IdleTop");
 
 	return object;
 }

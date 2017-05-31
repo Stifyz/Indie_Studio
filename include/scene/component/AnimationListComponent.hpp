@@ -22,6 +22,8 @@
 #include "Exception.hpp"
 #include "Timer.hpp"
 
+#define ANIM_FADE_SPEED 7.5f
+
 class Animation {
 	public:
 		Animation(Ogre::Entity *entity, const char *animName) {
@@ -61,18 +63,19 @@ class AnimationListComponent {
 			animIterator->second.state->setEnabled(false);
 		}
 
-		void setupActiveAnimation(const unsigned int id, const char *animName, const bool reset = false) {
+		void setActiveAnimation(const unsigned int id, const char *animName, const bool reset = false) {
 			auto animIterator = m_animationList.find(animName);
 			if (animIterator == m_animationList.end()) {
 				throw EXCEPTION("Animation not found:", animName);
 			}
 
-			if (!animName) {
+			auto activeAnimIterator = m_activeAnimations.find(id);
+			if (activeAnimIterator != m_activeAnimations.end() && activeAnimIterator->second) {
 				animIterator->second.fadingIn = false;
 				animIterator->second.fadingOut = true;
 			}
 
-			m_activeAnimations.emplace(id, animName);
+			m_activeAnimations[id] = animName;
 
 			if (animName) {
 				animIterator->second.state->setEnabled(true);
@@ -87,23 +90,33 @@ class AnimationListComponent {
 		void updateActiveAnimations() {
 			for (auto &it : m_activeAnimations) {
 				Animation &anim = m_animationList.at(it.second);
-				// anim.state->addTime(6);
 				if (anim.timer.isStarted()) {
-					anim.state->addTime(anim.timer.time());
+					anim.state->addTime(anim.timer.time() / 1000.0);
 					anim.timer.reset();
 				}
 				anim.timer.start();
 			}
 		}
 
-		// void updateActiveAnimations(unsigned int id) {
-		// 	auto animIterator = m_animationList.find(animName);
-		// 	if (animIterator == m_animationList.end()) {
-		// 		throw EXCEPTION("Animation ");
-		// 	}
-        //
-		// 	 animIterator->second->anim()
-		// }
+		void fadeAnimations() {
+			for (auto &it : m_animationList) {
+				if (it.second.fadingIn) {
+					Ogre::Real newWeight = it.second.state->getWeight() + ANIM_FADE_SPEED;
+					it.second.state->setWeight(Ogre::Math::Clamp<Ogre::Real>(newWeight, 0, 1));
+					if (newWeight >= 1)
+						it.second.fadingIn = false;
+				}
+				else if (it.second.fadingOut) {
+					Ogre::Real newWeight = it.second.state->getWeight() - ANIM_FADE_SPEED;
+					it.second.state->setWeight(Ogre::Math::Clamp<Ogre::Real>(newWeight, 0, 1));
+					if (newWeight <= 0)
+					{
+						it.second.state->setEnabled(false);
+						it.second.fadingOut = false;
+					}
+				}
+			}
+		}
 
 	private:
 		std::map<const char *, Animation> m_animationList;

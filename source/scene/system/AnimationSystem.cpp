@@ -18,6 +18,7 @@ void AnimationSystem::process(SceneObject &object) {
 	if (object.has<AnimationListComponent>()) {
 		auto &animationListComponent = object.get<AnimationListComponent>();
 		animationListComponent.updateActiveAnimations();
+		animationListComponent.fadeAnimations();
 	}
 }
 
