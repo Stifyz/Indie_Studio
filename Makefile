@@ -204,6 +204,33 @@ source/core/Application.cpp.s:
 	$(MAKE) -f CMakeFiles/indie_studio.dir/build.make CMakeFiles/indie_studio.dir/source/core/Application.cpp.s
 .PHONY : source/core/Application.cpp.s
 
+source/core/Timer.o: source/core/Timer.cpp.o
+
+.PHONY : source/core/Timer.o
+
+# target to build an object file
+source/core/Timer.cpp.o:
+	$(MAKE) -f CMakeFiles/indie_studio.dir/build.make CMakeFiles/indie_studio.dir/source/core/Timer.cpp.o
+.PHONY : source/core/Timer.cpp.o
+
+source/core/Timer.i: source/core/Timer.cpp.i
+
+.PHONY : source/core/Timer.i
+
+# target to preprocess a source file
+source/core/Timer.cpp.i:
+	$(MAKE) -f CMakeFiles/indie_studio.dir/build.make CMakeFiles/indie_studio.dir/source/core/Timer.cpp.i
+.PHONY : source/core/Timer.cpp.i
+
+source/core/Timer.s: source/core/Timer.cpp.s
+
+.PHONY : source/core/Timer.s
+
+# target to generate assembly for a file
+source/core/Timer.cpp.s:
+	$(MAKE) -f CMakeFiles/indie_studio.dir/build.make CMakeFiles/indie_studio.dir/source/core/Timer.cpp.s
+.PHONY : source/core/Timer.cpp.s
+
 source/core/XMLFile.o: source/core/XMLFile.cpp.o
 
 .PHONY : source/core/XMLFile.o
@@ -420,6 +447,33 @@ source/scene/factories/SinbadFactory.cpp.s:
 	$(MAKE) -f CMakeFiles/indie_studio.dir/build.make CMakeFiles/indie_studio.dir/source/scene/factories/SinbadFactory.cpp.s
 .PHONY : source/scene/factories/SinbadFactory.cpp.s
 
+source/scene/system/AnimationSystem.o: source/scene/system/AnimationSystem.cpp.o
+
+.PHONY : source/scene/system/AnimationSystem.o
+
+# target to build an object file
+source/scene/system/AnimationSystem.cpp.o:
+	$(MAKE) -f CMakeFiles/indie_studio.dir/build.make CMakeFiles/indie_studio.dir/source/scene/system/AnimationSystem.cpp.o
+.PHONY : source/scene/system/AnimationSystem.cpp.o
+
+source/scene/system/AnimationSystem.i: source/scene/system/AnimationSystem.cpp.i
+
+.PHONY : source/scene/system/AnimationSystem.i
+
+# target to preprocess a source file
+source/scene/system/AnimationSystem.cpp.i:
+	$(MAKE) -f CMakeFiles/indie_studio.dir/build.make CMakeFiles/indie_studio.dir/source/scene/system/AnimationSystem.cpp.i
+.PHONY : source/scene/system/AnimationSystem.cpp.i
+
+source/scene/system/AnimationSystem.s: source/scene/system/AnimationSystem.cpp.s
+
+.PHONY : source/scene/system/AnimationSystem.s
+
+# target to generate assembly for a file
+source/scene/system/AnimationSystem.cpp.s:
+	$(MAKE) -f CMakeFiles/indie_studio.dir/build.make CMakeFiles/indie_studio.dir/source/scene/system/AnimationSystem.cpp.s
+.PHONY : source/scene/system/AnimationSystem.cpp.s
+
 source/scene/system/CollisionSystem.o: source/scene/system/CollisionSystem.cpp.o
 
 .PHONY : source/scene/system/CollisionSystem.o
@@ -546,6 +600,9 @@ help:
 	@echo "... source/core/Application.o"
 	@echo "... source/core/Application.i"
 	@echo "... source/core/Application.s"
+	@echo "... source/core/Timer.o"
+	@echo "... source/core/Timer.i"
+	@echo "... source/core/Timer.s"
 	@echo "... source/core/XMLFile.o"
 	@echo "... source/core/XMLFile.i"
 	@echo "... source/core/XMLFile.s"
@@ -570,6 +627,9 @@ help:
 	@echo "... source/scene/factories/SinbadFactory.o"
 	@echo "... source/scene/factories/SinbadFactory.i"
 	@echo "... source/scene/factories/SinbadFactory.s"
+	@echo "... source/scene/system/AnimationSystem.o"
+	@echo "... source/scene/system/AnimationSystem.i"
+	@echo "... source/scene/system/AnimationSystem.s"
 	@echo "... source/scene/system/CollisionSystem.o"
 	@echo "... source/scene/system/CollisionSystem.i"
 	@echo "... source/scene/system/CollisionSystem.s"

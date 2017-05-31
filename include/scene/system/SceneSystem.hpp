@@ -21,11 +21,9 @@ class SceneSystem {
 	public:
 		static void reset(SceneObjectList &objectList);
 		static void update(SceneObjectList &objectList);
-		static void draw(SceneObjectList &objectList);
 
 		static void resetObject(SceneObject &object);
 		static void updateObject(SceneObject &object);
-		static void drawObject(SceneObject &object);
 };
 
 #endif // SCENESYSTEM_HPP_

@@ -13,6 +13,7 @@
  */
 #include <Ogre.h>
 
+#include "AnimationListComponent.hpp"
 #include "OgreData.hpp"
 #include "SinbadFactory.hpp"
 
@@ -60,47 +61,10 @@ class EntityListComponent {
 		Ogre::SceneNode *m_rootNode = nullptr;
 };
 
-class Animation {
-	public:
-		Animation(Ogre::Entity *entity, const char *animName) {
-			state = entity->getAnimationState(animName);
-			state->setLoop(true);
-		}
-
-		Ogre::AnimationState *state = nullptr;
-
-		bool fadingIn = false;
-		bool fadingOut = false;
-};
-
-class AnimationListComponent {
-	public:
-		void add(Ogre::Entity *entity, const char *animName) {
-			m_animationList.emplace(animName, Animation{entity, animName});
-		}
-
-		void enableAnimation(const char *animName) {
-			auto animIterator = m_animationList.find(animName);
-			if (animIterator == m_animationList.end()) {
-				animIterator->second.state->setEnabled(true);
-			}
-		}
-
-		void disableAnimation(const char *animName) {
-			auto animIterator = m_animationList.find(animName);
-			if (animIterator == m_animationList.end()) {
-				animIterator->second.state->setEnabled(false);
-			}
-		}
-
-	private:
-		std::map<const char *, Animation> m_animationList;
-};
-
 SceneObject SinbadFactory::create() {
 	SceneObject object("Sinbad");
 
-	auto &bodyNodeComponent = object.set<SceneNodeComponent>(Ogre::Vector3(20, CHAR_HEIGHT, 20), Ogre::Vector3(0.5, 0.5, 0.5));
+	auto &bodyNodeComponent = object.set<SceneNodeComponent>(Ogre::Vector3(10, CHAR_HEIGHT, 10), Ogre::Vector3(0.5, 0.5, 0.5));
 	auto &entityListComponent = object.set<EntityListComponent>(bodyNodeComponent.node);
 
 	Ogre::Entity *bodyEntity = entityListComponent.addEntity("SinbadBody_", "Sinbad.mesh", true);
@@ -115,11 +79,15 @@ SceneObject SinbadFactory::create() {
 		"IdleBase", "IdleTop", "RunBase", "RunTop", "HandsClosed", "HandsRelaxed", "DrawSwords",
 		"SliceVertical", "SliceHorizontal", "Dance", "JumpStart", "JumpLoop", "JumpEnd"
 	};
+
 	auto &animationListComponent = object.set<AnimationListComponent>();
 	for (const char *animName : animNames) {
 		animationListComponent.add(bodyEntity, animName);
 	}
+
 	animationListComponent.enableAnimation("HandsRelaxed");
+	animationListComponent.setupActiveAnimation(0, "IdleBase");
+	animationListComponent.setupActiveAnimation(1, "IdleTop");
 
 	return object;
 }
