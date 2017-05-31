@@ -385,8 +385,6 @@ private:
         // increment the current base and top animation times
         if (mBaseAnimID != ANIM_NONE) mAnims[mBaseAnimID]->addTime(deltaTime * baseAnimSpeed);
         if (mTopAnimID != ANIM_NONE) mAnims[mTopAnimID]->addTime(deltaTime * topAnimSpeed);
-		std::cout << "Other ogre time offset: " << deltaTime << std::endl;
-		std::cout << "Other ogre time offset: " << deltaTime << std::endl;
 
         // apply smooth transitioning between our animations
         fadeAnimations(deltaTime);

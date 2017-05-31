@@ -20,6 +20,7 @@
 
 #include "ApplicationStateStack.hpp"
 #include "GameClock.hpp"
+#include "KeyboardHandler.hpp"
 #include "ResourceHandler.hpp"
 
 class Application : public OgreBites::ApplicationContext, public OgreBites::InputListener {
@@ -40,9 +41,8 @@ class Application : public OgreBites::ApplicationContext, public OgreBites::Inpu
 
 	private:
 		ApplicationStateStack m_stateStack;
-
 		GameClock m_clock;
-
+		KeyboardHandler m_keyboardHandler;
 		ResourceHandler m_resourceHandler;
 
 		OgreBites::TrayManager *m_trayManager = nullptr;

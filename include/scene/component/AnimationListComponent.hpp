@@ -109,8 +109,7 @@ class AnimationListComponent {
 				else if (it.second.fadingOut) {
 					Ogre::Real newWeight = it.second.state->getWeight() - ANIM_FADE_SPEED;
 					it.second.state->setWeight(Ogre::Math::Clamp<Ogre::Real>(newWeight, 0, 1));
-					if (newWeight <= 0)
-					{
+					if (newWeight <= 0) {
 						it.second.state->setEnabled(false);
 						it.second.fadingOut = false;
 					}
