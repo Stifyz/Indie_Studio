@@ -18,7 +18,6 @@
 #include <typeindex>
 #include <unordered_map>
 
-#include "Debug.hpp"
 #include "Exception.hpp"
 
 class SceneObject {
