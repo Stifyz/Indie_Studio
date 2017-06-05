@@ -43,7 +43,7 @@ void Movement::goUp(Ogre::Vector3 &position, float distance) {
 }
 
 void Movement::goDown(Ogre::Vector3 &position, float distance) {
-	position.z += distance;
+	position.z = distance;
 }
 
 void Movement::goLeft(Ogre::Vector3 &position, float distance) {

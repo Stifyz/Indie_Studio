@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-/************************************************************\
-|*                                                          *|
-|* Copyright (C) (2017) by zimmer_n
-|*                                                          *|
-|* SceneNodeComponent.hpp for project :
-|*                                                          *|
-|* Created: 2017-06-05 19:00
-|*                                                          *|
-\************************************************************/
-
-=======
 /*
  * =====================================================================================
  *
@@ -23,7 +11,7 @@
  *
  * =====================================================================================
  */
->>>>>>> a5023387dd89e87227e8101de112ce1ed92acda4
+
 #ifndef SCENENODECOMPONENT_HPP_
 #define SCENENODECOMPONENT_HPP_
 
@@ -35,11 +23,8 @@
 
 class SceneNodeComponent {
 	public:
-<<<<<<< HEAD
 		SceneNodeComponent(const Ogre::Vector3 &pos, const Ogre::Vector3 &scale = Ogre::Vector3::ZERO) {
-=======
 		SceneNodeComponent(const Ogre::Vector3 &pos, const Ogre::Vector3 &scale = Ogre::Vector3::UNIT_SCALE) {
->>>>>>> a5023387dd89e87227e8101de112ce1ed92acda4
 			Ogre::SceneManager *sceneManager = OgreData::getInstance().sceneManager();
 			node = sceneManager->getRootSceneNode()->createChildSceneNode(pos);
 			node->setScale(scale);
@@ -48,8 +33,4 @@ class SceneNodeComponent {
 		Ogre::SceneNode *node = nullptr;
 };
 
-<<<<<<< HEAD
 #endif // !SCENENODECOMPONENT_HPP_
-=======
-#endif // SCENENODECOMPONENT_HPP_
->>>>>>> a5023387dd89e87227e8101de112ce1ed92acda4

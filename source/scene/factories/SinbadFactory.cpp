@@ -14,16 +14,12 @@
 #include <Ogre.h>
 
 #include "AnimationListComponent.hpp"
-<<<<<<< HEAD
 #include "CollisionComponent.hpp"
 #include "EntityListComponent.hpp"
 #include "GamePadMovement.hpp"
 #include "MovementComponent.hpp"
 #include "OgreData.hpp"
 #include "PositionComponent.hpp"
-=======
-#include "EntityListComponent.hpp"
->>>>>>> a5023387dd89e87227e8101de112ce1ed92acda4
 #include "SceneNodeComponent.hpp"
 #include "SinbadFactory.hpp"
 
