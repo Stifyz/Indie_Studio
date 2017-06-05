@@ -12,11 +12,14 @@
  * =====================================================================================
  */
 #include "Application.hpp"
+#include "GamePad.hpp"
 #include "GameState.hpp"
 #include "OgreData.hpp"
 
 Application::Application() : OgreBites::ApplicationContext("Indie Studio") {
 	addInputListener(this);
+
+	GamePad::init(m_keyboardHandler);
 }
 
 void Application::setup() {

@@ -49,55 +49,29 @@ GameKey GamePad::m_verticalValue = GameKey::Down;
 GameKey GamePad::m_horizontalValue = GameKey::Left;
 
 bool GamePad::isKeyPressed(GameKey key) {
-	if(!inputHandler) return false;
+	if(!inputHandler)
+		return false;
 
-	if(key == GameKey::Up) { // First vertical key pressed disable the other one
-		if (m_verticalLock && m_verticalValue == GameKey::Down) {
-			return false;
-		} else if(inputHandler->isKeyPressed(key)) {
-			m_verticalLock = true;
-			m_verticalValue = GameKey::Up;
-			return true;
-		} else {
-			m_verticalLock = false;
-			return false;
+	for (unsigned int i = 0 ; i < 4 ; ++i) {
+		if (key == static_cast<GameKey>(i)) {
+			bool &lock = (i < 2) ? m_horizontalLock : m_verticalLock;
+			GameKey &value = (i < 2) ? m_horizontalValue : m_verticalValue;
+
+			if (lock && value == static_cast<GameKey>(i))
+				return false;
+			else if (inputHandler->isKeyPressed(key)) {
+				lock = true;
+				value = static_cast<GameKey>(i + (i % 2 ? 1 : -1));
+				return true;
+			}
+			else {
+				lock = false;
+				return false;
+			}
 		}
-	} else if(key == GameKey::Down) {
-		if (m_verticalLock && m_verticalValue == GameKey::Up) {
-			return false;
-		} else if(inputHandler->isKeyPressed(key)) {
-			m_verticalLock = true;
-			m_verticalValue = GameKey::Down;
-			return true;
-		} else {
-			m_verticalLock = false;
-			return false;
-		}
-	} else if(key == GameKey::Left) { // First horizontal key pressed disable the other one
-		if(m_horizontalLock && m_horizontalValue == GameKey::Right) {
-			return false;
-		} else if(inputHandler->isKeyPressed(key)) {
-			m_horizontalLock = true;
-			m_horizontalValue = GameKey::Left;
-			return true;
-		} else {
-			m_horizontalLock = false;
-			return false;
-		}
-	} else if(key == GameKey::Right) {
-		if(m_horizontalLock && m_horizontalValue == GameKey::Left) {
-			return false;
-		} else if(inputHandler->isKeyPressed(key)) {
-			m_horizontalLock = true;
-			m_horizontalValue = GameKey::Right;
-			return true;
-		} else {
-			m_horizontalLock = false;
-			return false;
-		}
-	} else {
-		return inputHandler->isKeyPressed(key);
 	}
+
+	return inputHandler->isKeyPressed(key);
 }
 
 bool GamePad::isKeyPressedOnce(GameKey key) {

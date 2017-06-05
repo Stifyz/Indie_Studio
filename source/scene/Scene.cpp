@@ -48,8 +48,8 @@ void Scene::checkCollisionsFor(SceneObject &object) {
 		}
 	}
 
-	if (&object != Scene::player) {
-		CollisionSystem::checkCollision(object, *Scene::player);
+	if (player && &object != player) {
+		CollisionSystem::checkCollision(object, *player);
 	}
 }
 
