@@ -40,7 +40,7 @@ void MovementSystem::process(SceneObject &object) {
 		if (movement.behaviour)
 			movement.behaviour(object);
 		else {
-			position.move(movement.v * movement.speed);
+			position.scale(movement.v * movement.speed);
 
 			movement.v = 0;
 		}

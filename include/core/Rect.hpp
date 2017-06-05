@@ -112,4 +112,5 @@ class Rect {
 using IntRect = Rect<int>;
 using FloatRect = Rect<float>;
 
+
 #endif // RECT_HPP_

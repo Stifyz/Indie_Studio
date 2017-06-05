@@ -34,18 +34,22 @@ bool CollisionSystem::inCollision(SceneObject &object1, SceneObject &object2) {
 		auto &position1 = object1.get<PositionComponent>();
 		auto &position2 = object2.get<PositionComponent>();
 
-		FloatRect rect1 = position1;
-		FloatRect rect2 = position2;
+		Ogre::AxisAlignedBox box1 = position1;
+		Ogre::AxisAlignedBox box2 = position2;
 
 		if(object1.has<MovementComponent>()) {
-			rect1 += object1.get<MovementComponent>().v;
+			auto &tmp = object1.get<MovementComponent>().v;
+			box1.getMinimum() += tmp;
+			box1.getMaximum() += tmp;
 		}
 
 		if(object2.has<MovementComponent>()) {
-			rect2 += object2.get<MovementComponent>().v;
+			auto &tmp = object2.get<MovementComponent>().v;
+			box2.getMinimum() += tmp;
+			box2.getMaximum() += tmp;
 		}
 
-		if(rect1.intersects(rect2)) {
+		if(box1.intersects(box2)) {
 			return true;
 		}
 	}

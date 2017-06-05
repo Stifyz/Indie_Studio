@@ -18,13 +18,14 @@
 #include <memory>
 
 #include "Movement.hpp"
-#include "Vector2.hpp"
+#include "OgreVector3.h"
+// #include "Vector2.hpp"
 
 class MovementComponent {
 	public:
 		MovementComponent(Movement *_movement) : movement(_movement) {}
 
-		Vector2f v{0, 0};
+		Ogre::Vector3 v{0, 0, 0};
 
 		bool isMoving = false;
 		bool isDirectionLocked = false;

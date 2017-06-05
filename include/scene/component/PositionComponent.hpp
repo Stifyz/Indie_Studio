@@ -15,22 +15,23 @@
 #define POSITIONCOMPONENT_HPP_
 
 #include "Direction.hpp"
-#include "Rect.hpp"
-#include "Vector2.hpp"
+// #include "Rect.hpp"
+#include <OgreAxisAlignedBox.h>
 
-class PositionComponent : public FloatRect {
+class PositionComponent : public Ogre::AxisAlignedBox {
 	public:
 		PositionComponent() = default;
 
-		PositionComponent(float x, float y, float width, float height, Direction _direction = Direction::None)
-			: FloatRect(x, y, width, height), direction(_direction) {
+		PositionComponent(const float x, const float y, const float z,
+				const float width, const float height, const float depth,
+				Direction _direction = Direction::None)
+			: Ogre::AxisAlignedBox(x, y, z, x + width, y + height, z + depth), direction(_direction) {
 		}
 
-		PositionComponent(const Vector2f &position, const Vector2f &size)
-			: FloatRect(position, size) {
-		}
+		PositionComponent(const Ogre::Vector3 &position, const Ogre::Vector3 &size)
+			: Ogre::AxisAlignedBox(position, {position.x + size.x, position.y + size.y, position.z + size.z}) {}
 
-		void updateDirection(const Vector2f &v) {
+		void updateDirection(const Ogre::Vector3 &v) {
 			if(v.x < 0) direction = Direction::Left;
 			if(v.x > 0) direction = Direction::Right;
 			if(v.y < 0) direction = Direction::Up;
