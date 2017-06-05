@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /************************************************************\
 |*                                                          *|
 |* Copyright (C) (2017) by zimmer_n
@@ -8,12 +9,32 @@
 |*                                                          *|
 \************************************************************/
 
+=======
+/*
+ * =====================================================================================
+ *
+ *       Filename:  EntityListComponent.hpp
+ *
+ *    Description:
+ *
+ *        Created:  05/06/2017 22:18:06
+ *
+ *         Author:  Quentin Bazin, <quent42340@gmail.com>
+ *
+ * =====================================================================================
+ */
+>>>>>>> a5023387dd89e87227e8101de112ce1ed92acda4
 #ifndef ENTITYLISTCOMPONENT_HPP_
 #define ENTITYLISTCOMPONENT_HPP_
 
 #include <OgreEntity.h>
+<<<<<<< HEAD
 #include <OgreSceneNode.h>
 #include <map>
+=======
+#include <OgreSceneManager.h>
+#include <OgreSceneNode.h>
+>>>>>>> a5023387dd89e87227e8101de112ce1ed92acda4
 
 #include "OgreData.hpp"
 
@@ -50,4 +71,8 @@ class EntityListComponent {
 		Ogre::SceneNode *m_rootNode = nullptr;
 };
 
+<<<<<<< HEAD
 #endif // !ENTITYLISTCOMPONENT_HPP_
+=======
+#endif // ENTITYLISTCOMPONENT_HPP_
+>>>>>>> a5023387dd89e87227e8101de112ce1ed92acda4

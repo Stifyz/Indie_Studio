@@ -14,19 +14,23 @@
 #include <Ogre.h>
 
 #include "AnimationListComponent.hpp"
+<<<<<<< HEAD
 #include "CollisionComponent.hpp"
 #include "EntityListComponent.hpp"
 #include "GamePadMovement.hpp"
 #include "MovementComponent.hpp"
 #include "OgreData.hpp"
 #include "PositionComponent.hpp"
+=======
+#include "EntityListComponent.hpp"
+>>>>>>> a5023387dd89e87227e8101de112ce1ed92acda4
 #include "SceneNodeComponent.hpp"
 #include "SinbadFactory.hpp"
 
 SceneObject SinbadFactory::create() {
 	SceneObject object("Sinbad");
 
-	auto &bodyNodeComponent = object.set<SceneNodeComponent>(Ogre::Vector3(10, CHAR_HEIGHT, 10), Ogre::Vector3(0.5, 0.5, 0.5));
+	auto &bodyNodeComponent = object.set<SceneNodeComponent>(Ogre::Vector3(20, CHAR_HEIGHT, 20), Ogre::Vector3(0.5, 0.5, 0.5));
 	auto &entityListComponent = object.set<EntityListComponent>(bodyNodeComponent.node);
 
 	object.set<MovementComponent>(MovementComponent(new GamePadMovement));
@@ -51,8 +55,8 @@ SceneObject SinbadFactory::create() {
 	}
 
 	animationListComponent.enableAnimation("HandsRelaxed");
-	animationListComponent.setActiveAnimation(0, "IdleTop");
-	animationListComponent.setActiveAnimation(1, "IdleBase");
+	animationListComponent.setActiveAnimation(0, "Dance");
+	// animationListComponent.setActiveAnimation(1, "IdleBase");
 
 	return object;
 }

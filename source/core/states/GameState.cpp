@@ -13,6 +13,7 @@
  */
 #include <Ogre.h>
 
+#include "ArcherFactory.hpp"
 #include "GameState.hpp"
 #include "OgreData.hpp"
 #include "SinbadFactory.hpp"
@@ -37,6 +38,7 @@ GameState::GameState() {
 	m_room.init(sceneManager);
 	m_chara.init(camera);
 
+	m_scene.addObject(ArcherFactory::create());
 	m_scene.addObject(SinbadFactory::create());
 }
 
