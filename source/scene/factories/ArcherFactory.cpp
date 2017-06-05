@@ -24,12 +24,6 @@ SceneObject ArcherFactory::create() {
 
 	Ogre::Entity *bodyEntity = entityListComponent.addEntity("ArcherBody", "Archer.mesh", true);
 	// bodyEntity->setMaterialName("Archer");
-	auto &names = bodyEntity->getAnimableValueNames();
-	std::cout << "Animations:" << std::endl;
-	for (auto &it : names) {
-		std::cout << it << std::endl;
-	}
-	std::cout.flush();
 
 	const char *animNames[] = {"my_animation"};
 
