@@ -8,22 +8,47 @@
 |*                                                          *|
 \************************************************************/
 
+#include "GameKey.hpp"
 #include "GamePadMovement.hpp"
 #include "PositionComponent.hpp"
-
-#include <OgreVector3.h>
+#include "SceneNodeComponent.hpp"
 
 void GamePadMovement::process(SceneObject &object) {
-	Ogre::Vector3 v(0, 0, 0);
-	auto &positionComponent = object.get<PositionComponent>();
+	Ogre::SceneNode *node = nullptr;
 
-	if (GamePad::isKeyPressed(GameKey::Left))
-		v.x -= 1;
-	else if (GamePad::isKeyPressed(GameKey::Right))
-		v.x += 1;
-	else if (GamePad::isKeyPressed(GameKey::Up))
-		v.y -= 1;
-	else if (GamePad::isKeyPressed(GameKey::Down))
-		v.y += 1;
-	positionComponent.updateDirection(v);
+	if (object.has<SceneNodeComponent>())
+		node = object.get<SceneNodeComponent>().node;
+	else
+		return ;
+
+	Ogre::Quaternion orientation = node->getOrientation();
+	Ogre::Vector3 position = node->getPosition();
+
+	if (GamePad::isKeyPressedOnce(GameKey::Left))
+	{
+		turnToLeft(orientation);
+		goLeft(position);
+	}
+	if (GamePad::isKeyPressedOnce(GameKey::Right))
+	{
+		turnToRight(orientation);
+		goRight(position);
+	}
+	if (GamePad::isKeyPressedOnce(GameKey::Up))
+	{
+		turnToUp(orientation);
+		goUp(position);
+	}
+	if (GamePad::isKeyPressedOnce(GameKey::Down))
+	{
+		turnToDown(orientation);
+		goDown(position);
+	}
+	if (GamePad::isKeyPressedOnce(GameKey::Start))
+	{
+		std::cout << "Orientation : " << orientation.w << ';' << orientation.x << ';' << orientation.y << ';' << orientation.z << ';' << std::endl;
+		std::cout << "Position : " << position.x << ';' << position.y << ';' << position.z << ';' << std::endl;
+	}
+	node->setOrientation(orientation);
+	node->setPosition(position);
 }

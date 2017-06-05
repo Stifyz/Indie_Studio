@@ -15,55 +15,13 @@
 
 #include "AnimationListComponent.hpp"
 #include "CollisionComponent.hpp"
+#include "EntityListComponent.hpp"
 #include "GamePadMovement.hpp"
 #include "MovementComponent.hpp"
 #include "OgreData.hpp"
 #include "PositionComponent.hpp"
+#include "SceneNodeComponent.hpp"
 #include "SinbadFactory.hpp"
-
-class SceneNodeComponent {
-	public:
-		SceneNodeComponent(const Ogre::Vector3 &pos, const Ogre::Vector3 &scale = Ogre::Vector3::ZERO) {
-			Ogre::SceneManager *sceneManager = OgreData::getInstance().sceneManager();
-			node = sceneManager->getRootSceneNode()->createChildSceneNode(pos);
-			node->setScale(scale);
-		}
-
-		Ogre::SceneNode *node = nullptr;
-};
-
-class EntityListComponent {
-	public:
-		EntityListComponent(Ogre::SceneNode *rootNode) {
-			m_rootNode = rootNode;
-		}
-
-		Ogre::Entity *addEntity(const char *name, const char *meshFilename, bool attachObjectToRoot = false) {
-			Ogre::SceneManager *sceneManager = OgreData::getInstance().sceneManager();
-			Ogre::Entity *entity = sceneManager->createEntity(name, meshFilename);
-			if (attachObjectToRoot)
-				m_rootNode->attachObject(entity);
-			m_entityList.emplace(name, entity);
-			return entity;
-		}
-
-		void linkEntityToBone(const char *linkedEntityName, const char *parentEntityName, const char *boneName) {
-			auto parentEntity = m_entityList.find(parentEntityName);
-			if (parentEntity == m_entityList.end())
-				throw EXCEPTION("Failed to load entity:", parentEntityName);
-
-			auto linkedEntity = m_entityList.find(linkedEntityName);
-			if (linkedEntity == m_entityList.end())
-				throw EXCEPTION("Failed to load entity:", linkedEntityName);
-
-			parentEntity->second->attachObjectToBone(boneName, linkedEntity->second);
-		}
-
-	private:
-		std::map<const char *, Ogre::Entity *> m_entityList;
-
-		Ogre::SceneNode *m_rootNode = nullptr;
-};
 
 SceneObject SinbadFactory::create() {
 	SceneObject object("Sinbad");
@@ -71,9 +29,8 @@ SceneObject SinbadFactory::create() {
 	auto &bodyNodeComponent = object.set<SceneNodeComponent>(Ogre::Vector3(10, CHAR_HEIGHT, 10), Ogre::Vector3(0.5, 0.5, 0.5));
 	auto &entityListComponent = object.set<EntityListComponent>(bodyNodeComponent.node);
 
-	object.set<PositionComponent>(PositionComponent({0, 0, 0}, {1, 1, 2}));
 	object.set<MovementComponent>(MovementComponent(new GamePadMovement));
-	// object.set<CollisionComponent>(CollisionComponent());
+	object.set<CollisionComponent>(CollisionComponent());
 
 	Ogre::Entity *bodyEntity = entityListComponent.addEntity("SinbadBody_", "Sinbad.mesh", true);
 	bodyEntity->getSkeleton()->setBlendMode(Ogre::ANIMBLEND_CUMULATIVE);
