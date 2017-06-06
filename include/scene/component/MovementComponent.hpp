@@ -32,7 +32,7 @@ class MovementComponent {
 
 		bool isBlocked = false;
 
-		float speed = 1.0f;
+		float speed = 0.08f;
 
 		std::unique_ptr<Movement> movement;
 

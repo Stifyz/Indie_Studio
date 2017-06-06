@@ -64,20 +64,21 @@ class AnimationListComponent {
 		}
 
 		void setActiveAnimation(const unsigned int id, const char *animName, const bool reset = false) {
-			auto animIterator = m_animationList.find(animName);
-			if (animIterator == m_animationList.end()) {
-				throw EXCEPTION("Animation not found:", animName);
-			}
-
 			auto activeAnimIterator = m_activeAnimations.find(id);
 			if (activeAnimIterator != m_activeAnimations.end() && activeAnimIterator->second) {
-				animIterator->second.fadingIn = false;
-				animIterator->second.fadingOut = true;
+				auto oldAnimIterator = m_animationList.find(activeAnimIterator->second);
+				oldAnimIterator->second.fadingIn = false;
+				oldAnimIterator->second.fadingOut = true;
 			}
 
 			m_activeAnimations[id] = animName;
 
 			if (animName) {
+				auto animIterator = m_animationList.find(animName);
+				if (animIterator == m_animationList.end()) {
+					throw EXCEPTION("Animation not found:", animName);
+				}
+
 				animIterator->second.state->setEnabled(true);
 				animIterator->second.state->setWeight(0);
 				animIterator->second.fadingIn = true;
@@ -87,8 +88,15 @@ class AnimationListComponent {
 			}
 		}
 
+		const char *getActiveAnimation(const unsigned int id) {
+			return m_activeAnimations.at(id);
+		}
+
 		void updateActiveAnimations() {
 			for (auto &it : m_activeAnimations) {
+				if (!it.second)
+					continue;
+
 				Animation &anim = m_animationList.at(it.second);
 				if (anim.timer.isStarted()) {
 					anim.state->addTime(anim.timer.time() / 1000.0);

@@ -33,16 +33,15 @@ void MovementSystem::process(SceneObject &object) {
 
 	if(object.has<MovementComponent>()) {
 		auto &movement = object.get<MovementComponent>();
-		movement.isMoving = (movement.v.x || movement.v.y) ? true : false;
+		movement.isMoving = (movement.v.x || movement.v.z) ? true : false;
 
 		if (movement.behaviour)
 			movement.behaviour(object);
-		else {
-			Ogre::SceneNode *node = object.get<SceneNodeComponent>().node;
-			node->setPosition(node->getPosition() + movement.v * movement.speed);
 
-			movement.v = 0;
-		}
+		Ogre::SceneNode *node = object.get<SceneNodeComponent>().node;
+		node->setPosition(node->getPosition() + movement.v * movement.speed);
+
+		movement.v = 0;
 	}
 }
 

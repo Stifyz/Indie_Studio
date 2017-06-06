@@ -13,28 +13,32 @@ TODO
    ◦ DONE: Système de temps simulé (GameClock)
    ◦ DONE: Système d’états de jeu
       ◦ DONE: ApplicationStateStack et ApplicationState
+   ◦ DONE: Affichage
+      ◦ DONE: Ouverture d’une fenêtre
+      ◦ DONE: Texture
+      ◦ DONE: Chargement/affichage d’un modèle 3D
+      ◦ DONE: Map
    ◦  WIP: Système de gestion des entités
       ◦ DONE: Trouver un moyen d’adapter l’ECS à Ogre3D qui utilise un graphe de scène
       ◦ DONE: Scene et SceneObject
+      ◦ DONE: SceneNodeComponent et EntityListComponent
+      ◦  WIP: AnimationListComponent et AnimationSystem
+      ◦ TODO: BehaviourComponent
       ◦ TODO: Améliorer la gestion des System
       ◦ TODO: Améliorer la gestion des Factory
    ◦  WIP: Système de gestion de ressource
       ◦ DONE: ResourceHandler et ResourceLoader
-      ◦ TODO: Trouver un format de fichier de configuration (si possible géré par Irrlicht)
+      ◦ TODO: Trouver un format de fichier de configuration (si possible géré par Ogre3D)
       ◦ TODO: Améliorer la construction du système de loaders
-   ◦  WIP: Affichage
-      ◦ DONE: Ouverture d’une fenêtre
-      ◦ DONE: Texture
-      ◦ DONE: Chargement/affichage d’un modèle 3D
-      ◦ TODO: Map
    ◦  WIP: Entrées utilisateur
       ◦ DONE: InputHandler et KeyboardHandler
       ◦ DONE: GamePad et GameKey
       ◦ TODO: Réfléchir à un moyen d’adapter le système d’input au multijoueur
       ◦ TODO: Gestion de la souris
       ◦ TODO: Gestion du joystick
-   ◦ TODO: Adapter l’engine au multi-threading
-      ◦ TODO: Faire un thread séparé pour l’affichage
+   ◦  WIP: Adapter l’engine au multi-threading
+      ◦ DONE: Faire un thread séparé pour l’affichage (Ogre3D le gère apparemment)
+      ◦ TODO: Faire un thread séparé pour le réseau
       ◦ TODO: Répartir les systèmes sur plusieurs threads
    ◦ TODO: Réseau
       ◦ TODO: Envoi de paquets et création automatique d’un hôte

@@ -21,14 +21,16 @@
 #include "SceneNodeComponent.hpp"
 #include "SinbadFactory.hpp"
 
+void sinbadMovementBehaviour(SceneObject &object);
+
 SceneObject SinbadFactory::create() {
 	SceneObject object("Sinbad");
 
 	auto &bodyNodeComponent = object.set<SceneNodeComponent>(Ogre::Vector3(20, CHAR_HEIGHT, 20), Ogre::Vector3(0.5, 0.5, 0.5));
 	auto &entityListComponent = object.set<EntityListComponent>(bodyNodeComponent.node);
 
-	object.set<MovementComponent>(new GamePadMovement).speed = 0.1f;
-	object.set<CollisionComponent>();
+	auto &movementComponent = object.set<MovementComponent>(new GamePadMovement);
+	movementComponent.behaviour = &sinbadMovementBehaviour;
 
 	Ogre::Entity *bodyEntity = entityListComponent.addEntity("SinbadBody_", "Sinbad.mesh", true);
 	bodyEntity->getSkeleton()->setBlendMode(Ogre::ANIMBLEND_CUMULATIVE);
@@ -53,5 +55,24 @@ SceneObject SinbadFactory::create() {
 	// animationListComponent.setActiveAnimation(1, "IdleBase");
 
 	return object;
+}
+
+void sinbadMovementBehaviour(SceneObject &object) {
+	auto &movementComponent = object.get<MovementComponent>();
+	auto &animationListComponent = object.get<AnimationListComponent>();
+
+	static bool oldMovingState = false;
+	if (oldMovingState != movementComponent.isMoving) {
+		if (movementComponent.isMoving) {
+			animationListComponent.setActiveAnimation(0, "RunTop");
+			animationListComponent.setActiveAnimation(1, "RunBase");
+		}
+		else {
+			animationListComponent.setActiveAnimation(0, "Dance");
+			animationListComponent.setActiveAnimation(1, nullptr);
+		}
+	}
+
+	oldMovingState = movementComponent.isMoving;
 }
 
