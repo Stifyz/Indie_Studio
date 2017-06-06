@@ -31,7 +31,7 @@ void GamePadMovement::process(SceneObject &object) {
 	}
 
 	if (movementComponent.v.x && movementComponent.v.z) {
-		movementComponent.v.x /= 1.41;
+		movementComponent.v.x /= 1.41; // La diagonale d'un cube d'unité 1 est sqrt(2) ~= 1.41
 		movementComponent.v.z /= 1.41;
 	}
 }
