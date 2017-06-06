@@ -29,9 +29,8 @@ Je m'explique un peu sur les changements. On va avoir besoin que **tout le monde
 
 Notes spéciales:
 - Utilisez Ogre3D 1.10, c'est la dernière version stable.
-- Théo, Steven, Maxime, je vous laisse uniquement le Réseau en terme de code, je compte sur vous pour ça.
 - Loris, concentre toi vraiment sur les Assets, et on va en avoir besoin très très vite. Envoie un message sur Discord quand t'es chaud et je te dis ce dont j'aurais besoin.
-- Boubou, regarde comment faire un menu tout simple avec Ogre3D 1.10 et fais une page de wiki pour expliquer ça, ensuite faudra l'intégrer au jeu, faire un menu principal, un menu pause, etc.. et ensuite faudra faire le HUD
+- Boubou, regarde comment faire un menu tout simple avec Ogre3D 1.10 et fais une page de wiki pour expliquer ça, ensuite faudra l'intégrer au jeu, faire un menu principal, un menu pause, etc.. ensuite faudra faire le HUD et le tchat
 
 ***
 
