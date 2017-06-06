@@ -14,8 +14,6 @@
 #ifndef APPLICATION_HPP_
 #define APPLICATION_HPP_
 
-#include <thread>
-
 #include <OgreApplicationContext.h>
 #include <OgreInput.h>
 #include <OgreTrays.h>
@@ -51,8 +49,6 @@ class Application : public OgreBites::ApplicationContext, public OgreBites::Inpu
 		ResourceHandler m_resourceHandler;
 
 		OgreBites::TrayManager *m_trayManager = nullptr;
-
-		std::atomic<bool> m_isRunning{true};
 };
 
 #endif // APPLICATION_HPP_

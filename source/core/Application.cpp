@@ -53,46 +53,18 @@ void Application::run() {
 	root->getRenderSystem()->_initRenderTargets();
 	root->clearEventTimes();
 
-	std::thread updateThread{std::bind(&Application::update, this)};
-	std::thread drawThread{std::bind(&Application::draw, this)};
-
-	updateThread.join();
-	drawThread.join();
-
-	// while (m_isRunning.load() && !root->endRenderingQueued()) {
-	// 	Ogre::WindowEventUtilities::messagePump();
-    //
-	// 	m_clock.updateGame([&] {
-	// 		m_stateStack.top()->update();
-	// 	});
-    //
-	// 	m_clock.drawGame([&] {
-	// 		if (mWindow && mWindow->isActive() && !root->renderOneFrame())
-	// 			m_isRunning.store(false);
-	// 		}
-	// 	);
-	// }
-}
-
-void Application::update() {
-	Ogre::Root *root = getRoot();
-	while (m_isRunning.load() && !root->endRenderingQueued()) {
+	while (!root->endRenderingQueued()) {
 		Ogre::WindowEventUtilities::messagePump();
 
 		m_clock.updateGame([&] {
 			m_stateStack.top()->update();
 		});
 
-		m_clock.drawGame([&] { // FIXME
-		});
-	}
-}
-
-void Application::draw() {
-	Ogre::Root *root = getRoot();
-	while (m_isRunning.load() && !root->endRenderingQueued()) {
-		if (mWindow && mWindow->isActive() && !root->renderOneFrame())
-			m_isRunning.store(false);
+		m_clock.drawGame([&] {
+			if (mWindow && mWindow->isActive() && !root->renderOneFrame())
+				getRoot()->queueEndRendering();
+			}
+		);
 	}
 }
 
