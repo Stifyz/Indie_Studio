@@ -14,10 +14,13 @@
 #include "AnimationListComponent.hpp"
 #include "ArcherFactory.hpp"
 #include "EntityListComponent.hpp"
+#include "GamePadMovement.hpp"
+#include "MovementComponent.hpp"
 #include "SceneNodeComponent.hpp"
 
 SceneObject ArcherFactory::create() {
 	SceneObject object("Archer");
+	object.set<MovementComponent>(new GamePadMovement);
 
 	auto &bodyNodeComponent = object.set<SceneNodeComponent>(Ogre::Vector3(10, ARCHER_HEIGHT, 10), Ogre::Vector3(0.3, 0.3, 0.3));
 	auto &entityListComponent = object.set<EntityListComponent>(bodyNodeComponent.node);

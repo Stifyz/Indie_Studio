@@ -40,8 +40,11 @@ void MovementSystem::process(SceneObject &object) {
 
 		Ogre::SceneNode *node = object.get<SceneNodeComponent>().node;
 		node->setPosition(node->getPosition() + movement.v * movement.speed);
-		node->resetOrientation();
-		node->setDirection(-movement.v);
+
+		if (movement.isMoving) {
+			node->resetOrientation();
+			node->setDirection(-movement.v);
+		}
 
 		movement.v = 0;
 	}
