@@ -29,4 +29,9 @@ void GamePadMovement::process(SceneObject &object) {
 	else if (GamePad::isKeyPressed(GameKey::Down)) {
 		movementComponent.v.z = 1;
 	}
+
+	if (movementComponent.v.x && movementComponent.v.z) {
+		movementComponent.v.x /= 1.41;
+		movementComponent.v.z /= 1.41;
+	}
 }
