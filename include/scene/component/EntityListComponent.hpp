@@ -14,9 +14,9 @@
 #ifndef ENTITYLISTCOMPONENT_HPP_
 #define ENTITYLISTCOMPONENT_HPP_
 
-#include <OgreEntity.h>
-#include <OgreSceneNode.h>
 #include <map>
+
+#include <OgreEntity.h>
 #include <OgreSceneManager.h>
 #include <OgreSceneNode.h>
 
@@ -55,4 +55,4 @@ class EntityListComponent {
 		Ogre::SceneNode *m_rootNode = nullptr;
 };
 
-#endif // !ENTITYLISTCOMPONENT_HPP_
+#endif // ENTITYLISTCOMPONENT_HPP_

@@ -11,13 +11,12 @@
  *
  * =====================================================================================
  */
-
 #ifndef SCENENODECOMPONENT_HPP_
 #define SCENENODECOMPONENT_HPP_
 
-#include <OgreVector3.h>
 #include <OgreSceneManager.h>
 #include <OgreSceneNode.h>
+#include <OgreVector3.h>
 
 #include "OgreData.hpp"
 
@@ -32,4 +31,4 @@ class SceneNodeComponent {
 		Ogre::SceneNode *node = nullptr;
 };
 
-#endif // !SCENENODECOMPONENT_HPP_
+#endif // SCENENODECOMPONENT_HPP_

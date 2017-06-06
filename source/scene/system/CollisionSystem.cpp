@@ -15,7 +15,6 @@
 
 #include "CollisionComponent.hpp"
 #include "MovementComponent.hpp"
-#include "PositionComponent.hpp"
 
 void CollisionSystem::checkCollision(SceneObject &object1, SceneObject &object2) {
 	bool inCollision = CollisionSystem::inCollision(object1, object2);
@@ -30,30 +29,32 @@ void CollisionSystem::checkCollision(SceneObject &object1, SceneObject &object2)
 }
 
 bool CollisionSystem::inCollision(SceneObject &object1, SceneObject &object2) {
-	if(object1.has<PositionComponent>() && object2.has<PositionComponent>()) {
-		auto &position1 = object1.get<PositionComponent>();
-		auto &position2 = object2.get<PositionComponent>();
+	// FIXME
 
-		Ogre::AxisAlignedBox box1 = position1;
-		Ogre::AxisAlignedBox box2 = position2;
-
-		if(object1.has<MovementComponent>()) {
-			auto &tmp = object1.get<MovementComponent>().v;
-			box1.getMinimum() += tmp;
-			box1.getMaximum() += tmp;
-		}
-
-		if(object2.has<MovementComponent>()) {
-			auto &tmp = object2.get<MovementComponent>().v;
-			box2.getMinimum() += tmp;
-			box2.getMaximum() += tmp;
-		}
-
-		if(box1.intersects(box2)) {
-			return true;
-		}
-	}
-
-	return false;
+	// if(object1.has<PositionComponent>() && object2.has<PositionComponent>()) {
+	// 	auto &position1 = object1.get<PositionComponent>();
+	// 	auto &position2 = object2.get<PositionComponent>();
+    //
+	// 	Ogre::AxisAlignedBox box1 = position1;
+	// 	Ogre::AxisAlignedBox box2 = position2;
+    //
+	// 	if(object1.has<MovementComponent>()) {
+	// 		auto &tmp = object1.get<MovementComponent>().v;
+	// 		box1.getMinimum() += tmp;
+	// 		box1.getMaximum() += tmp;
+	// 	}
+    //
+	// 	if(object2.has<MovementComponent>()) {
+	// 		auto &tmp = object2.get<MovementComponent>().v;
+	// 		box2.getMinimum() += tmp;
+	// 		box2.getMaximum() += tmp;
+	// 	}
+    //
+	// 	if(box1.intersects(box2)) {
+	// 		return true;
+	// 	}
+	// }
+    //
+	// return false;
 }
 

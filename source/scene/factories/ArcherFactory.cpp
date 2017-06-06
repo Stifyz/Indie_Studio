@@ -23,16 +23,16 @@ SceneObject ArcherFactory::create() {
 	auto &entityListComponent = object.set<EntityListComponent>(bodyNodeComponent.node);
 
 	Ogre::Entity *bodyEntity = entityListComponent.addEntity("ArcherBody", "Archer.mesh", true);
-	// bodyEntity->setMaterialName("Archer");
+	bodyEntity->setMaterialName("Archer");
 
-	const char *animNames[] = {"my_animation"};
-
-	auto &animationListComponent = object.set<AnimationListComponent>();
-	for (const char *animName : animNames) {
-		animationListComponent.add(bodyEntity, animName);
-	}
-
-	animationListComponent.setActiveAnimation(0, "my_animation");
+	// const char *animNames[] = {"my_animation"};
+    //
+	// auto &animationListComponent = object.set<AnimationListComponent>();
+	// for (const char *animName : animNames) {
+	// 	animationListComponent.add(bodyEntity, animName);
+	// }
+    //
+	// animationListComponent.setActiveAnimation(0, "my_animation");
 
 	return object;
 }

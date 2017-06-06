@@ -11,15 +11,13 @@
  *
  * =====================================================================================
  */
-#include <Ogre.h>
+#include <OgreSkeletonInstance.h>
 
 #include "AnimationListComponent.hpp"
 #include "CollisionComponent.hpp"
 #include "EntityListComponent.hpp"
 #include "GamePadMovement.hpp"
 #include "MovementComponent.hpp"
-#include "OgreData.hpp"
-#include "PositionComponent.hpp"
 #include "SceneNodeComponent.hpp"
 #include "SinbadFactory.hpp"
 
@@ -29,8 +27,8 @@ SceneObject SinbadFactory::create() {
 	auto &bodyNodeComponent = object.set<SceneNodeComponent>(Ogre::Vector3(20, CHAR_HEIGHT, 20), Ogre::Vector3(0.5, 0.5, 0.5));
 	auto &entityListComponent = object.set<EntityListComponent>(bodyNodeComponent.node);
 
-	object.set<MovementComponent>(MovementComponent(new GamePadMovement));
-	object.set<CollisionComponent>(CollisionComponent());
+	object.set<MovementComponent>(new GamePadMovement).speed = 0.1f;
+	object.set<CollisionComponent>();
 
 	Ogre::Entity *bodyEntity = entityListComponent.addEntity("SinbadBody_", "Sinbad.mesh", true);
 	bodyEntity->getSkeleton()->setBlendMode(Ogre::ANIMBLEND_CUMULATIVE);
