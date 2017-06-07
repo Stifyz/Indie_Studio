@@ -15,6 +15,41 @@
 #include "GamePad.hpp"
 #include "GameState.hpp"
 #include "OgreData.hpp"
+#include "Menu.hpp"
+
+Ui::Ui(OgreBites::TrayManager *trayManager) {
+  m_uiManager = trayManager;
+  m_menuptr[0] = &Ui::start;
+  m_menuptr[1] = &Ui::settings;
+  m_menuptr[2] = &Ui::howtoplay;
+  m_menuType[0] = MenuType::START;
+  m_menuType[1] = MenuType::SETTINGS;
+  m_menuType[2] = MenuType::HOWTOPLAY;
+}
+
+void	Ui::refresh(Ui::MenuType Menu) {
+  int	i = 0;
+
+  m_uiManager->clearAllTrays();
+  while (i < 3)
+    {
+      if(Menu == m_menuType[i])
+	(this->*m_menuptr[i])();
+      i++;
+    }
+}
+
+void	Ui::start() {
+  m_uiManager->createButton(OgreBites::TL_CENTER, "Start Game", "Start Game", 200);
+}
+
+void	Ui::settings() {
+  m_uiManager->createButton(OgreBites::TL_CENTER, "Settings", "Settings", 200);
+}
+
+void	Ui::howtoplay() {
+  m_uiManager->createButton(OgreBites::TL_CENTER, "How To Play", "How To Play", 200);
+}
 
 Application::Application() : OgreBites::ApplicationContext("Indie Studio") {
 	addInputListener(this);
@@ -34,6 +69,9 @@ void Application::setup() {
 	m_trayManager->showFrameStats(OgreBites::TL_BOTTOMLEFT);
 	m_trayManager->showLogo(OgreBites::TL_BOTTOMRIGHT);
 	m_trayManager->showCursor();
+
+	Ui *m_menuGame = new Ui(m_trayManager);
+	m_menuGame->refresh(Ui::MenuType::HOWTOPLAY);
 
 	Ogre::RTShader::ShaderGenerator* shadergen = Ogre::RTShader::ShaderGenerator::getSingletonPtr();
 	shadergen->addSceneManager(sceneManager);
