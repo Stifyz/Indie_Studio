@@ -2,40 +2,35 @@
 #ifndef MENU_HPP_
 # define MENU_HPP_
 
-#include "Application.hpp"
+#include <OgreTrays.h>
 #include "OgreData.hpp"
+
 #include <map>
 
-class   Ui
-{
+class Ui {
 public:
-  Ui(OgreBites::TrayManager *trayManager);
-  ~Ui();
-  
+  Ui();
+
   enum MenuType {
     Main,
     Game,
     Settings,
     HowToPlay
   };
-  
-  void launch(const MenuType m_menuType);
-  void clear() const;
-  void refresh();
-  
-  void setMain();
-  void setGame();
-  void setSettings();
-  void setHowToPlay();
-  
-  typedef void (Ui::*MenuPtr)();
-  
+
+  OgreBites::TrayManager *create(const MenuType, Ogre::RenderWindow *);
+
+  void setMain(OgreBites::TrayManager *);
+  void setGame(OgreBites::TrayManager *);
+  void setSettings(OgreBites::TrayManager *);
+  void setHowToPlay(OgreBites::TrayManager *);
+
+  typedef void (Ui::*setMenuFnct)(OgreBites::TrayManager *);
+
 private:
-  const std::shared_ptr<OgreBites::TrayManager> m_uiManager = nullptr;
-  
   MenuType m_actMenu;
-  
-  const std::map<MenuType, MenuPtr> m_menu = {
+
+  const std::map<MenuType, setMenuFnct> m_menu = {
     {MenuType::Main, &Ui::setMain},
     {MenuType::Game, &Ui::setGame},
     {MenuType::Settings, &Ui::setSettings},
@@ -44,3 +39,4 @@ private:
 };
 
 #endif /* MENU_HPP_ */
+

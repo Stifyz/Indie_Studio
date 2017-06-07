@@ -15,7 +15,6 @@
 #include "GamePad.hpp"
 #include "GameState.hpp"
 #include "OgreData.hpp"
-#include "Menu.hpp"
 
 Application::Application() : OgreBites::ApplicationContext("Indie Studio") {
 	addInputListener(this);
@@ -31,13 +30,7 @@ void Application::setup() {
 	sceneManager->addRenderQueueListener(mOverlaySystem);
 	// sceneManager->setAmbientLight(Ogre::ColourValue(0.2, 0.2, 0.2, 1.0));
 
-	m_trayManager = new OgreBites::TrayManager("TrayManager", mWindow);
-	m_trayManager->showFrameStats(OgreBites::TL_BOTTOMLEFT);
-	m_trayManager->showLogo(OgreBites::TL_BOTTOMRIGHT);
-	m_trayManager->showCursor();
-
-	Ui *m_menuGame = new Ui(m_trayManager);
-	m_menuGame->refresh(Ui::MenuType::HOWTOPLAY);
+	m_trayManager.reset(m_ui.create(Ui::MenuType::Game, mWindow));
 
 	Ogre::RTShader::ShaderGenerator* shadergen = Ogre::RTShader::ShaderGenerator::getSingletonPtr();
 	shadergen->addSceneManager(sceneManager);
