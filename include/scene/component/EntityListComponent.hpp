@@ -28,7 +28,7 @@ class EntityListComponent {
 			m_rootNode = rootNode;
 		}
 
-		Ogre::Entity *addEntity(const char *name, const char *meshFilename, bool attachObjectToRoot = false) {
+		Ogre::Entity *addEntity(const char *name, const char *meshFilename, const bool attachObjectToRoot = false) {
 			Ogre::SceneManager *sceneManager = OgreData::getInstance().sceneManager();
 			Ogre::Entity *entity = sceneManager->createEntity(name, meshFilename);
 			if (attachObjectToRoot)
@@ -48,6 +48,8 @@ class EntityListComponent {
 
 			parentEntity->second->attachObjectToBone(boneName, linkedEntity->second);
 		}
+
+		Ogre::Entity *getEntity(const std::string &name) { return m_entityList.at(name.c_str()); }
 
 	private:
 		std::map<const char *, Ogre::Entity *> m_entityList;

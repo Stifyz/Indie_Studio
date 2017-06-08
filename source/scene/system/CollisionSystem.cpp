@@ -14,6 +14,7 @@
 #include "CollisionSystem.hpp"
 
 #include "CollisionComponent.hpp"
+#include "EntityListComponent.hpp"
 #include "MovementComponent.hpp"
 
 void CollisionSystem::checkCollision(SceneObject &object1, SceneObject &object2) {
@@ -29,32 +30,25 @@ void CollisionSystem::checkCollision(SceneObject &object1, SceneObject &object2)
 }
 
 bool CollisionSystem::inCollision(SceneObject &object1, SceneObject &object2) {
-	// FIXME
+	Ogre::AxisAlignedBox box1 = object1.get<EntityListComponent>().getEntity(object1.name() + "Body")->getBoundingBox();
+	Ogre::AxisAlignedBox box2 = object2.get<EntityListComponent>().getEntity(object2.name() + "Body")->getBoundingBox();
 
-	// if(object1.has<PositionComponent>() && object2.has<PositionComponent>()) {
-	// 	auto &position1 = object1.get<PositionComponent>();
-	// 	auto &position2 = object2.get<PositionComponent>();
-    //
-	// 	Ogre::AxisAlignedBox box1 = position1;
-	// 	Ogre::AxisAlignedBox box2 = position2;
-    //
-	// 	if(object1.has<MovementComponent>()) {
-	// 		auto &tmp = object1.get<MovementComponent>().v;
-	// 		box1.getMinimum() += tmp;
-	// 		box1.getMaximum() += tmp;
-	// 	}
-    //
-	// 	if(object2.has<MovementComponent>()) {
-	// 		auto &tmp = object2.get<MovementComponent>().v;
-	// 		box2.getMinimum() += tmp;
-	// 		box2.getMaximum() += tmp;
-	// 	}
-    //
-	// 	if(box1.intersects(box2)) {
-	// 		return true;
-	// 	}
-	// }
-    //
-	// return false;
+	if(object1.has<MovementComponent>()) {
+		auto &v = object1.get<MovementComponent>().v;
+		box1.getMinimum() += v;
+		box1.getMaximum() += v;
+	}
+
+	if(object2.has<MovementComponent>()) {
+		auto &v = object2.get<MovementComponent>().v;
+		box2.getMinimum() += v;
+		box2.getMaximum() += v;
+	}
+
+	if(box1.intersects(box2)) {
+		return true;
+	}
+
+	return false;
 }
 
