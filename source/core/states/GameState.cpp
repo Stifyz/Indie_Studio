@@ -41,6 +41,10 @@ GameState::GameState() : m_room(ResourceHandler::getInstance().get<Room>("tuto_r
 
 	m_scene.addObject(ArcherFactory::create());
 	m_scene.addObject(SinbadFactory::create());
+
+	m_scene.addCollisionChecker([&] (SceneObject &object) {
+		m_room.checkCollisions(object);
+	});
 }
 
 void GameState::update() {

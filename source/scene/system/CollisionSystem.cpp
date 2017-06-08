@@ -30,8 +30,11 @@ void CollisionSystem::checkCollision(SceneObject &object1, SceneObject &object2)
 }
 
 bool CollisionSystem::inCollision(SceneObject &object1, SceneObject &object2) {
-	Ogre::AxisAlignedBox box1 = object1.get<EntityListComponent>().getEntity(object1.name() + "Body")->getBoundingBox();
-	Ogre::AxisAlignedBox box2 = object2.get<EntityListComponent>().getEntity(object2.name() + "Body")->getBoundingBox();
+	Ogre::Entity *entity1 = object1.get<EntityListComponent>().getEntity(object1.name() + "Body");
+	Ogre::Entity *entity2 = object2.get<EntityListComponent>().getEntity(object2.name() + "Body");
+
+	Ogre::AxisAlignedBox box1 = entity1->getWorldBoundingBox();
+	Ogre::AxisAlignedBox box2 = entity2->getWorldBoundingBox();
 
 	if(object1.has<MovementComponent>()) {
 		auto &v = object1.get<MovementComponent>().v;

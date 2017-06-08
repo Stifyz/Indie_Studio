@@ -19,12 +19,19 @@
 #include "SceneNodeComponent.hpp"
 
 void MovementSystem::process(SceneObject &object) {
+	Ogre::SceneNode *node = object.get<SceneNodeComponent>().node;
+
 	if(object.has<MovementComponent>()) {
 		auto &movement = object.get<MovementComponent>();
 
 		if (movement.movement)
 			movement.movement->process(object);
 		movement.isBlocked = false;
+
+		if (movement.v.x || movement.v.z) {
+			node->resetOrientation();
+			node->setDirection(-movement.v);
+		}
 	}
 
 	if(object.has<CollisionComponent>()) {
@@ -38,13 +45,7 @@ void MovementSystem::process(SceneObject &object) {
 		if (movement.behaviour)
 			movement.behaviour(object);
 
-		Ogre::SceneNode *node = object.get<SceneNodeComponent>().node;
 		node->setPosition(node->getPosition() + movement.v * movement.speed);
-
-		if (movement.isMoving) {
-			node->resetOrientation();
-			node->setDirection(-movement.v);
-		}
 
 		movement.v = 0;
 	}

@@ -15,6 +15,8 @@
 
 #include <Ogre.h>
 
+#include "EntityListComponent.hpp"
+#include "MovementComponent.hpp"
 #include "Room.hpp"
 
 Room::Room(const u16 width, const u16 height, std::vector<u16> &&data) : m_width(width), m_height(height) {
@@ -50,6 +52,7 @@ void Room::init(Ogre::SceneManager *sceneManager) {
 				Ogre::Entity* ent = sceneManager->createEntity("Claimed_" + meshID + ".mesh");
 				ent->setMaterialName("Claimed");
 				// ent->setMaterialName("Test");
+				m_walls.emplace_back(ent);
 
 				Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
 				node->setScale(4, 4, 4);
@@ -74,5 +77,34 @@ void Room::init(Ogre::SceneManager *sceneManager) {
 	Ogre::SceneNode* floorNode = sceneManager->getRootSceneNode()->createChildSceneNode();
 	floorNode->setPosition(m_width * tileSize / 2.0 - tileSize / 2.0, 0, m_height * tileSize / 2.0 - tileSize / 2.0);
 	floorNode->attachObject(floor);
+}
+
+void Room::checkCollisions(SceneObject &object) {
+	Ogre::Entity *entity = object.get<EntityListComponent>().getEntity(object.name() + "Body");
+	if(entity && object.has<MovementComponent>()) {
+		for (Ogre::Entity *wall : m_walls) {
+			Ogre::AxisAlignedBox wallHitbox = wall->getWorldBoundingBox();
+			Ogre::AxisAlignedBox entityHitbox = entity->getWorldBoundingBox();
+
+			std::cout << entityHitbox << std::endl;
+
+			auto &v = object.get<MovementComponent>().v;
+			entityHitbox.getMinimum() += v * Ogre::Vector3::UNIT_X;
+			entityHitbox.getMaximum() += v * Ogre::Vector3::UNIT_X;
+
+			if (entityHitbox.intersects(wallHitbox)) {
+				object.get<MovementComponent>().v.x = 0;
+			}
+
+			entityHitbox = entity->getWorldBoundingBox();
+
+			entityHitbox.getMinimum() += v * Ogre::Vector3::UNIT_Z;
+			entityHitbox.getMaximum() += v * Ogre::Vector3::UNIT_Z;
+
+			if (entityHitbox.intersects(wallHitbox)) {
+				object.get<MovementComponent>().v.z = 0;
+			}
+		}
+	}
 }
 

@@ -153,7 +153,7 @@ private:
     {
         // create main model
         mBodyNode = sceneMgr->getRootSceneNode()->createChildSceneNode(Vector3::UNIT_Y * CHAR_HEIGHT);
-        mBodyEnt = sceneMgr->createEntity("SinbadBody", "Sinbad.mesh");
+        mBodyEnt = sceneMgr->createEntity("SinbadBody_", "Sinbad.mesh");
         mBodyNode->attachObject(mBodyEnt);
 
         // create swords and attach to sheath

@@ -25,6 +25,7 @@ void sinbadMovementBehaviour(SceneObject &object);
 
 SceneObject SinbadFactory::create() {
 	SceneObject object("Sinbad");
+	object.set<CollisionComponent>();
 
 	auto &bodyNodeComponent = object.set<SceneNodeComponent>(Ogre::Vector3(20, CHAR_HEIGHT, 20), Ogre::Vector3(0.5, 0.5, 0.5));
 	auto &entityListComponent = object.set<EntityListComponent>(bodyNodeComponent.node);
@@ -32,13 +33,13 @@ SceneObject SinbadFactory::create() {
 	auto &movementComponent = object.set<MovementComponent>(new GamePadMovement);
 	movementComponent.behaviour = &sinbadMovementBehaviour;
 
-	Ogre::Entity *bodyEntity = entityListComponent.addEntity("SinbadBody_", "Sinbad.mesh", true);
+	Ogre::Entity *bodyEntity = entityListComponent.addEntity("SinbadBody", "Sinbad.mesh", true);
 	bodyEntity->getSkeleton()->setBlendMode(Ogre::ANIMBLEND_CUMULATIVE);
 
 	entityListComponent.addEntity("SinbadSword1_", "Sword.mesh");
 	entityListComponent.addEntity("SinbadSword2_", "Sword.mesh");
-	entityListComponent.linkEntityToBone("SinbadSword1_", "SinbadBody_", "Sheath.L");
-	entityListComponent.linkEntityToBone("SinbadSword2_", "SinbadBody_", "Sheath.R");
+	entityListComponent.linkEntityToBone("SinbadSword1_", "SinbadBody", "Sheath.L");
+	entityListComponent.linkEntityToBone("SinbadSword2_", "SinbadBody", "Sheath.R");
 
 	const char *animNames[] = {
 		"IdleBase", "IdleTop", "RunBase", "RunTop", "HandsClosed", "HandsRelaxed", "DrawSwords",

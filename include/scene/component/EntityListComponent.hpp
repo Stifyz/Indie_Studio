@@ -20,6 +20,7 @@
 #include <OgreSceneManager.h>
 #include <OgreSceneNode.h>
 
+#include "Exception.hpp"
 #include "OgreData.hpp"
 
 class EntityListComponent {
@@ -33,6 +34,7 @@ class EntityListComponent {
 			Ogre::Entity *entity = sceneManager->createEntity(name, meshFilename);
 			if (attachObjectToRoot)
 				m_rootNode->attachObject(entity);
+			DEBUG("Entity added:", name);
 			m_entityList.emplace(name, entity);
 			return entity;
 		}
@@ -49,10 +51,15 @@ class EntityListComponent {
 			parentEntity->second->attachObjectToBone(boneName, linkedEntity->second);
 		}
 
-		Ogre::Entity *getEntity(const std::string &name) { return m_entityList.at(name.c_str()); }
+		Ogre::Entity *getEntity(const std::string &name) {
+			auto entity = m_entityList.find(name);
+			if (entity == m_entityList.end())
+				throw EXCEPTION("Entity not found:", name);
+			return entity->second;
+		}
 
 	private:
-		std::map<const char *, Ogre::Entity *> m_entityList;
+		std::map<std::string, Ogre::Entity *> m_entityList;
 
 		Ogre::SceneNode *m_rootNode = nullptr;
 };
