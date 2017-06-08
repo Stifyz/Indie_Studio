@@ -11,19 +11,19 @@
  *
  * =====================================================================================
  */
-#include <iostream>
-
 #include <Ogre.h>
 
 #include "EntityListComponent.hpp"
 #include "MovementComponent.hpp"
+#include "OgreData.hpp"
 #include "Room.hpp"
 
 Room::Room(const u16 width, const u16 height, std::vector<u16> &&data) : m_width(width), m_height(height) {
 	m_data = std::forward<decltype(data)>(data);
 }
 
-void Room::init(Ogre::SceneManager *sceneManager) {
+void Room::init() {
+	Ogre::SceneManager *sceneManager = OgreData::getInstance().sceneManager();
 	const unsigned int tileSize = 10;
 
 	for (u16 y = 0 ; y < m_height ; ++y) {

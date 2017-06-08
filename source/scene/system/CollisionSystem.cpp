@@ -18,13 +18,10 @@
 #include "MovementComponent.hpp"
 
 void CollisionSystem::checkCollision(SceneObject &object1, SceneObject &object2) {
-	bool inCollision = CollisionSystem::inCollision(object1, object2);
+	if(object1.has<CollisionComponent>() && object2.has<CollisionComponent>()) {
+		bool inCollision = CollisionSystem::inCollision(object1, object2);
 
-	if(object1.has<CollisionComponent>()) {
 		object1.get<CollisionComponent>().collisionActions(object1, object2, inCollision);
-	}
-
-	if(object2.has<CollisionComponent>()) {
 		object2.get<CollisionComponent>().collisionActions(object2, object1, inCollision);
 	}
 }
@@ -33,6 +30,7 @@ bool CollisionSystem::inCollision(SceneObject &object1, SceneObject &object2) {
 	Ogre::Entity *entity1 = object1.get<EntityListComponent>().getEntity(object1.name() + "Body");
 	Ogre::Entity *entity2 = object2.get<EntityListComponent>().getEntity(object2.name() + "Body");
 
+	// FIXME: I should use spheres here but how to apply 'v'?
 	Ogre::AxisAlignedBox box1 = entity1->getWorldBoundingBox();
 	Ogre::AxisAlignedBox box2 = entity2->getWorldBoundingBox();
 

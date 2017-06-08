@@ -14,9 +14,10 @@
 #ifndef ROOM_HPP_
 #define ROOM_HPP_
 
+#include <deque>
 #include <vector>
 
-#include <OgreSceneManager.h>
+#include <OgreEntity.h>
 
 #include "IntTypes.hpp"
 #include "SceneObject.hpp"
@@ -25,7 +26,7 @@ class Room {
 	public:
 		Room(const u16 width, const u16 height, std::vector<u16> &&data);
 
-		void init(Ogre::SceneManager *sceneManager);
+		void init();
 
 		void checkCollisions(SceneObject &object);
 
