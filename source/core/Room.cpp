@@ -84,22 +84,21 @@ void Room::checkCollisions(SceneObject &object) {
 	if(entity && object.has<MovementComponent>()) {
 		for (Ogre::Entity *wall : m_walls) {
 			Ogre::AxisAlignedBox wallHitbox = wall->getWorldBoundingBox();
-			Ogre::AxisAlignedBox entityHitbox = entity->getWorldBoundingBox();
-
-			std::cout << entityHitbox << std::endl;
+			Ogre::Sphere entityHitbox = entity->getWorldBoundingSphere();
+			entityHitbox.setRadius(entityHitbox.getRadius() / 2.0);
 
 			auto &v = object.get<MovementComponent>().v;
-			entityHitbox.getMinimum() += v * Ogre::Vector3::UNIT_X;
-			entityHitbox.getMaximum() += v * Ogre::Vector3::UNIT_X;
+			wallHitbox.getMinimum() -= v * Ogre::Vector3::UNIT_X;
+			wallHitbox.getMaximum() -= v * Ogre::Vector3::UNIT_X;
 
 			if (entityHitbox.intersects(wallHitbox)) {
 				object.get<MovementComponent>().v.x = 0;
 			}
 
-			entityHitbox = entity->getWorldBoundingBox();
+			wallHitbox = wall->getWorldBoundingBox();
 
-			entityHitbox.getMinimum() += v * Ogre::Vector3::UNIT_Z;
-			entityHitbox.getMaximum() += v * Ogre::Vector3::UNIT_Z;
+			wallHitbox.getMinimum() -= v * Ogre::Vector3::UNIT_Z;
+			wallHitbox.getMaximum() -= v * Ogre::Vector3::UNIT_Z;
 
 			if (entityHitbox.intersects(wallHitbox)) {
 				object.get<MovementComponent>().v.z = 0;
