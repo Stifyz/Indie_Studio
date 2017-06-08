@@ -62,6 +62,7 @@ TODO
 
 # FIXMEs
 
-• FIXME: _empty_
+• FIXME: Quand un perso glisse sur un mur il est ralenti
+   • TODO: Appliquer la division par `sqrt(2)` après la gestion des collisions
 
 > vim:ft=notes

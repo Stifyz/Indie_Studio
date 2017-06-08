@@ -85,7 +85,7 @@ void Room::checkCollisions(SceneObject &object) {
 		for (Ogre::Entity *wall : m_walls) {
 			Ogre::AxisAlignedBox wallHitbox = wall->getWorldBoundingBox();
 			Ogre::Sphere entityHitbox = entity->getWorldBoundingSphere();
-			entityHitbox.setRadius(entityHitbox.getRadius() / 2.0);
+			entityHitbox.setRadius(entityHitbox.getRadius() / 3.0);
 
 			auto &v = object.get<MovementComponent>().v;
 			wallHitbox.getMinimum() -= v * Ogre::Vector3::UNIT_X;
