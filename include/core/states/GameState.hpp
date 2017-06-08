@@ -20,7 +20,7 @@
 #include "ApplicationState.hpp"
 #include "Scene.hpp"
 
-#include "MyTestRoom.hpp"
+#include "Room.hpp"
 #include "SinbadCharacterController.hpp"
 
 class GameState : public ApplicationState, public Ogre::FrameListener, public OgreBites::InputListener {
@@ -38,7 +38,7 @@ class GameState : public ApplicationState, public Ogre::FrameListener, public Og
 		bool frameRenderingQueued(const Ogre::FrameEvent &evt) override;
 
 	private:
-		MyTestRoom m_room;
+		Room &m_room;
 		SinbadCharacterController m_chara;
 
 		Scene m_scene;

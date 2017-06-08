@@ -19,22 +19,24 @@
 
 #include "Debug.hpp"
 
-#define EXCEPTION(args...) (Exception(__LINE__, _FILE_, args))
+#define EXCEPTION(args...) (System::Exception(__LINE__, _FILE_, args))
 
-class Exception : public std::exception {
-	public:
-		template<typename... Args>
-		Exception(const u16 line, const std::string &filename, Args &&...args) noexcept {
-			m_errorMsg = "at " + filename + ":" + std::to_string(line) + ": ";
-			m_errorMsg += Debug::makeString(std::forward<Args>(args)...);
-		}
+namespace System {
+	class Exception : public std::exception {
+		public:
+			template<typename... Args>
+			Exception(const u16 line, const std::string &filename, Args &&...args) noexcept {
+				m_errorMsg = "at " + filename + ":" + std::to_string(line) + ": ";
+				m_errorMsg += Debug::makeString(std::forward<Args>(args)...);
+			}
 
 		virtual const char *what() const noexcept {
 			return m_errorMsg.c_str();
 		}
 
-	private:
-		std::string m_errorMsg;
-};
+		private:
+			std::string m_errorMsg;
+	};
+}
 
 #endif // EXCEPTION_HPP_

@@ -24,7 +24,7 @@ int main(int argc, char **argv) {
 		app.run();
 		app.closeApp();
 	}
-	catch(const Exception &e) {
+	catch(const System::Exception &e) {
 		std::cerr << "Fatal error " << e.what() << std::endl;
 		return 1;
 	}

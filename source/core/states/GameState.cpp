@@ -16,9 +16,10 @@
 #include "ArcherFactory.hpp"
 #include "GameState.hpp"
 #include "OgreData.hpp"
+#include "ResourceHandler.hpp"
 #include "SinbadFactory.hpp"
 
-GameState::GameState() {
+GameState::GameState() : m_room(ResourceHandler::getInstance().get<Room>("tuto_room")) {
 	Ogre::RenderWindow *renderWindow = OgreData::getInstance().renderWindow();
 	Ogre::SceneManager *sceneManager = OgreData::getInstance().sceneManager();
 

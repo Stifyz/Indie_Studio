@@ -1,7 +1,7 @@
 /*
  * =====================================================================================
  *
- *       Filename:  MyTestRoom.hpp
+ *       Filename:  Room.hpp
  *
  *    Description:
  *
@@ -11,14 +11,26 @@
  *
  * =====================================================================================
  */
-#ifndef MYTESTROOM_HPP_
-#define MYTESTROOM_HPP_
+#ifndef ROOM_HPP_
+#define ROOM_HPP_
+
+#include <vector>
 
 #include <OgreSceneManager.h>
 
-class MyTestRoom {
+#include "IntTypes.hpp"
+
+class Room {
 	public:
+		Room(const u16 width, const u16 height, std::vector<u16> &&data);
+
 		void init(Ogre::SceneManager *sceneManager);
+
+	private:
+		const u16 m_width;
+		const u16 m_height;
+
+		std::vector<u16> m_data;
 };
 
-#endif // MYTESTROOM_HPP_
+#endif // ROOM_HPP_

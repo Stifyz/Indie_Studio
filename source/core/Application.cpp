@@ -16,10 +16,15 @@
 #include "GameState.hpp"
 #include "OgreData.hpp"
 
+#include "RoomLoader.hpp"
+
 Application::Application() : OgreBites::ApplicationContext("Indie Studio") {
 	addInputListener(this);
 
 	GamePad::init(m_keyboardHandler);
+
+	ResourceHandler::setInstance(&m_resourceHandler);
+	ResourceHandler::loadConfigFile<RoomLoader>("res/config/rooms.xml");
 }
 
 void Application::setup() {
@@ -41,8 +46,6 @@ void Application::setup() {
 	OgreData::getInstance().init(root, mWindow, sceneManager, this);
 
 	m_stateStack.push<GameState>();
-
-	ResourceHandler::setInstance(&m_resourceHandler);
 }
 
 void Application::run() {
