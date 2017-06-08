@@ -55,9 +55,6 @@ void MyTestRoom::init(Ogre::SceneManager *sceneManager) {
 					meshID[1] = (x > 0            && y < mapHeight - 1 && mapData[x - 1 + (y + 1) * mapWidth]) ? '1' : '0';
 				}
 
-
-				std::cout << "Processing entity (" << x << ";" << y << ")" << std::endl;
-
 				Ogre::Entity* ent = sceneManager->createEntity("Claimed_" + meshID + ".mesh");
 				ent->setMaterialName("Claimed");
 				// ent->setMaterialName("Test");
@@ -75,30 +72,15 @@ void MyTestRoom::init(Ogre::SceneManager *sceneManager) {
 	light->setPosition(mapWidth * tileSize / 2, 60, mapHeight * tileSize / 2);
 	light->setSpecularColour(Ogre::ColourValue::White);
 
-	// create a floor mesh resource
 	Ogre::MeshManager::getSingleton().createPlane("floor", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
 			Ogre::Plane(Ogre::Vector3::UNIT_Y, 0), mapWidth * tileSize, mapHeight * tileSize, 10, 10, true, 1, 10, 10, Ogre::Vector3::UNIT_Z);
 
-	// create a floor entity, give it a material, and place it at the origin
 	Ogre::Entity* floor = sceneManager->createEntity("Floor", "floor");
 	floor->setMaterialName("Examples/Rockwall");
 	floor->setCastShadows(false);
 
 	Ogre::SceneNode* floorNode = sceneManager->getRootSceneNode()->createChildSceneNode();
-	floorNode->setPosition(round(mapWidth * tileSize / 2.0), 0, round(mapHeight * tileSize / 2.0));
+	floorNode->setPosition(mapWidth * tileSize / 2.0 - tileSize / 2.0, 0, mapHeight * tileSize / 2.0 - tileSize / 2.0);
 	floorNode->attachObject(floor);
-
-	// Ogre::Entity* ent = sceneManager->createEntity("Claimed_10000011.mesh");
-	// ent->setMaterialName("Test");
-	// Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
-	// node->setPosition(10, 0.001, -10);
-	// node->setScale(4, 4, 4);
-	// node->attachObject(ent);
-	//
-	// Ogre::Entity* ent2 = sceneManager->createEntity("Claimed_10001111.mesh");
-	// Ogre::SceneNode* node2 = sceneManager->getRootSceneNode()->createChildSceneNode();
-	// node2->setPosition(0, 0.001, -10);
-	// node2->setScale(4, 4, 4);
-	// node2->attachObject(ent2);
 }
 
