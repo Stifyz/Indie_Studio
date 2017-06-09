@@ -20,7 +20,7 @@
 #include "ResourceHandler.hpp"
 #include "SinbadFactory.hpp"
 
-GameState::GameState() : m_room(ResourceHandler::getInstance().get<Room>("tuto_room")) {
+GameState::GameState() : m_room(ResourceHandler::getInstance().get<Room>("test_room")) {
 	m_room.init();
 
 	SceneObject &sinbad = m_scene.addObject(SinbadFactory::create());

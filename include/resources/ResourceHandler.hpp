@@ -33,7 +33,7 @@ class ResourceHandler {
 		}
 
 		bool has(const std::string &name) {
-			return m_resources.count(name) == 1;
+			return m_resources.find(name) != m_resources.end();
 		}
 
 		template<typename T>
