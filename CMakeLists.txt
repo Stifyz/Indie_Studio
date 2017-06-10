@@ -41,6 +41,14 @@ endif()
 #------------------------------------------------------------------------------
 # Packages
 #------------------------------------------------------------------------------
+# - tinyxml2 (Note: It's a dependency for both Ogre3D and this project)
+#------------------------------------------------------------------------------
+find_package(TinyXml2 REQUIRED)
+
+include_directories(${TINYXML2_INCLUDE_DIRS})
+link_directories(${TINYXML2_LIBRARY_DIRS})
+
+#------------------------------------------------------------------------------
 # - Ogre3D
 #------------------------------------------------------------------------------
 find_package(OGRE 1.10 REQUIRED)
@@ -52,5 +60,6 @@ link_directories(${OGRE_LIBRARY_DIRS})
 # Link options
 #------------------------------------------------------------------------------
 target_link_libraries(${CMAKE_PROJECT_NAME}
+                      ${TINYXML2_LIBRARIES}
                       ${OGRE_LIBRARIES})
 

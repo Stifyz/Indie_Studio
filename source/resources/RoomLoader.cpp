@@ -19,7 +19,7 @@
 void RoomLoader::load(const char *xmlFilename, ResourceHandler &handler) {
 	XMLFile doc(xmlFilename);
 
-	XMLElement *roomElement = doc.FirstChildElement("rooms").FirstChildElement("room").ToElement();
+	tinyxml2::XMLElement *roomElement = doc.FirstChildElement("rooms").FirstChildElement("room").ToElement();
 	while(roomElement) {
 		std::string name = roomElement->Attribute("name");
 
@@ -33,13 +33,13 @@ void RoomLoader::load(const char *xmlFilename, ResourceHandler &handler) {
 void RoomLoader::loadRoom(const std::string &name, ResourceHandler &handler) {
 	XMLFile doc("res/rooms/" + name + ".tmx");
 
-	XMLElement *roomElement = doc.FirstChildElement("map").ToElement();
+	tinyxml2::XMLElement *roomElement = doc.FirstChildElement("map").ToElement();
 
 	u16 width = roomElement->IntAttribute("width");
 	u16 height = roomElement->IntAttribute("height");
 
 	std::vector<u16> data;
-	XMLElement *tileElement = roomElement->FirstChildElement("layer")->FirstChildElement("data")->FirstChildElement("tile");
+	tinyxml2::XMLElement *tileElement = roomElement->FirstChildElement("layer")->FirstChildElement("data")->FirstChildElement("tile");
 	while(tileElement) {
 		s16 tileID = tileElement->IntAttribute("gid") - 1;
 

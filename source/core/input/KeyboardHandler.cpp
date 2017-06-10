@@ -14,33 +14,21 @@
 #include "Debug.hpp"
 #include "IntTypes.hpp"
 #include "KeyboardHandler.hpp"
-#include "XMLFile.hpp"
 
 KeyboardHandler::KeyboardHandler() {
 	XMLFile doc("res/config/keys.xml");
+	tinyxml2::XMLElement *keys = doc.FirstChildElement("keys").ToElement();
 
-	XMLElement *keys = doc.FirstChildElement("keys").ToElement();
+	addKey(keys, GameKey::Left,  "Left");
+	addKey(keys, GameKey::Right, "Right");
+	addKey(keys, GameKey::Up,    "Up");
+	addKey(keys, GameKey::Down,  "Down");
 
-	// Reading keys from names as defined here: https://wiki.libsdl.org/SDL_Keycode
-	auto addKey = [&](GameKey key, const char *name) {
-		XMLElement *keyElement = keys->FirstChildElement(name);
-		m_keys[key] = SDL_GetKeyFromName(keyElement->Attribute("key"));
+	addKey(keys, GameKey::A, "A");
+	addKey(keys, GameKey::B, "B");
 
-		if(m_keys[key] == SDLK_UNKNOWN) {
-			DEBUG("Key '", keyElement->Attribute("key"), "' not recognized");
-		}
-	};
-
-	addKey(GameKey::Left,  "Left");
-	addKey(GameKey::Right, "Right");
-	addKey(GameKey::Up,    "Up");
-	addKey(GameKey::Down,  "Down");
-
-	addKey(GameKey::A, "A");
-	addKey(GameKey::B, "B");
-
-	addKey(GameKey::Start,  "Start");
-	addKey(GameKey::Select, "Select");
+	addKey(keys, GameKey::Start,  "Start");
+	addKey(keys, GameKey::Select, "Select");
 }
 
 bool KeyboardHandler::isKeyPressed(GameKey key) {
@@ -49,4 +37,14 @@ bool KeyboardHandler::isKeyPressed(GameKey key) {
 
 	return keyboardState[keyScancode];
 }
+
+// Reading keys from names as defined here: https://wiki.libsdl.org/SDL_Keycode
+void KeyboardHandler::addKey(tinyxml2::XMLElement *keys, GameKey key, const char *name) {
+	tinyxml2::XMLElement *keyElement = keys->FirstChildElement(name);
+	m_keys[key] = SDL_GetKeyFromName(keyElement->Attribute("key"));
+
+	if(m_keys[key] == SDLK_UNKNOWN) {
+		DEBUG("Key '", keyElement->Attribute("key"), "' not recognized");
+	}
+};
 

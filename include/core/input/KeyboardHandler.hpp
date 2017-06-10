@@ -18,6 +18,7 @@
 
 #include "InputHandler.hpp"
 #include "SDLHeaders.hpp"
+#include "XMLFile.hpp"
 
 class KeyboardHandler : public InputHandler {
 	public:
@@ -26,6 +27,8 @@ class KeyboardHandler : public InputHandler {
 		bool isKeyPressed(GameKey key);
 
 	private:
+		void addKey(tinyxml2::XMLElement *keys, GameKey key, const char *name);
+
 		std::map<GameKey, SDL_Keycode> m_keys;
 };
 
