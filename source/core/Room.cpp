@@ -66,6 +66,7 @@ void Room::init() {
 	light->setType(Ogre::Light::LT_POINT);
 	light->setPosition(m_width * tileSize / 2, 60, m_height * tileSize / 2);
 	light->setSpecularColour(Ogre::ColourValue::White);
+	light->setDiffuseColour(0.55, 0.55, 0.55);
 
 	Ogre::MeshManager::getSingleton().createPlane("floor", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
 			Ogre::Plane(Ogre::Vector3::UNIT_Y, 0), m_width * tileSize, m_height * tileSize, 10, 10, true, 1, 10, 10, Ogre::Vector3::UNIT_Z);

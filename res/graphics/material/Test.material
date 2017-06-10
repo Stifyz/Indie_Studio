@@ -79,6 +79,6 @@ material Test : base_material
 
     set $diffuseCol "0.5082666949669523 0.5082666949669523 0.5082666949669523 1.0"
     set $specularCol "0.18047994375228882 0.18047994375228882 0.18047994375228882 1.0"
-	set $shininess "25.0"
+    set $shininess "25.0"
 }
 
