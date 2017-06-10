@@ -48,7 +48,7 @@ void Application::setup() {
 	OgreData::getInstance().init(root, mWindow, sceneManager, this);
 
 	m_stateStack.push<GameState>();
-	m_stateStack.push<MainMenuState>(m_trayManager);
+	// m_stateStack.push<MainMenuState>(m_trayManager);
 }
 
 void Application::run() {
