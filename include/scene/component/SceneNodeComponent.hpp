@@ -11,18 +11,24 @@
  *
  * =====================================================================================
  */
-
 #ifndef SCENENODECOMPONENT_HPP_
 #define SCENENODECOMPONENT_HPP_
 
-#include <OgreVector3.h>
 #include <OgreSceneManager.h>
 #include <OgreSceneNode.h>
+#include <OgreVector3.h>
 
 #include "OgreData.hpp"
 
 class SceneNodeComponent {
 	public:
+		SceneNodeComponent(Ogre::SceneNode *_node) {
+			Ogre::SceneManager *sceneManager = OgreData::getInstance().sceneManager();
+			node = sceneManager->getRootSceneNode()->createChildSceneNode();
+			// node = _node->createChildSceneNode();
+			node->setAutoTracking(true, _node);
+		}
+
 		SceneNodeComponent(const Ogre::Vector3 &pos, const Ogre::Vector3 &scale = Ogre::Vector3::UNIT_SCALE) {
 			Ogre::SceneManager *sceneManager = OgreData::getInstance().sceneManager();
 			node = sceneManager->getRootSceneNode()->createChildSceneNode(pos);
@@ -32,4 +38,4 @@ class SceneNodeComponent {
 		Ogre::SceneNode *node = nullptr;
 };
 
-#endif // !SCENENODECOMPONENT_HPP_
+#endif // SCENENODECOMPONENT_HPP_

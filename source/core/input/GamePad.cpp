@@ -16,7 +16,7 @@
 
 InputHandler *GamePad::inputHandler = nullptr;
 
-std::map<GameKey, bool> GamePad::keysPressed = {
+std::map<GameKey, bool> GamePad::s_keysPressed = {
 	{GameKey::Left,   false},
 	{GameKey::Right,  false},
 	{GameKey::Up,     false},
@@ -29,7 +29,7 @@ std::map<GameKey, bool> GamePad::keysPressed = {
 	{GameKey::Select, false}
 };
 
-std::map<GameKey, u32> GamePad::lastTimePressed = {
+std::map<GameKey, u32> GamePad::s_lastTimePressed = {
 	{GameKey::Left,     0},
 	{GameKey::Right,    0},
 	{GameKey::Up,       0},
@@ -42,11 +42,11 @@ std::map<GameKey, u32> GamePad::lastTimePressed = {
 	{GameKey::Select,   0}
 };
 
-bool GamePad::m_verticalLock = false;
-bool GamePad::m_horizontalLock = false;
+bool GamePad::s_verticalLock = false;
+bool GamePad::s_horizontalLock = false;
 
-GameKey GamePad::m_verticalValue = GameKey::Down;
-GameKey GamePad::m_horizontalValue = GameKey::Left;
+GameKey GamePad::s_verticalValue = GameKey::Down;
+GameKey GamePad::s_horizontalValue = GameKey::Left;
 
 bool GamePad::isKeyPressed(GameKey key) {
 	if(!inputHandler)
@@ -54,8 +54,8 @@ bool GamePad::isKeyPressed(GameKey key) {
 
 	for (unsigned int i = 0 ; i < 4 ; ++i) {
 		if (key == static_cast<GameKey>(i)) {
-			bool &lock = (i < 2) ? m_horizontalLock : m_verticalLock;
-			GameKey &value = (i < 2) ? m_horizontalValue : m_verticalValue;
+			bool &lock = (i < 2) ? s_horizontalLock : s_verticalLock;
+			GameKey &value = (i < 2) ? s_horizontalValue : s_verticalValue;
 
 			if (lock && value == static_cast<GameKey>(i))
 				return false;
@@ -76,24 +76,24 @@ bool GamePad::isKeyPressed(GameKey key) {
 
 bool GamePad::isKeyPressedOnce(GameKey key) {
 	if(GamePad::isKeyPressed(key)) {
-		if(!keysPressed[key]) {
-			keysPressed[key] = true;
+		if(!s_keysPressed[key]) {
+			s_keysPressed[key] = true;
 			return true;
 		} else {
 			return false;
 		}
 	} else {
-		keysPressed[key] = false;
+		s_keysPressed[key] = false;
 		return false;
 	}
 }
 
 bool GamePad::isKeyPressedWithDelay(GameKey key, u16 delay) {
-	if(GamePad::isKeyPressed(key) && GameClock::getTicks() - lastTimePressed[key] > delay) {
-		lastTimePressed[key] = GameClock::getTicks();
+	if(GamePad::isKeyPressed(key) && GameClock::getTicks() - s_lastTimePressed[key] > delay) {
+		s_lastTimePressed[key] = GameClock::getTicks();
 		return true;
 	} else {
-		if(!GamePad::isKeyPressed(key)) lastTimePressed[key] = 0;
+		if(!GamePad::isKeyPressed(key)) s_lastTimePressed[key] = 0;
 		return false;
 	}
 }

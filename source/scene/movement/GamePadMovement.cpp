@@ -10,45 +10,28 @@
 
 #include "GameKey.hpp"
 #include "GamePadMovement.hpp"
-#include "PositionComponent.hpp"
+#include "MovementComponent.hpp"
 #include "SceneNodeComponent.hpp"
 
 void GamePadMovement::process(SceneObject &object) {
-	Ogre::SceneNode *node = nullptr;
+	auto &movementComponent = object.get<MovementComponent>();
 
-	if (object.has<SceneNodeComponent>())
-		node = object.get<SceneNodeComponent>().node;
-	else
-		return ;
+	if (GamePad::isKeyPressed(GameKey::Left)) {
+		movementComponent.v.x = -1;
+	}
+	else if (GamePad::isKeyPressed(GameKey::Right)) {
+		movementComponent.v.x = 1;
+	}
 
-	Ogre::Quaternion orientation = node->getOrientation();
-	Ogre::Vector3 position = node->getPosition();
+	if (GamePad::isKeyPressed(GameKey::Up)) {
+		movementComponent.v.z = -1;
+	}
+	else if (GamePad::isKeyPressed(GameKey::Down)) {
+		movementComponent.v.z = 1;
+	}
 
-	if (GamePad::isKeyPressedOnce(GameKey::Left))
-	{
-		turnToLeft(orientation);
-		goLeft(position);
+	if (movementComponent.v.x && movementComponent.v.z) {
+		movementComponent.v.x /= 1.41; // La diagonale d'un cube d'unité 1 est sqrt(2) ~= 1.41
+		movementComponent.v.z /= 1.41;
 	}
-	if (GamePad::isKeyPressedOnce(GameKey::Right))
-	{
-		turnToRight(orientation);
-		goRight(position);
-	}
-	if (GamePad::isKeyPressedOnce(GameKey::Up))
-	{
-		turnToUp(orientation);
-		goUp(position);
-	}
-	if (GamePad::isKeyPressedOnce(GameKey::Down))
-	{
-		turnToDown(orientation);
-		goDown(position);
-	}
-	if (GamePad::isKeyPressedOnce(GameKey::Start))
-	{
-		std::cout << "Orientation : " << orientation.w << ';' << orientation.x << ';' << orientation.y << ';' << orientation.z << ';' << std::endl;
-		std::cout << "Position : " << position.x << ';' << position.y << ';' << position.z << ';' << std::endl;
-	}
-	node->setOrientation(orientation);
-	node->setPosition(position);
 }

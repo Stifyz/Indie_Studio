@@ -17,16 +17,20 @@
 #include "CollisionSystem.hpp"
 #include "SceneSystem.hpp"
 
-SceneObject *Scene::player = nullptr;
-
 void Scene::reset() {
 	SceneSystem::reset(m_objects);
 }
 
 void Scene::update() {
 	SceneSystem::update(m_objects);
+}
 
-	if(player) SceneSystem::updateObject(*player);
+void Scene::addCollisionChecker(std::function<void(SceneObject &)> checker) {
+	for (SceneObject &object : m_objects) {
+		if (object.has<CollisionComponent>()) {
+			object.get<CollisionComponent>().addChecker(checker);
+		}
+	}
 }
 
 SceneObject &Scene::addObject(SceneObject &&object) {
@@ -46,10 +50,6 @@ void Scene::checkCollisionsFor(SceneObject &object) {
 		if(&object != &object2) {
 			CollisionSystem::checkCollision(object, object2);
 		}
-	}
-
-	if (player && &object != player) {
-		CollisionSystem::checkCollision(object, *player);
 	}
 }
 

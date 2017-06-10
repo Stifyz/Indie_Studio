@@ -16,10 +16,15 @@
 #include "GameState.hpp"
 #include "OgreData.hpp"
 
+#include "RoomLoader.hpp"
+
 Application::Application() : OgreBites::ApplicationContext("Indie Studio") {
 	addInputListener(this);
 
 	GamePad::init(m_keyboardHandler);
+
+	ResourceHandler::setInstance(&m_resourceHandler);
+	ResourceHandler::loadConfigFile<RoomLoader>("res/config/rooms.xml");
 }
 
 void Application::setup() {
@@ -38,8 +43,6 @@ void Application::setup() {
 	OgreData::getInstance().init(root, mWindow, sceneManager, this);
 
 	m_stateStack.push<GameState>();
-
-	ResourceHandler::setInstance(&m_resourceHandler);
 }
 
 void Application::run() {
@@ -50,8 +53,7 @@ void Application::run() {
 	root->getRenderSystem()->_initRenderTargets();
 	root->clearEventTimes();
 
-	bool isRunning = true;
-	while (isRunning && !root->endRenderingQueued()) {
+	while (!root->endRenderingQueued()) {
 		Ogre::WindowEventUtilities::messagePump();
 
 		m_clock.updateGame([&] {
@@ -60,7 +62,7 @@ void Application::run() {
 
 		m_clock.drawGame([&] {
 			if (mWindow && mWindow->isActive() && !root->renderOneFrame())
-				isRunning = false;
+				getRoot()->queueEndRendering();
 			}
 		);
 	}

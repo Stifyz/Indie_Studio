@@ -14,12 +14,13 @@
 #ifndef ENTITYLISTCOMPONENT_HPP_
 #define ENTITYLISTCOMPONENT_HPP_
 
-#include <OgreEntity.h>
-#include <OgreSceneNode.h>
 #include <map>
+
+#include <OgreEntity.h>
 #include <OgreSceneManager.h>
 #include <OgreSceneNode.h>
 
+#include "Exception.hpp"
 #include "OgreData.hpp"
 
 class EntityListComponent {
@@ -28,11 +29,12 @@ class EntityListComponent {
 			m_rootNode = rootNode;
 		}
 
-		Ogre::Entity *addEntity(const char *name, const char *meshFilename, bool attachObjectToRoot = false) {
+		Ogre::Entity *addEntity(const char *name, const char *meshFilename, const bool attachObjectToRoot = false) {
 			Ogre::SceneManager *sceneManager = OgreData::getInstance().sceneManager();
 			Ogre::Entity *entity = sceneManager->createEntity(name, meshFilename);
 			if (attachObjectToRoot)
 				m_rootNode->attachObject(entity);
+			DEBUG("Entity added:", name);
 			m_entityList.emplace(name, entity);
 			return entity;
 		}
@@ -49,10 +51,17 @@ class EntityListComponent {
 			parentEntity->second->attachObjectToBone(boneName, linkedEntity->second);
 		}
 
+		Ogre::Entity *getEntity(const std::string &name) {
+			auto entity = m_entityList.find(name);
+			if (entity == m_entityList.end())
+				throw EXCEPTION("Entity not found:", name);
+			return entity->second;
+		}
+
 	private:
-		std::map<const char *, Ogre::Entity *> m_entityList;
+		std::map<std::string, Ogre::Entity *> m_entityList;
 
 		Ogre::SceneNode *m_rootNode = nullptr;
 };
 
-#endif // !ENTITYLISTCOMPONENT_HPP_
+#endif // ENTITYLISTCOMPONENT_HPP_

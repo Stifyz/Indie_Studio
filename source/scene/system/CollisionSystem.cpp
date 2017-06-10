@@ -14,44 +14,40 @@
 #include "CollisionSystem.hpp"
 
 #include "CollisionComponent.hpp"
+#include "EntityListComponent.hpp"
 #include "MovementComponent.hpp"
-#include "PositionComponent.hpp"
 
 void CollisionSystem::checkCollision(SceneObject &object1, SceneObject &object2) {
-	bool inCollision = CollisionSystem::inCollision(object1, object2);
+	if(object1.has<CollisionComponent>() && object2.has<CollisionComponent>()) {
+		bool inCollision = CollisionSystem::inCollision(object1, object2);
 
-	if(object1.has<CollisionComponent>()) {
 		object1.get<CollisionComponent>().collisionActions(object1, object2, inCollision);
-	}
-
-	if(object2.has<CollisionComponent>()) {
 		object2.get<CollisionComponent>().collisionActions(object2, object1, inCollision);
 	}
 }
 
 bool CollisionSystem::inCollision(SceneObject &object1, SceneObject &object2) {
-	if(object1.has<PositionComponent>() && object2.has<PositionComponent>()) {
-		auto &position1 = object1.get<PositionComponent>();
-		auto &position2 = object2.get<PositionComponent>();
+	Ogre::Entity *entity1 = object1.get<EntityListComponent>().getEntity(object1.name() + "Body");
+	Ogre::Entity *entity2 = object2.get<EntityListComponent>().getEntity(object2.name() + "Body");
 
-		Ogre::AxisAlignedBox box1 = position1;
-		Ogre::AxisAlignedBox box2 = position2;
+	// FIXME: I should use spheres here but how to apply 'v'?
+	Ogre::AxisAlignedBox box1 = entity1->getWorldBoundingBox();
+	Ogre::AxisAlignedBox box2 = entity2->getWorldBoundingBox();
 
-		if(object1.has<MovementComponent>()) {
-			auto &tmp = object1.get<MovementComponent>().v;
-			box1.getMinimum() += tmp;
-			box1.getMaximum() += tmp;
-		}
+	if(object1.has<MovementComponent>()) {
+		auto &v = object1.get<MovementComponent>().v;
+		box1.getMinimum() += v;
+		box1.getMaximum() += v;
+	}
 
-		if(object2.has<MovementComponent>()) {
-			auto &tmp = object2.get<MovementComponent>().v;
-			box2.getMinimum() += tmp;
-			box2.getMaximum() += tmp;
-		}
+	if(object2.has<MovementComponent>()) {
+		auto &v = object2.get<MovementComponent>().v;
+		box2.getMinimum() += v;
+		box2.getMaximum() += v;
+	}
 
-		if(box1.intersects(box2)) {
-			return true;
-		}
+	if(box1.intersects(box2)) {
+		return true;
 	}
 
 	return false;

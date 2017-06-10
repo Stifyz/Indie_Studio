@@ -1,24 +1,24 @@
 /*
  * =====================================================================================
  *
- *       Filename:  MyTestRoom.hpp
+ *       Filename:  CameraFactory.hpp
  *
  *    Description:
  *
- *        Created:  26/05/2017 14:02:31
+ *        Created:  08/06/2017 20:50:55
  *
  *         Author:  Quentin Bazin, <quent42340@gmail.com>
  *
  * =====================================================================================
  */
-#ifndef MYTESTROOM_HPP_
-#define MYTESTROOM_HPP_
+#ifndef CAMERAFACTORY_HPP_
+#define CAMERAFACTORY_HPP_
 
-#include <OgreSceneManager.h>
+#include "SceneObject.hpp"
 
-class MyTestRoom {
+class CameraFactory {
 	public:
-		void init(Ogre::SceneManager *sceneManager);
+		static SceneObject create(SceneObject &objectToWatch);
 };
 
-#endif // MYTESTROOM_HPP_
+#endif // CAMERAFACTORY_HPP_

@@ -14,6 +14,8 @@
 #ifndef SCENE_HPP_
 #define SCENE_HPP_
 
+#include <functional>
+
 #include "SceneObject.hpp"
 #include "SceneObjectList.hpp"
 
@@ -24,10 +26,8 @@ class Scene {
 
 		SceneObject &addObject(SceneObject &&object);
 
+		void addCollisionChecker(std::function<void(SceneObject &)> checker);
 		void checkCollisionsFor(SceneObject &object);
-
-		static bool isPlayer(const SceneObject &object) { return player == &object; }
-		static SceneObject *player;
 
 		const SceneObjectList &objects() const { return m_objects; }
 

@@ -25,14 +25,14 @@ class CollisionComponent {
 
 	public:
 		void checkCollisions(SceneObject &object) {
-			for(auto &it : m_checkers) {
-				it(object);
+			for(auto &checker : m_checkers) {
+				checker(object);
 			}
 		}
 
 		void collisionActions(SceneObject &object1, SceneObject &object2, bool inCollision) {
-			for(auto &it : m_actions) {
-				it(object1, object2, inCollision);
+			for(auto &action : m_actions) {
+				action(object1, object2, inCollision);
 			}
 		}
 

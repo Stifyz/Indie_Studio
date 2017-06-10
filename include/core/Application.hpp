@@ -32,6 +32,9 @@ class Application : public OgreBites::ApplicationContext, public OgreBites::Inpu
 
 		void run();
 
+		void update();
+		void draw();
+
 		bool keyPressed(const OgreBites::KeyboardEvent& evt) override;
 		bool keyReleased(const OgreBites::KeyboardEvent& evt) override;
 		bool mouseMoved(const OgreBites::MouseMotionEvent& evt) override;
