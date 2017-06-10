@@ -106,6 +106,12 @@ bool Application::mousePressed(const OgreBites::MouseButtonEvent& evt) {
 	return true;
 }
 
+bool Application::mouseReleased(const OgreBites::MouseButtonEvent& evt) {
+	m_trayManager->mouseReleased(evt);
+
+	return true;
+}
+
 bool Application::frameRenderingQueued(const Ogre::FrameEvent &evt) {
 	m_trayManager->frameRendered(evt);
 

@@ -14,11 +14,11 @@
 #include "MainMenuState.hpp"
 #include "OgreData.hpp"
 
-MainMenuState::MainMenuState(OgreBites::TrayManager *trayManager) {
-	trayManager->setListener(this);
+MainMenuState::MainMenuState(OgreBites::TrayManager *trayManager) : m_trayManager(trayManager) {
+	m_trayManager->setListener(this);
 
-	trayManager->createButton(OgreBites::TL_CENTER, "start", "Start Game", 200);
-	trayManager->createButton(OgreBites::TL_CENTER, "quit", "Quit", 200);
+	m_trayManager->createButton(OgreBites::TL_CENTER, "start", "Start Game", 200);
+	m_trayManager->createButton(OgreBites::TL_CENTER, "quit", "Quit", 200);
 }
 
 void MainMenuState::update() {
@@ -26,6 +26,7 @@ void MainMenuState::update() {
 
 void MainMenuState::buttonHit(OgreBites::Button *button) {
 	if (button->getName() == "start") {
+		m_trayManager->destroyAllWidgetsInTray(OgreBites::TrayLocation::TL_CENTER);
 		m_stateStack->pop();
 	}
 	else if (button->getName() == "quit") {

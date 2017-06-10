@@ -39,6 +39,7 @@ class Application : public OgreBites::ApplicationContext, public OgreBites::Inpu
 		bool mouseMoved(const OgreBites::MouseMotionEvent& evt) override;
 		bool mouseWheelRolled(const OgreBites::MouseWheelEvent& evt) override;
 		bool mousePressed(const OgreBites::MouseButtonEvent& evt) override;
+		bool mouseReleased(const OgreBites::MouseButtonEvent& evt) override;
 
 		bool frameRenderingQueued(const Ogre::FrameEvent& evt) override;
 
