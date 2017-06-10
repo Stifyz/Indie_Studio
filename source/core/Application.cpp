@@ -35,10 +35,10 @@ void Application::setup() {
 	sceneManager->addRenderQueueListener(mOverlaySystem);
 	// sceneManager->setAmbientLight(Ogre::ColourValue(0.2, 0.2, 0.2, 1.0));
 
-	m_trayManager = new OgreBites::TrayManager("TrayManager", mWindow);
-	m_trayManager->showFrameStats(OgreBites::TL_BOTTOMLEFT);
-	m_trayManager->showLogo(OgreBites::TL_BOTTOMRIGHT);
-	m_trayManager->showCursor();
+	m_trayManager.reset(new OgreBites::TrayManager("TrayManager", mWindow));
+	m_menu.reset(new MenuState(m_trayManager));
+	m_menu->loadMenu(MenuState::MenuType::Main);
+
 
 	Ogre::RTShader::ShaderGenerator* shadergen = Ogre::RTShader::ShaderGenerator::getSingletonPtr();
 	shadergen->addSceneManager(sceneManager);
