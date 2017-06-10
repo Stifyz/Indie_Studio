@@ -10,12 +10,13 @@
 
 #include "MenuState.hpp"
 
-MenuState::MenuState(OgreBites::TrayManager *trayManager) {
+MenuState::MenuState(std::shared_ptr<OgreBites::TrayManager> trayManager) {
   m_menuManager = trayManager;
 }
 
 void MenuState::loadMenu(const MenuState::MenuType menuType) {
   m_actMenu = menuType;
+  m_menuManager->clearAllTrays();
   (this->*m_menu.at(menuType))();
 }
 
@@ -48,8 +49,10 @@ void MenuState::setHowToPlay() {
 
 bool MenuState::keyPressed(const OgreBites::KeyboardEvent& evt) {
   if (evt.keysym.sym == SDLK_F1) {
-    load_menu(MenuType::Game);
+    loadMenu(MenuType::Game);
+	return true;
   }
+  return false;
 }
 
 bool MenuState::keyReleased(const OgreBites::KeyboardEvent& evt) {
@@ -69,5 +72,5 @@ bool MenuState::mousePressed(const OgreBites::MouseButtonEvent& evt) {
 }
 
 void MenuState::update() {
-  
+
 }

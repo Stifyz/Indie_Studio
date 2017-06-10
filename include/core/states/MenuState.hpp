@@ -11,7 +11,7 @@
 
 class MenuState : public OgreBites::InputListener, public ApplicationState {
 public:
-  MenuState(OgreBites::TrayManager *);
+  MenuState(std::shared_ptr<OgreBites::TrayManager>);
 
   enum MenuType {
     Main,
@@ -33,19 +33,19 @@ public:
   bool mouseMoved(const OgreBites::MouseMotionEvent& evt) override;
   bool mouseWheelRolled(const OgreBites::MouseWheelEvent& evt) override;
   bool mousePressed(const OgreBites::MouseButtonEvent& evt) override;
-  
+
   void	update() override;
 
 private:
   MenuType m_actMenu;
 
-  OgreBites::TrayManager *m_menuManager;
-  
+  std::shared_ptr<OgreBites::TrayManager> m_menuManager = nullptr;
+
   const std::map<MenuType, setMenuFnct> m_menu = {
-    {MenuType::Main, &Ui::setMain},
-    {MenuType::Game, &Ui::setGame},
-    {MenuType::Settings, &Ui::setSettings},
-    {MenuType::HowToPlay, &Ui::setHowToPlay}
+    {MenuType::Main, &MenuState::setMain},
+    {MenuType::Game, &MenuState::setGame},
+    {MenuType::Settings, &MenuState::setSettings},
+    {MenuType::HowToPlay, &MenuState::setHowToPlay}
   };
 };
 
