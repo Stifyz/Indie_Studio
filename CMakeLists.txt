@@ -45,7 +45,7 @@ endif()
 #------------------------------------------------------------------------------
 find_package(TinyXml2 REQUIRED)
 if(NOT TINYXML2_FOUND)
-	message(FATAL_ERROR "Ogre3D is needed to build the project. Please install it correctly.")
+	message(FATAL_ERROR "tinyxml2 is needed to build the project. Please install it correctly.")
 endif()
 
 include_directories(${TINYXML2_INCLUDE_DIRS})
@@ -67,7 +67,7 @@ link_directories(${OGRE_LIBRARY_DIRS})
 #------------------------------------------------------------------------------
 option(BUILD_DOCUMENTATION "Use Doxygen to create the HTML based API documentation" ON)
 if(BUILD_DOCUMENTATION)
-	find_package(Doxygen)
+	find_package(Doxygen REQUIRED)
 	if(NOT DOXYGEN_FOUND)
 		message(FATAL_ERROR "Doxygen is needed to build the documentation. Please install it correctly.")
 	endif()

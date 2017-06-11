@@ -29,11 +29,12 @@ SceneObject CameraFactory::create(SceneObject &objectToWatch) {
 	Ogre::RenderWindow *renderWindow = OgreData::getInstance().renderWindow();
 	renderWindow->addViewport(camera);
 
-	auto &sceneNodeComponent = object.set<SceneNodeComponent>(objectToWatch.get<SceneNodeComponent>().node);
+	auto &sceneNodeComponentToWatch = objectToWatch.get<SceneNodeComponent>();
+	auto &sceneNodeComponent = object.set<SceneNodeComponent>(sceneNodeComponentToWatch.root, sceneNodeComponentToWatch.node);
 	sceneNodeComponent.node->attachObject(camera);
 	// sceneNodeComponent.node->setInheritOrientation(false);
 	// sceneNodeComponent.node->lookAt(Ogre::Vector3(0, 0, -1), Ogre::Node::TS_LOCAL);
-	sceneNodeComponent.node->setPosition(50, 90, 110);
+	sceneNodeComponent.node->setPosition(0, 75, 50);
 	sceneNodeComponent.node->setFixedYawAxis(true);
 
 	return object;

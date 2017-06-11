@@ -28,7 +28,7 @@ TODO
       ◦ TODO: Améliorer la gestion des Factory
    ◦  WIP: Système de gestion de ressource
       ◦ DONE: ResourceHandler et ResourceLoader
-      ◦ TODO: Trouver un format de fichier de configuration (si possible géré par Ogre3D)
+      ◦ DONE: Trouver un format de fichier de configuration (si possible géré par Ogre3D)
       ◦ TODO: Améliorer la construction du système de loaders
    ◦  WIP: Entrées utilisateur
       ◦ DONE: InputHandler et KeyboardHandler
