@@ -29,6 +29,8 @@ class GameState : public ApplicationState {
 		Room &m_room;
 
 		Scene m_scene;
+		SceneObject *m_sinbad = nullptr;
+		SceneObject *m_camera = nullptr;
 };
 
 #endif // GAMESTATE_HPP_

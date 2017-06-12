@@ -45,10 +45,9 @@ void Application::setup() {
 	Ogre::RTShader::ShaderGenerator* shadergen = Ogre::RTShader::ShaderGenerator::getSingletonPtr();
 	shadergen->addSceneManager(sceneManager);
 
-	OgreData::getInstance().init(root, mWindow, sceneManager, this);
+	OgreData::getInstance().init(root, mWindow, sceneManager, this, m_trayManager);
 
 	m_stateStack.push<GameState>();
-	// m_stateStack.push<MainMenuState>(m_trayManager);
 }
 
 void Application::run() {
@@ -72,49 +71,37 @@ void Application::run() {
 }
 
 bool Application::keyPressed(const OgreBites::KeyboardEvent &evt) {
-	if (evt.keysym.sym == SDLK_ESCAPE) {
-		getRoot()->queueEndRendering();
-		return true;
-	}
-
 	m_trayManager->keyPressed(evt);
-
 	return true;
 }
 
 bool Application::keyReleased(const OgreBites::KeyboardEvent& evt) {
 	m_trayManager->keyReleased(evt);
-
 	return true;
 }
 
 bool Application::mouseMoved(const OgreBites::MouseMotionEvent& evt) {
 	m_trayManager->mouseMoved(evt);
-
 	return true;
 }
 
 bool Application::mouseWheelRolled(const OgreBites::MouseWheelEvent& evt) {
 	m_trayManager->mouseWheelRolled(evt);
-
 	return true;
 }
 
 bool Application::mousePressed(const OgreBites::MouseButtonEvent& evt) {
 	m_trayManager->mousePressed(evt);
-
 	return true;
 }
 
 bool Application::mouseReleased(const OgreBites::MouseButtonEvent& evt) {
 	m_trayManager->mouseReleased(evt);
-
 	return true;
 }
 
 bool Application::frameRenderingQueued(const Ogre::FrameEvent &evt) {
 	m_trayManager->frameRendered(evt);
-
 	return true;
 }
 

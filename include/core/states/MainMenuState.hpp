@@ -21,14 +21,11 @@
 
 class MainMenuState : public ApplicationState, public OgreBites::TrayListener {
 	public:
-		MainMenuState(OgreBites::TrayManager *trayManager);
+		MainMenuState();
 
 		void update() override;
 
 		void buttonHit(OgreBites::Button *button) override;
-
-	private:
-		OgreBites::TrayManager *m_trayManager;
 };
 
 #endif // MAINMENUSTATE_HPP_

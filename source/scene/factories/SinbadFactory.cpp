@@ -21,17 +21,16 @@
 #include "SceneNodeComponent.hpp"
 #include "SinbadFactory.hpp"
 
-void sinbadMovementBehaviour(SceneObject &object);
-
 SceneObject SinbadFactory::create() {
 	SceneObject object("Sinbad");
 	object.set<CollisionComponent>();
 
 	auto &bodyNodeComponent = object.set<SceneNodeComponent>(Ogre::Vector3(20, CHAR_HEIGHT, 20), Ogre::Vector3(0.5, 0.5, 0.5));
 	auto &entityListComponent = object.set<EntityListComponent>(bodyNodeComponent.node);
+	bodyNodeComponent.node->setFixedYawAxis(true);
 
 	auto &movementComponent = object.set<MovementComponent>(new GamePadMovement);
-	movementComponent.behaviour = &sinbadMovementBehaviour;
+	movementComponent.behaviour = &SinbadFactory::movementBehaviour;
 
 	Ogre::Entity *bodyEntity = entityListComponent.addEntity("SinbadBody", "Sinbad.mesh", true);
 	bodyEntity->getSkeleton()->setBlendMode(Ogre::ANIMBLEND_CUMULATIVE);
@@ -58,7 +57,12 @@ SceneObject SinbadFactory::create() {
 	return object;
 }
 
-void sinbadMovementBehaviour(SceneObject &object) {
+void SinbadFactory::movementBehaviour(SceneObject &object) {
+	updateAnimation(object);
+	// updateDirection(object);
+}
+
+void SinbadFactory::updateAnimation(SceneObject &object) {
 	auto &movementComponent = object.get<MovementComponent>();
 	auto &animationListComponent = object.get<AnimationListComponent>();
 
@@ -75,5 +79,21 @@ void sinbadMovementBehaviour(SceneObject &object) {
 	}
 
 	oldMovingState = movementComponent.isMoving;
+}
+
+void SinbadFactory::updateDirection(SceneObject &object) {
+	OgreBites::TrayManager *trayManager = OgreData::getInstance().trayManager();
+	Ogre::Ray ray = trayManager->getCursorRay(object.get<Ogre::Camera *>());
+	Ogre::Plane plane(Ogre::Vector3::UNIT_Y, CHAR_HEIGHT / 2);
+
+	std::pair<bool, float> intersection = ray.intersects(plane);
+	if (intersection.first) {
+		Ogre::Vector3 point = ray.getPoint(intersection.second);
+
+		Ogre::SceneNode *root = object.get<SceneNodeComponent>().root;
+		Ogre::SceneNode *node = object.get<SceneNodeComponent>().node;
+		node->resetOrientation();
+		node->setDirection(root->getPosition() - point);
+	}
 }
 

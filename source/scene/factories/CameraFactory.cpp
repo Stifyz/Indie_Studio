@@ -20,8 +20,9 @@
 SceneObject CameraFactory::create(SceneObject &objectToWatch) {
 	SceneObject object("Camera_" + objectToWatch.name());
 
-	Ogre::SceneManager *sceneManager = OgreData::getInstance().sceneManager();
-	Ogre::Camera* camera = sceneManager->createCamera(object.name());
+	auto *sceneManager = OgreData::getInstance().sceneManager();
+	Ogre::Camera *camera = sceneManager->createCamera(object.name());
+	objectToWatch.set<Ogre::Camera *>(camera);
 	camera->setAutoAspectRatio(true);
 	camera->setNearClipDistance(0.1);
 	camera->setFarClipDistance(1000);
