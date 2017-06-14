@@ -13,7 +13,7 @@ material base_material
             ambient 1 1 1 1
             diffuse $diffuseCol
             specular 0 0 0 0
-            emissive 0 0 0 1
+            emissive 0 0 0 0
 
             vertex_program_ref ambient_vs
             {
@@ -71,14 +71,36 @@ material base_material
     }
 }
 
+// examples (require the appropriate [[textures]], all found in the Ogre samples)
+
+material rockwall : base_material
+{
+    set_texture_alias diffuseMap rockwall.tga
+    set_texture_alias specMap rockwall.tga
+    set_texture_alias normalMap rockwall_NH.tga
+}
+
+material metal : base_material
+{
+    set_texture_alias diffuseMap RustedMetal.jpg
+    set_texture_alias specMap RustedMetal.jpg
+}
+
+material ogre : base_material
+{
+    set_texture_alias diffuseMap GreenSkin.jpg
+    set_texture_alias specMap GreenSkin.jpg
+    set_texture_alias normalMap NMHollyBumps.png
+}
+
 material Test : base_material
 {
-    set_texture_alias diffuseMap ClaimedE.png
-    set_texture_alias specMap Claimed_spec.png
-    set_texture_alias normalMap Claimed_nor2.png
+    set_texture_alias diffuseMap Claimedwall2C.png
+    set_texture_alias specMap Claimedwall2_spec3.png
+    set_texture_alias normalMap Claimedwall2_nor3.png
 
-    set $diffuseCol "0.5082666949669523 0.5082666949669523 0.5082666949669523 1.0"
-    set $specularCol "0.18047994375228882 0.18047994375228882 0.18047994375228882 1.0"
+    // set $diffuseCol "0.5082666949669523 0.5082666949669523 0.5082666949669523 1.0"
+    // set $specularCol "0.18047994375228882 0.18047994375228882 0.18047994375228882 1.0"
     set $shininess "25.0"
 }
 

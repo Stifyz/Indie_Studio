@@ -126,3 +126,4 @@ float4 diffuse_ps(
 
     return float4(light0C, diffuseTex.a);
 }
+
