@@ -61,6 +61,15 @@ void Room::init() {
 				// }
 
 				Ogre::Entity* ent = sceneManager->createEntity("Claimed_" + meshID + ".mesh");
+
+				// Ogre::Entity* ent;
+				// try {
+				// 	ent = sceneManager->createEntity("Dirt_" + meshID + ".mesh");
+				// }
+				// catch (...) {
+				// 	ent = sceneManager->createEntity("Dirt_" + meshID + "a" + ".mesh");
+				// }
+
 				// Ogre::Entity* ent = sceneManager->createEntity(pMesh);
 				// ent->setMaterialName("Claimed");
 				ent->setMaterialName("Test2");
