@@ -62,8 +62,8 @@ void Room::init() {
 
 				Ogre::Entity* ent = sceneManager->createEntity("Claimed_" + meshID + ".mesh");
 				// Ogre::Entity* ent = sceneManager->createEntity(pMesh);
-				ent->setMaterialName("Claimed");
-				// ent->setMaterialName("Test");
+				// ent->setMaterialName("Claimed");
+				ent->setMaterialName("Test2");
 				m_walls.emplace_back(ent);
 
 				Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
