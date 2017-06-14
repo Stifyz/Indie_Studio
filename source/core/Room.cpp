@@ -95,7 +95,7 @@ void Room::init() {
 
 	Ogre::Entity* floor = sceneManager->createEntity("Floor", "floor");
 	// floor->setMaterialName("rockwall");
-	floor->setMaterialName("Examples/Rockwall");
+	floor->setMaterialName("Claimed");
 	floor->setCastShadows(false);
 
 	Ogre::SceneNode* floorNode = sceneManager->getRootSceneNode()->createChildSceneNode();

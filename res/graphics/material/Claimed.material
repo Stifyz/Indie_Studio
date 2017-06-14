@@ -5,6 +5,7 @@ material Claimed {
     technique {
         pass Claimed {
             ambient 0.800000011920929 0.800000011920929 0.800000011920929 1.0
+            diffuse 0.8 0.8 0.8 1.0
             // diffuse 0.5227734643634179 0.5227734643634179 0.5227734643634179 1.0
             // specular 0.5899629592895508 0.5899629592895508 0.5899629592895508 1.0 120
             emissive 0.0 0.0 0.0 1.0
@@ -27,7 +28,7 @@ material Claimed {
             // transparent_sorting on
 
             texture_unit  {
-                texture ClaimedE.png
+                texture rockwall.tga
                 tex_address_mode wrap
                 // scale 1.0 1.0
                 // colour_op modulate
