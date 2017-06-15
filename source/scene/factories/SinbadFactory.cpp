@@ -51,8 +51,8 @@ SceneObject SinbadFactory::create() {
 	}
 
 	animationListComponent.enableAnimation("HandsRelaxed");
-	animationListComponent.setActiveAnimation(0, "Dance");
-	// animationListComponent.setActiveAnimation(1, "IdleBase");
+	animationListComponent.setActiveAnimation(0, "IdleTop");
+	animationListComponent.setActiveAnimation(1, "IdleBase");
 
 	return object;
 }
@@ -73,8 +73,8 @@ void SinbadFactory::updateAnimation(SceneObject &object) {
 			animationListComponent.setActiveAnimation(1, "RunBase");
 		}
 		else {
-			animationListComponent.setActiveAnimation(0, "Dance");
-			animationListComponent.setActiveAnimation(1, nullptr);
+			animationListComponent.setActiveAnimation(0, "IdleTop");
+			animationListComponent.setActiveAnimation(1, "IdleBase");
 		}
 	}
 

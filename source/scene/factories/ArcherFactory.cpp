@@ -30,14 +30,14 @@ SceneObject ArcherFactory::create() {
 	Ogre::Entity *bodyEntity = entityListComponent.addEntity("ArcherBody", "Archer.mesh", true);
 	bodyEntity->setMaterialName("Archer");
 
-	const char *animNames[] = {"Attack", "Stand", "Idle", "Hit", "Die"};
+	const char *animNames[] = {"Attack", "Walk", "Idle", "Hit", "Die"};
 
 	auto &animationListComponent = object.set<AnimationListComponent>();
 	for (const char *animName : animNames) {
 		animationListComponent.add(bodyEntity, animName);
 	}
 
-	animationListComponent.setActiveAnimation(0, "Attack");
+	animationListComponent.setActiveAnimation(0, "Walk");
 
 	return object;
 }
