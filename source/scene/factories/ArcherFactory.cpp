@@ -11,6 +11,8 @@
  *
  * =====================================================================================
  */
+#include <functional>
+
 #include "AnimationListComponent.hpp"
 #include "ArcherFactory.hpp"
 #include "ArcherShootBehaviour.hpp"
@@ -30,7 +32,7 @@ SceneObject ArcherFactory::create() {
 	auto &entityListComponent = object.set<EntityListComponent>(bodyNodeComponent.node);
 
 	auto &behaviourComponent = object.set<BehaviourComponent>();
-	behaviourComponent.addBehaviour<ArcherShootBehaviour>("Shoot");
+	auto &archerShootBehaviour = behaviourComponent.addBehaviour<ArcherShootBehaviour>("Shoot");
 
 	auto &movementComponent = object.set<MovementComponent>(new GamePadMovement);
 	movementComponent.behaviour.reset(new PlayerMovementBehaviour({"Idle"}, {"Walk"}));
@@ -41,10 +43,12 @@ SceneObject ArcherFactory::create() {
 	const char *animNames[] = {"Attack", "Walk", "Idle", "Hit", "Die"};
 
 	auto &animationListComponent = object.set<AnimationListComponent>();
+	animationListComponent.setAnimationEndCallback(std::bind(&ArcherShootBehaviour::animationEndCallback, &archerShootBehaviour, std::placeholders::_1, std::placeholders::_2));
 	for (const char *animName : animNames) {
 		animationListComponent.add(bodyEntity, animName);
 	}
 
+	animationListComponent.setLoop("Attack", false);
 	animationListComponent.setActiveAnimation(0, "Idle");
 
 	return object;

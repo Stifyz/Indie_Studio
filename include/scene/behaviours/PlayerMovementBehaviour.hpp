@@ -23,10 +23,11 @@ class PlayerMovementBehaviour : public Behaviour {
 		PlayerMovementBehaviour(AnimList &&idleAnimations, AnimList &&walkAnimations);
 
 		void update(SceneObject &object) override;
+
+	private:
 		void updateAnimation(SceneObject &object);
 		void updateDirection(SceneObject &object);
 
-	private:
 		bool m_oldMovingState = false;
 
 		AnimList m_idleAnimations;

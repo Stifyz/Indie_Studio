@@ -30,8 +30,8 @@ void SceneSystem::resetObject(SceneObject &object) {
 
 void SceneSystem::updateObject(SceneObject &object) {
 	AnimationSystem::process(object);
-	MovementSystem::process(object);
 	BehaviourSystem::process(object);
+	MovementSystem::process(object);
 
 	if(object.has<SceneObjectList>()) {
 		update(object.get<SceneObjectList>());

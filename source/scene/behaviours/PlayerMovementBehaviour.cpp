@@ -34,11 +34,20 @@ void PlayerMovementBehaviour::updateAnimation(SceneObject &object) {
 
 	if (m_oldMovingState != movementComponent.isMoving) {
 		const AnimList &activeAnimList = (movementComponent.isMoving) ? m_walkAnimations : m_idleAnimations;
-		for (unsigned int i = 0 ; i < activeAnimList.size() ; ++i)
-			animationListComponent.setActiveAnimation(i, activeAnimList[i]);
-	}
+		const AnimList &inactiveAnimList = (!movementComponent.isMoving) ? m_walkAnimations : m_idleAnimations;
 
-	m_oldMovingState = movementComponent.isMoving;
+		unsigned int editedAnims = 0;
+		for (unsigned int i = 0 ; i < activeAnimList.size() ; ++i) {
+			const char *activeAnimation = animationListComponent.getActiveAnimation(i);
+			if (activeAnimation && std::string(activeAnimation) == inactiveAnimList[i]) {
+				animationListComponent.setActiveAnimation(i, activeAnimList[i]);
+				++editedAnims;
+			}
+		}
+
+		if (editedAnims)
+			m_oldMovingState = movementComponent.isMoving;
+	}
 }
 
 void PlayerMovementBehaviour::updateDirection(SceneObject &object) {
