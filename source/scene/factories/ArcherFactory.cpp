@@ -13,6 +13,8 @@
  */
 #include "AnimationListComponent.hpp"
 #include "ArcherFactory.hpp"
+#include "ArcherShootBehaviour.hpp"
+#include "BehaviourComponent.hpp"
 #include "CollisionComponent.hpp"
 #include "EntityListComponent.hpp"
 #include "GamePadMovement.hpp"
@@ -26,6 +28,9 @@ SceneObject ArcherFactory::create() {
 
 	auto &bodyNodeComponent = object.set<SceneNodeComponent>(Ogre::Vector3(30, ARCHER_HEIGHT, 30), Ogre::Vector3(0.3, 0.3, 0.3));
 	auto &entityListComponent = object.set<EntityListComponent>(bodyNodeComponent.node);
+
+	auto &behaviourComponent = object.set<BehaviourComponent>();
+	behaviourComponent.addBehaviour<ArcherShootBehaviour>("Shoot");
 
 	auto &movementComponent = object.set<MovementComponent>(new GamePadMovement);
 	movementComponent.behaviour.reset(new PlayerMovementBehaviour({"Idle"}, {"Walk"}));

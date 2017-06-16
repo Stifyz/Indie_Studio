@@ -12,6 +12,7 @@
  * =====================================================================================
  */
 #include "AnimationSystem.hpp"
+#include "BehaviourSystem.hpp"
 #include "MovementSystem.hpp"
 #include "SceneSystem.hpp"
 
@@ -23,12 +24,14 @@ void SceneSystem::update(SceneObjectList &objectList) {
 	for(auto &object : objectList) updateObject(object);
 }
 
-void SceneSystem::resetObject(SceneObject &) {
+void SceneSystem::resetObject(SceneObject &object) {
+	BehaviourSystem::reset(object);
 }
 
 void SceneSystem::updateObject(SceneObject &object) {
 	AnimationSystem::process(object);
 	MovementSystem::process(object);
+	BehaviourSystem::process(object);
 
 	if(object.has<SceneObjectList>()) {
 		update(object.get<SceneObjectList>());

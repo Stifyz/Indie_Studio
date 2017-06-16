@@ -22,8 +22,7 @@ class PlayerMovementBehaviour : public Behaviour {
 	public:
 		PlayerMovementBehaviour(AnimList &&idleAnimations, AnimList &&walkAnimations);
 
-		void action(SceneObject &object) override;
-
+		void update(SceneObject &object) override;
 		void updateAnimation(SceneObject &object);
 		void updateDirection(SceneObject &object);
 

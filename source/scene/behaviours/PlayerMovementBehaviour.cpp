@@ -23,7 +23,7 @@ PlayerMovementBehaviour::PlayerMovementBehaviour(AnimList &&idleAnimations, Anim
 {
 }
 
-void PlayerMovementBehaviour::action(SceneObject &object) {
+void PlayerMovementBehaviour::update(SceneObject &object) {
 	updateAnimation(object);
 	// updateDirection(object);
 }
@@ -47,7 +47,7 @@ void PlayerMovementBehaviour::updateDirection(SceneObject &object) {
 
 	OgreBites::TrayManager *trayManager = OgreData::getInstance().trayManager();
 	Ogre::Ray ray = trayManager->getCursorRay(object.get<Ogre::Camera *>());
-	Ogre::Plane plane(Ogre::Vector3::UNIT_Y, bodyEntityBoundingBox.getMaximum().y / 2);
+	Ogre::Plane plane(Ogre::Vector3::UNIT_Y, bodyEntityBoundingBox.getMaximum().y / 2.0f);
 
 	std::pair<bool, float> intersection = ray.intersects(plane);
 	if (intersection.first) {

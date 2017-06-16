@@ -18,7 +18,7 @@
 
 class Behaviour {
 	public:
-		virtual void action(SceneObject &object) = 0;
+		virtual void update(SceneObject &object) = 0;
 };
 
 #endif // BEHAVIOUR_HPP_

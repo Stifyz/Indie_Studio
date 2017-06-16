@@ -126,7 +126,7 @@ class AnimationListComponent {
 		}
 
 	private:
-		std::map<const char *, Animation> m_animationList;
+		std::map<std::string, Animation> m_animationList;
 
 		std::map<unsigned int, const char *> m_activeAnimations;
 };
