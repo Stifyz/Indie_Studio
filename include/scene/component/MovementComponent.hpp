@@ -14,12 +14,11 @@
 #ifndef MOVEMENTCOMPONENT_HPP_
 #define MOVEMENTCOMPONENT_HPP_
 
-#include <functional>
 #include <memory>
 
+#include "Behaviour.hpp"
 #include "Movement.hpp"
 #include "OgreVector3.h"
-// #include "Vector2.hpp"
 
 class MovementComponent {
 	public:
@@ -34,9 +33,9 @@ class MovementComponent {
 
 		float speed = 0.08f;
 
-		std::unique_ptr<Movement> movement;
+		std::unique_ptr<Movement> movement{nullptr};
 
-		std::function<void(SceneObject &)> behaviour;
+		std::unique_ptr<Behaviour> behaviour{nullptr};
 };
 
 #endif // MOVEMENTCOMPONENT_HPP_

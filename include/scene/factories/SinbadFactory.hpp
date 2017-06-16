@@ -21,12 +21,6 @@
 class SinbadFactory {
 	public:
 		static SceneObject create();
-
-	private:
-		static void movementBehaviour(SceneObject &object);
-
-		static void updateAnimation(SceneObject &object);
-		static void updateDirection(SceneObject &object);
 };
 
 #endif // SINBADFACTORY_HPP_

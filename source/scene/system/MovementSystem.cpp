@@ -44,7 +44,7 @@ void MovementSystem::process(SceneObject &object) {
 		movement.isMoving = (movement.v.x || movement.v.z) ? true : false;
 
 		if (movement.behaviour)
-			movement.behaviour(object);
+			movement.behaviour->action(object);
 
 		root->setPosition(root->getPosition() + movement.v * movement.speed);
 

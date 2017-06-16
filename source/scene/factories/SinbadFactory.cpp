@@ -18,6 +18,7 @@
 #include "EntityListComponent.hpp"
 #include "GamePadMovement.hpp"
 #include "MovementComponent.hpp"
+#include "PlayerMovementBehaviour.hpp"
 #include "SceneNodeComponent.hpp"
 #include "SinbadFactory.hpp"
 
@@ -30,7 +31,7 @@ SceneObject SinbadFactory::create() {
 	bodyNodeComponent.node->setFixedYawAxis(true);
 
 	auto &movementComponent = object.set<MovementComponent>(new GamePadMovement);
-	movementComponent.behaviour = &SinbadFactory::movementBehaviour;
+	movementComponent.behaviour.reset(new PlayerMovementBehaviour({"IdleTop", "IdleBase"}, {"RunTop", "RunBase"}));
 
 	Ogre::Entity *bodyEntity = entityListComponent.addEntity("SinbadBody", "Sinbad.mesh", true);
 	bodyEntity->getSkeleton()->setBlendMode(Ogre::ANIMBLEND_CUMULATIVE);
@@ -55,45 +56,5 @@ SceneObject SinbadFactory::create() {
 	animationListComponent.setActiveAnimation(1, "IdleBase");
 
 	return object;
-}
-
-void SinbadFactory::movementBehaviour(SceneObject &object) {
-	updateAnimation(object);
-	// updateDirection(object);
-}
-
-void SinbadFactory::updateAnimation(SceneObject &object) {
-	auto &movementComponent = object.get<MovementComponent>();
-	auto &animationListComponent = object.get<AnimationListComponent>();
-
-	static bool oldMovingState = false;
-	if (oldMovingState != movementComponent.isMoving) {
-		if (movementComponent.isMoving) {
-			animationListComponent.setActiveAnimation(0, "RunTop");
-			animationListComponent.setActiveAnimation(1, "RunBase");
-		}
-		else {
-			animationListComponent.setActiveAnimation(0, "IdleTop");
-			animationListComponent.setActiveAnimation(1, "IdleBase");
-		}
-	}
-
-	oldMovingState = movementComponent.isMoving;
-}
-
-void SinbadFactory::updateDirection(SceneObject &object) {
-	OgreBites::TrayManager *trayManager = OgreData::getInstance().trayManager();
-	Ogre::Ray ray = trayManager->getCursorRay(object.get<Ogre::Camera *>());
-	Ogre::Plane plane(Ogre::Vector3::UNIT_Y, CHAR_HEIGHT / 2);
-
-	std::pair<bool, float> intersection = ray.intersects(plane);
-	if (intersection.first) {
-		Ogre::Vector3 point = ray.getPoint(intersection.second);
-
-		Ogre::SceneNode *root = object.get<SceneNodeComponent>().root;
-		Ogre::SceneNode *node = object.get<SceneNodeComponent>().node;
-		node->resetOrientation();
-		node->setDirection(root->getPosition() - point);
-	}
 }
 

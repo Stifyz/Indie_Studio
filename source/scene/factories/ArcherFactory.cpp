@@ -17,15 +17,18 @@
 #include "EntityListComponent.hpp"
 #include "GamePadMovement.hpp"
 #include "MovementComponent.hpp"
+#include "PlayerMovementBehaviour.hpp"
 #include "SceneNodeComponent.hpp"
 
 SceneObject ArcherFactory::create() {
 	SceneObject object("Archer");
-	object.set<MovementComponent>(new GamePadMovement);
 	object.set<CollisionComponent>();
 
 	auto &bodyNodeComponent = object.set<SceneNodeComponent>(Ogre::Vector3(30, ARCHER_HEIGHT, 30), Ogre::Vector3(0.3, 0.3, 0.3));
 	auto &entityListComponent = object.set<EntityListComponent>(bodyNodeComponent.node);
+
+	auto &movementComponent = object.set<MovementComponent>(new GamePadMovement);
+	movementComponent.behaviour.reset(new PlayerMovementBehaviour({"Idle"}, {"Walk"}));
 
 	Ogre::Entity *bodyEntity = entityListComponent.addEntity("ArcherBody", "Archer.mesh", true);
 	bodyEntity->setMaterialName("Archer");
@@ -37,7 +40,7 @@ SceneObject ArcherFactory::create() {
 		animationListComponent.add(bodyEntity, animName);
 	}
 
-	animationListComponent.setActiveAnimation(0, "Walk");
+	animationListComponent.setActiveAnimation(0, "Idle");
 
 	return object;
 }
