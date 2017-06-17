@@ -22,7 +22,7 @@ void DiabolousAttackBehaviour::update(SceneObject &object) {
      	if (GamePad::isKeyPressed(GameKey::A) && animationListComponent.isAnimationFinished("Attack")) {
 		if (animationListComponent.getActiveAnimation(0) != std::string("Attack"))
 			m_previousActiveAnimation = animationListComponent.getActiveAnimation(0);
-		animationListComponent.setActiveAnimation(0, "Attack", true);
+		animationListComponent.setActiveAnimation(0, "Attack", true)->timer.setTime(6);
 	}
 }
 
