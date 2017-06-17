@@ -16,16 +16,21 @@
 
 #include <OgreVector2.h>
 
-namespace Mouse {
-	enum class Button {
-		Left   = 1,
-		Middle = 2,
-		Right  = 3
-	};
+class Mouse {
+	public:
+		enum class Button {
+			Left   = 1,
+			Middle = 2,
+			Right  = 3
+		};
 
-	bool isButtonPressed(Button button);
+		static bool isButtonPressed(const Button button);
+		static bool isButtonPressedOnce(const Button button);
 
-	Ogre::Vector2 getPosition();
+		static Ogre::Vector2 getPosition();
+
+	private:
+		static std::map<Button, bool> s_buttonsPressed;
 };
 
 #endif // MOUSE_HPP_

@@ -24,9 +24,9 @@ class GamePad {
 	public:
 		static void init(InputHandler &inputHandler) { s_inputHandler = &inputHandler; }
 
-		static bool isKeyPressed(GameKey key);
-		static bool isKeyPressedOnce(GameKey key);
-		static bool isKeyPressedWithDelay(GameKey key, u16 delay);
+		static bool isKeyPressed(const GameKey key);
+		static bool isKeyPressedOnce(const GameKey key);
+		static bool isKeyPressedWithDelay(const GameKey key, const u16 delay);
 
 	private:
 		static InputHandler *s_inputHandler;

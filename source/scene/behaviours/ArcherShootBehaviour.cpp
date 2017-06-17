@@ -13,11 +13,11 @@
  */
 #include "AnimationListComponent.hpp"
 #include "ArcherShootBehaviour.hpp"
-#include "GamePad.hpp"
+#include "Mouse.hpp"
 
 void ArcherShootBehaviour::update(SceneObject &object) {
 	auto &animationListComponent = object.get<AnimationListComponent>();
-	if (GamePad::isKeyPressedOnce(GameKey::A) && animationListComponent.isAnimationFinished("Attack")) {
+	if (Mouse::isButtonPressedOnce(Mouse::Button::Left) && animationListComponent.isAnimationFinished("Attack")) {
 		m_previousActiveAnimation = animationListComponent.getActiveAnimation(0);
 		animationListComponent.setActiveAnimation(0, "Attack", true);
 	}

@@ -115,14 +115,14 @@ class AnimationListComponent {
 					continue;
 
 				Animation &anim = m_animationList.at(it.second);
-				if (anim.state->getTimePosition() >= anim.state->getLength() && m_animationEndCallback)
-					m_animationEndCallback(*this, anim);
-
 				if (anim.timer.isStarted()) {
 					anim.state->addTime(anim.timer.time() / 1000.0);
 					anim.timer.reset();
 				}
 				anim.timer.start();
+
+				if (anim.state->getTimePosition() >= anim.state->getLength() && m_animationEndCallback)
+					m_animationEndCallback(*this, anim);
 			}
 		}
 

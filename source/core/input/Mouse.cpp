@@ -15,8 +15,28 @@
 #include "Mouse.hpp"
 #include "SDLHeaders.hpp"
 
+std::map<Mouse::Button, bool> Mouse::s_buttonsPressed = {
+	{Mouse::Button::Left,   false},
+	{Mouse::Button::Middle, false},
+	{Mouse::Button::Right,  false}
+};
+
 bool Mouse::isButtonPressed(Button button) {
 	return SDL_GetMouseState(NULL, NULL) & static_cast<u32>(button);
+}
+
+bool Mouse::isButtonPressedOnce(Button button) {
+	if(Mouse::isButtonPressed(button)) {
+		if(!s_buttonsPressed[button]) {
+			s_buttonsPressed[button] = true;
+			return true;
+		} else {
+			return false;
+		}
+	} else {
+		s_buttonsPressed[button] = false;
+		return false;
+	}
 }
 
 Ogre::Vector2 Mouse::getPosition() {
