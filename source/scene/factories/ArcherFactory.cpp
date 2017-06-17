@@ -45,7 +45,8 @@ SceneObject ArcherFactory::create() {
 	auto &animationListComponent = object.set<AnimationListComponent>();
 	animationListComponent.setAnimationEndCallback(std::bind(&ArcherShootBehaviour::animationEndCallback, &archerShootBehaviour, std::placeholders::_1, std::placeholders::_2));
 	for (const char *animName : animNames) {
-		animationListComponent.add(bodyEntity, animName);
+		Animation &anim = animationListComponent.add(bodyEntity, animName);
+		anim.speed = (anim.name != "Attack") ? 1.75f : 4.0f;
 	}
 
 	animationListComponent.setLoop("Attack", false);
