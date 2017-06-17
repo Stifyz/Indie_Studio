@@ -12,11 +12,11 @@
  * =====================================================================================
  */
 #include "AnimationListComponent.hpp"
-#include "ArcherShootBehaviour.hpp"
+#include "BerserkerAttackBehaviour.hpp"
 #include "GamePad.hpp"
 // #include "Mouse.hpp"
 
-void ArcherShootBehaviour::update(SceneObject &object) {
+void BerserkerAttackBehaviour::update(SceneObject &object) {
 	auto &animationListComponent = object.get<AnimationListComponent>();
 	// if (Mouse::isButtonPressed(Mouse::Button::Left) && animationListComponent.isAnimationFinished("Attack")) {
 	if (GamePad::isKeyPressed(GameKey::A) && animationListComponent.isAnimationFinished("Attack")) {
@@ -26,7 +26,7 @@ void ArcherShootBehaviour::update(SceneObject &object) {
 	}
 }
 
-void ArcherShootBehaviour::animationEndCallback(AnimationListComponent &animationListComponent, const Animation &animation) const {
+void BerserkerAttackBehaviour::animationEndCallback(AnimationListComponent &animationListComponent, const Animation &animation) const {
 	if (animation.name == "Attack") {
 		animationListComponent.setActiveAnimation(0, m_previousActiveAnimation);
 	}

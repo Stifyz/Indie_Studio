@@ -118,7 +118,7 @@ class AnimationListComponent {
 					continue;
 
 				Animation &anim = m_animationList.at(it.second);
-				if (anim.timer.isStarted()) {
+				if (anim.timer.isStarted() || anim.timer.time()) {
 					anim.state->addTime(anim.timer.time() / 1000.0 * anim.speed);
 					anim.timer.reset();
 				}

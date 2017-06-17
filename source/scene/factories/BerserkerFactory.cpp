@@ -1,7 +1,7 @@
 /*
  * =====================================================================================
  *
- *       Filename:  ArcherFactory.cpp
+ *       Filename:  BerserkerFactory.cpp
  *
  *    Description:
  *
@@ -14,8 +14,8 @@
 #include <functional>
 
 #include "AnimationListComponent.hpp"
-#include "ArcherFactory.hpp"
-#include "ArcherShootBehaviour.hpp"
+#include "BerserkerFactory.hpp"
+#include "BerserkerAttackBehaviour.hpp"
 #include "BehaviourComponent.hpp"
 #include "CollisionComponent.hpp"
 #include "EntityListComponent.hpp"
@@ -24,18 +24,18 @@
 #include "PlayerMovementBehaviour.hpp"
 #include "SceneNodeComponent.hpp"
 
-SceneObject ArcherFactory::create() {
-	SceneObject object("Archer");
+SceneObject BerserkerFactory::create() {
+	SceneObject object("Berserker");
 	object.set<CollisionComponent>();
 
-	auto &bodyNodeComponent = object.set<SceneNodeComponent>(Ogre::Vector3(30, ARCHER_HEIGHT, 30), Ogre::Vector3(0.3, 0.3, 0.3));
+	auto &bodyNodeComponent = object.set<SceneNodeComponent>(Ogre::Vector3(60, BERSERKER_HEIGHT, 30), Ogre::Vector3(0.3, 0.3, 0.3));
 	auto &entityListComponent = object.set<EntityListComponent>(bodyNodeComponent.node);
 
-	Ogre::Entity *bodyEntity = entityListComponent.addEntity("ArcherBody", "Archer.mesh", true);
-	bodyEntity->setMaterialName("Archer");
+	Ogre::Entity *bodyEntity = entityListComponent.addEntity("BerserkerBody", "Berserker.mesh", true);
+	bodyEntity->setMaterialName("Berserker");
 
 	auto &behaviourComponent = object.set<BehaviourComponent>();
-	auto &archerShootBehaviour = behaviourComponent.addBehaviour<ArcherShootBehaviour>("Shoot");
+       	auto &berserkerAttackBehaviour = behaviourComponent.addBehaviour<BerserkerAttackBehaviour>("Fight");
 
 	auto &movementComponent = object.set<MovementComponent>(new GamePadMovement);
 	movementComponent.behaviour.reset(new PlayerMovementBehaviour({"Idle"}, {"Walk"}));
@@ -43,10 +43,10 @@ SceneObject ArcherFactory::create() {
 	const char *animNames[] = {"Attack", "Walk", "Idle", "Hit", "Die"};
 
 	auto &animationListComponent = object.set<AnimationListComponent>();
-	animationListComponent.setAnimationEndCallback(std::bind(&ArcherShootBehaviour::animationEndCallback, &archerShootBehaviour, std::placeholders::_1, std::placeholders::_2));
+       	animationListComponent.setAnimationEndCallback(std::bind(&BerserkerAttackBehaviour::animationEndCallback, &berserkerAttackBehaviour, std::placeholders::_1, std::placeholders::_2));
 	for (const char *animName : animNames) {
 		Animation &anim = animationListComponent.add(bodyEntity, animName);
-		anim.speed = (anim.name != "Attack") ? 1.75f : 4.0f;
+       	anim.speed = (anim.name != "Attack") ? 1.75f : 1.0f;
 	}
 
 	animationListComponent.setLoop("Attack", false);

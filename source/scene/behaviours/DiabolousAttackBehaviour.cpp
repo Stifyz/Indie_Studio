@@ -12,21 +12,21 @@
  * =====================================================================================
  */
 #include "AnimationListComponent.hpp"
-#include "ArcherShootBehaviour.hpp"
+#include "DiabolousAttackBehaviour.hpp"
 #include "GamePad.hpp"
 // #include "Mouse.hpp"
 
-void ArcherShootBehaviour::update(SceneObject &object) {
+void DiabolousAttackBehaviour::update(SceneObject &object) {
 	auto &animationListComponent = object.get<AnimationListComponent>();
-	// if (Mouse::isButtonPressed(Mouse::Button::Left) && animationListComponent.isAnimationFinished("Attack")) {
-	if (GamePad::isKeyPressed(GameKey::A) && animationListComponent.isAnimationFinished("Attack")) {
+	//        if (Mouse::isButtonPressed(Mouse::Button::Left) && animationListComponent.isAnimationFinished("Attack")) {
+     	if (GamePad::isKeyPressed(GameKey::A) && animationListComponent.isAnimationFinished("Attack")) {
 		if (animationListComponent.getActiveAnimation(0) != std::string("Attack"))
 			m_previousActiveAnimation = animationListComponent.getActiveAnimation(0);
-		animationListComponent.setActiveAnimation(0, "Attack", true)->timer.setTime(6);
+		animationListComponent.setActiveAnimation(0, "Attack", true);
 	}
 }
 
-void ArcherShootBehaviour::animationEndCallback(AnimationListComponent &animationListComponent, const Animation &animation) const {
+void DiabolousAttackBehaviour::animationEndCallback(AnimationListComponent &animationListComponent, const Animation &animation) const {
 	if (animation.name == "Attack") {
 		animationListComponent.setActiveAnimation(0, m_previousActiveAnimation);
 	}
