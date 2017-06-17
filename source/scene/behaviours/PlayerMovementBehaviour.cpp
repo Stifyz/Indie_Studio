@@ -40,7 +40,7 @@ void PlayerMovementBehaviour::updateAnimation(SceneObject &object) {
 		for (unsigned int i = 0 ; i < activeAnimList.size() ; ++i) {
 			const char *activeAnimation = animationListComponent.getActiveAnimation(i);
 			if (activeAnimation && std::string(activeAnimation) == inactiveAnimList[i]) {
-				animationListComponent.setActiveAnimation(i, activeAnimList[i], false, true);
+				animationListComponent.setActiveAnimation(i, activeAnimList[i]);
 				++editedAnims;
 			}
 		}

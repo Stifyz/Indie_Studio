@@ -70,14 +70,12 @@ class AnimationListComponent {
 			animIterator->second.state->setEnabled(false);
 		}
 
-		Animation *setActiveAnimation(const unsigned int id, const char *animName, const bool reset = false, const bool resetOld = false) {
+		Animation *setActiveAnimation(const unsigned int id, const char *animName, const bool reset = false) {
 			auto activeAnimIterator = m_activeAnimations.find(id);
 			if (activeAnimIterator != m_activeAnimations.end() && activeAnimIterator->second) {
 				auto oldAnimIterator = m_animationList.find(activeAnimIterator->second);
 				oldAnimIterator->second.fadingIn = false;
 				oldAnimIterator->second.fadingOut = true;
-				if (resetOld)
-					oldAnimIterator->second.state->setTimePosition(0);
 			}
 
 			m_activeAnimations[id] = animName;

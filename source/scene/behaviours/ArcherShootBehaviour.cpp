@@ -13,12 +13,15 @@
  */
 #include "AnimationListComponent.hpp"
 #include "ArcherShootBehaviour.hpp"
-#include "Mouse.hpp"
+#include "GamePad.hpp"
+// #include "Mouse.hpp"
 
 void ArcherShootBehaviour::update(SceneObject &object) {
 	auto &animationListComponent = object.get<AnimationListComponent>();
-	if (Mouse::isButtonPressedOnce(Mouse::Button::Left) && animationListComponent.isAnimationFinished("Attack")) {
-		m_previousActiveAnimation = animationListComponent.getActiveAnimation(0);
+	// if (Mouse::isButtonPressed(Mouse::Button::Left) && animationListComponent.isAnimationFinished("Attack")) {
+	if (GamePad::isKeyPressed(GameKey::A) && animationListComponent.isAnimationFinished("Attack")) {
+		if (animationListComponent.getActiveAnimation(0) != std::string("Attack"))
+			m_previousActiveAnimation = animationListComponent.getActiveAnimation(0);
 		animationListComponent.setActiveAnimation(0, "Attack", true);
 	}
 }
