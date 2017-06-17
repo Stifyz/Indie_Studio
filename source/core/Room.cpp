@@ -24,7 +24,7 @@ Room::Room(const u16 width, const u16 height, std::vector<u16> &&data) : m_width
 
 void Room::init() {
 	Ogre::SceneManager *sceneManager = OgreData::getInstance().sceneManager();
-	const unsigned int tileSize = 10;
+	const float tileSize = 10;
 
 	for (u16 y = 0 ; y < m_height ; ++y) {
 		for (u16 x = 0 ; x < m_width ; ++x) {
@@ -49,9 +49,30 @@ void Room::init() {
 					meshID[1] = (x > 0           && y < m_height - 1 && m_data[x - 1 + (y + 1) * m_width]) ? '1' : '0';
 				}
 
+				// Ogre::MeshPtr pMesh = Ogre::MeshManager::getSingleton().load("Claimed_" + meshID + ".mesh",
+				//                                                              Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+				//                                                              Ogre::HardwareBuffer::HBU_DYNAMIC_WRITE_ONLY,
+				//                                                              Ogre::HardwareBuffer::HBU_STATIC_WRITE_ONLY,
+				//                                                              true, true);
+                //
+				// unsigned short src, dest;
+				// if (!pMesh->suggestTangentVectorBuildParams(Ogre::VES_TANGENT, src, dest)) {
+				// 	pMesh->buildTangentVectors(Ogre::VES_TANGENT, src, dest);
+				// }
+
 				Ogre::Entity* ent = sceneManager->createEntity("Claimed_" + meshID + ".mesh");
-				ent->setMaterialName("Claimed");
-				// ent->setMaterialName("Test");
+
+				// Ogre::Entity* ent;
+				// try {
+				// 	ent = sceneManager->createEntity("Dirt_" + meshID + ".mesh");
+				// }
+				// catch (...) {
+				// 	ent = sceneManager->createEntity("Dirt_" + meshID + "a" + ".mesh");
+				// }
+
+				// Ogre::Entity* ent = sceneManager->createEntity(pMesh);
+				// ent->setMaterialName("Claimed");
+				ent->setMaterialName("Test2");
 				m_walls.emplace_back(ent);
 
 				Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
@@ -64,14 +85,17 @@ void Room::init() {
 
 	Ogre::Light* light = sceneManager->createLight("RoomLight");
 	light->setType(Ogre::Light::LT_POINT);
-	light->setPosition(m_width * tileSize / 2, 60, m_height * tileSize / 2);
+	light->setPosition((float)m_width * tileSize / 2.0, 60.0, (float)m_height * tileSize / 2.0);
+	// light->setPosition(0.0, 60.0, 0.0);
 	light->setSpecularColour(Ogre::ColourValue::White);
+	light->setDiffuseColour(0.45, 0.45, 0.45);
 
 	Ogre::MeshManager::getSingleton().createPlane("floor", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
 			Ogre::Plane(Ogre::Vector3::UNIT_Y, 0), m_width * tileSize, m_height * tileSize, 10, 10, true, 1, 10, 10, Ogre::Vector3::UNIT_Z);
 
 	Ogre::Entity* floor = sceneManager->createEntity("Floor", "floor");
-	floor->setMaterialName("Examples/Rockwall");
+	// floor->setMaterialName("rockwall");
+	floor->setMaterialName("Claimed");
 	floor->setCastShadows(false);
 
 	Ogre::SceneNode* floorNode = sceneManager->getRootSceneNode()->createChildSceneNode();

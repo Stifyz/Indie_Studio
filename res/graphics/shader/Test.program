@@ -58,3 +58,4 @@ fragment_program diffuse_ps cg
         param_named_auto spotlightParams spotlight_params 0
     }
 }
+

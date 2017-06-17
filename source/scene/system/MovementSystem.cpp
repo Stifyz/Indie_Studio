@@ -19,6 +19,7 @@
 #include "SceneNodeComponent.hpp"
 
 void MovementSystem::process(SceneObject &object) {
+	Ogre::SceneNode *root = object.get<SceneNodeComponent>().root;
 	Ogre::SceneNode *node = object.get<SceneNodeComponent>().node;
 
 	if(object.has<MovementComponent>()) {
@@ -43,9 +44,9 @@ void MovementSystem::process(SceneObject &object) {
 		movement.isMoving = (movement.v.x || movement.v.z) ? true : false;
 
 		if (movement.behaviour)
-			movement.behaviour(object);
+			movement.behaviour->update(object);
 
-		node->setPosition(node->getPosition() + movement.v * movement.speed);
+		root->setPosition(root->getPosition() + movement.v * movement.speed);
 
 		movement.v = 0;
 	}

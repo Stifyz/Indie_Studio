@@ -16,9 +16,7 @@
 
 #include <string>
 
-#include "tinyxml2.hpp"
-
-using namespace tinyxml2;
+#include <tinyxml2.h>
 
 class XMLFile {
 	public:
@@ -29,11 +27,11 @@ class XMLFile {
 
 		void load(const std::string &filename);
 
-		XMLHandle FirstChildElement(const char *element) { return m_doc.FirstChildElement(element); }
+		tinyxml2::XMLHandle FirstChildElement(const char *element) { return m_doc.FirstChildElement(element); }
 
 	private:
-		XMLDocument m_xml;
-		XMLHandle m_doc{m_xml};
+		tinyxml2::XMLDocument m_xml;
+		tinyxml2::XMLHandle m_doc{m_xml};
 };
 
 #endif // XMLFILE_HPP_

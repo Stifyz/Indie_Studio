@@ -22,19 +22,20 @@
 
 class SceneNodeComponent {
 	public:
-		SceneNodeComponent(Ogre::SceneNode *_node) {
-			Ogre::SceneManager *sceneManager = OgreData::getInstance().sceneManager();
-			node = sceneManager->getRootSceneNode()->createChildSceneNode();
-			// node = _node->createChildSceneNode();
+		SceneNodeComponent(Ogre::SceneNode *_root, Ogre::SceneNode *_node) {
+			root = _root;
+			node = root->createChildSceneNode();
 			node->setAutoTracking(true, _node);
 		}
 
 		SceneNodeComponent(const Ogre::Vector3 &pos, const Ogre::Vector3 &scale = Ogre::Vector3::UNIT_SCALE) {
 			Ogre::SceneManager *sceneManager = OgreData::getInstance().sceneManager();
-			node = sceneManager->getRootSceneNode()->createChildSceneNode(pos);
+			root = sceneManager->getRootSceneNode()->createChildSceneNode(pos);
+			node = root->createChildSceneNode();
 			node->setScale(scale);
 		}
 
+		Ogre::SceneNode *root = nullptr;
 		Ogre::SceneNode *node = nullptr;
 };
 

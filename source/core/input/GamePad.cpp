@@ -14,7 +14,7 @@
 #include "GameClock.hpp"
 #include "GamePad.hpp"
 
-InputHandler *GamePad::inputHandler = nullptr;
+InputHandler *GamePad::s_inputHandler = nullptr;
 
 std::map<GameKey, bool> GamePad::s_keysPressed = {
 	{GameKey::Left,   false},
@@ -49,7 +49,7 @@ GameKey GamePad::s_verticalValue = GameKey::Down;
 GameKey GamePad::s_horizontalValue = GameKey::Left;
 
 bool GamePad::isKeyPressed(GameKey key) {
-	if(!inputHandler)
+	if(!s_inputHandler)
 		return false;
 
 	for (unsigned int i = 0 ; i < 4 ; ++i) {
@@ -59,7 +59,7 @@ bool GamePad::isKeyPressed(GameKey key) {
 
 			if (lock && value == static_cast<GameKey>(i))
 				return false;
-			else if (inputHandler->isKeyPressed(key)) {
+			else if (s_inputHandler->isKeyPressed(key)) {
 				lock = true;
 				value = static_cast<GameKey>(i + (i % 2 ? 1 : -1));
 				return true;
@@ -71,7 +71,7 @@ bool GamePad::isKeyPressed(GameKey key) {
 		}
 	}
 
-	return inputHandler->isKeyPressed(key);
+	return s_inputHandler->isKeyPressed(key);
 }
 
 bool GamePad::isKeyPressedOnce(GameKey key) {

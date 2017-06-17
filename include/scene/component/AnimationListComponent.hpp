@@ -26,23 +26,30 @@
 
 class Animation {
 	public:
-		Animation(Ogre::Entity *entity, const char *animName) {
-			state = entity->getAnimationState(animName);
+		Animation(Ogre::Entity *entity, const char *name_) : name(name_) {
+			state = entity->getAnimationState(name);
 			state->setLoop(true);
 		}
+
+		std::string name;
 
 		Ogre::AnimationState *state = nullptr;
 
 		bool fadingIn = false;
 		bool fadingOut = false;
 
+		float speed = 1.0f;
+
 		Timer timer;
 };
 
 class AnimationListComponent {
+	using AnimationEndCallback = std::function<void(AnimationListComponent &, const Animation &)>;
+
 	public:
-		void add(Ogre::Entity *entity, const char *animName) {
+		Animation &add(Ogre::Entity *entity, const char *animName) {
 			m_animationList.emplace(animName, Animation{entity, animName});
+			return m_animationList.at(animName);
 		}
 
 		void enableAnimation(const char *animName) {
@@ -63,7 +70,7 @@ class AnimationListComponent {
 			animIterator->second.state->setEnabled(false);
 		}
 
-		void setActiveAnimation(const unsigned int id, const char *animName, const bool reset = false) {
+		Animation *setActiveAnimation(const unsigned int id, const char *animName, const bool reset = false) {
 			auto activeAnimIterator = m_activeAnimations.find(id);
 			if (activeAnimIterator != m_activeAnimations.end() && activeAnimIterator->second) {
 				auto oldAnimIterator = m_animationList.find(activeAnimIterator->second);
@@ -85,10 +92,23 @@ class AnimationListComponent {
 				animIterator->second.fadingOut = false;
 				if (reset)
 					animIterator->second.state->setTimePosition(0);
+				return &animIterator->second;
 			}
+
+			return nullptr;
 		}
 
-		const char *getActiveAnimation(const unsigned int id) {
+		bool isAnimationFinished(const char *name, unsigned int percentage = 100) {
+			auto animIterator = m_animationList.find(name);
+			if (animIterator == m_animationList.end()) {
+				throw EXCEPTION("Animation not found:", name);
+			}
+
+			Ogre::Real timePos = animIterator->second.state->getTimePosition();
+			return timePos == 0 || timePos >= animIterator->second.state->getLength() / percentage * 100;
+		}
+
+		const char *getActiveAnimation(const unsigned int id) const {
 			return m_activeAnimations.at(id);
 		}
 
@@ -99,10 +119,13 @@ class AnimationListComponent {
 
 				Animation &anim = m_animationList.at(it.second);
 				if (anim.timer.isStarted()) {
-					anim.state->addTime(anim.timer.time() / 1000.0);
+					anim.state->addTime(anim.timer.time() / 1000.0 * anim.speed);
 					anim.timer.reset();
 				}
 				anim.timer.start();
+
+				if (anim.state->getTimePosition() >= anim.state->getLength() && m_animationEndCallback)
+					m_animationEndCallback(*this, anim);
 			}
 		}
 
@@ -125,10 +148,16 @@ class AnimationListComponent {
 			}
 		}
 
+		void setLoop(const char *name, bool loop) { m_animationList.at(name).state->setLoop(loop); }
+
+		void setAnimationEndCallback(const AnimationEndCallback &animationEndCallback) { m_animationEndCallback = animationEndCallback; }
+
 	private:
-		std::map<const char *, Animation> m_animationList;
+		std::map<std::string, Animation> m_animationList;
 
 		std::map<unsigned int, const char *> m_activeAnimations;
+
+		AnimationEndCallback m_animationEndCallback;
 };
 
 #endif // ANIMATIONLISTCOMPONENT_HPP_

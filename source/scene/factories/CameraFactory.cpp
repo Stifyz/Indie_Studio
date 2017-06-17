@@ -20,8 +20,9 @@
 SceneObject CameraFactory::create(SceneObject &objectToWatch) {
 	SceneObject object("Camera_" + objectToWatch.name());
 
-	Ogre::SceneManager *sceneManager = OgreData::getInstance().sceneManager();
-	Ogre::Camera* camera = sceneManager->createCamera(object.name());
+	auto *sceneManager = OgreData::getInstance().sceneManager();
+	Ogre::Camera *camera = sceneManager->createCamera(object.name());
+	objectToWatch.set<Ogre::Camera *>(camera);
 	camera->setAutoAspectRatio(true);
 	camera->setNearClipDistance(0.1);
 	camera->setFarClipDistance(1000);
@@ -29,11 +30,12 @@ SceneObject CameraFactory::create(SceneObject &objectToWatch) {
 	Ogre::RenderWindow *renderWindow = OgreData::getInstance().renderWindow();
 	renderWindow->addViewport(camera);
 
-	auto &sceneNodeComponent = object.set<SceneNodeComponent>(objectToWatch.get<SceneNodeComponent>().node);
+	auto &sceneNodeComponentToWatch = objectToWatch.get<SceneNodeComponent>();
+	auto &sceneNodeComponent = object.set<SceneNodeComponent>(sceneNodeComponentToWatch.root, sceneNodeComponentToWatch.node);
 	sceneNodeComponent.node->attachObject(camera);
 	// sceneNodeComponent.node->setInheritOrientation(false);
 	// sceneNodeComponent.node->lookAt(Ogre::Vector3(0, 0, -1), Ogre::Node::TS_LOCAL);
-	sceneNodeComponent.node->setPosition(50, 90, 110);
+	sceneNodeComponent.node->setPosition(0, 75, 50);
 	sceneNodeComponent.node->setFixedYawAxis(true);
 
 	return object;

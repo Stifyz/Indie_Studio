@@ -41,16 +41,44 @@ endif()
 #------------------------------------------------------------------------------
 # Packages
 #------------------------------------------------------------------------------
+# - tinyxml2 (Note: It's a dependency for both Ogre3D and this project)
+#------------------------------------------------------------------------------
+find_package(TinyXml2 REQUIRED)
+if(NOT TINYXML2_FOUND)
+	message(FATAL_ERROR "tinyxml2 is needed to build the project. Please install it correctly.")
+endif()
+
+include_directories(${TINYXML2_INCLUDE_DIRS})
+link_directories(${TINYXML2_LIBRARY_DIRS})
+
+#------------------------------------------------------------------------------
 # - Ogre3D
 #------------------------------------------------------------------------------
 find_package(OGRE 1.10 REQUIRED)
+if(NOT OGRE_FOUND)
+	message(FATAL_ERROR "Ogre3D is needed to build the project. Please install it correctly.")
+endif()
 
 include_directories(${OGRE_INCLUDE_DIRS})
 link_directories(${OGRE_LIBRARY_DIRS})
 
 #------------------------------------------------------------------------------
+# Doxygen
+#------------------------------------------------------------------------------
+option(BUILD_DOCUMENTATION "Use Doxygen to create the HTML based API documentation" ON)
+if(BUILD_DOCUMENTATION)
+	find_package(Doxygen REQUIRED)
+	if(NOT DOXYGEN_FOUND)
+		message(FATAL_ERROR "Doxygen is needed to build the documentation. Please install it correctly.")
+	endif()
+
+	add_custom_target(doc ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/doc/Doxyfile WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/doc)
+endif()
+
+#------------------------------------------------------------------------------
 # Link options
 #------------------------------------------------------------------------------
 target_link_libraries(${CMAKE_PROJECT_NAME}
+                      ${TINYXML2_LIBRARIES}
                       ${OGRE_LIBRARIES})
 

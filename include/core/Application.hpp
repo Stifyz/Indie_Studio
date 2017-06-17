@@ -41,6 +41,7 @@ class Application : public OgreBites::ApplicationContext, public OgreBites::Inpu
 		bool mouseMoved(const OgreBites::MouseMotionEvent& evt) override;
 		bool mouseWheelRolled(const OgreBites::MouseWheelEvent& evt) override;
 		bool mousePressed(const OgreBites::MouseButtonEvent& evt) override;
+		bool mouseReleased(const OgreBites::MouseButtonEvent& evt) override;
 
 		bool frameRenderingQueued(const Ogre::FrameEvent& evt) override;
 
@@ -50,7 +51,7 @@ class Application : public OgreBites::ApplicationContext, public OgreBites::Inpu
 		KeyboardHandler m_keyboardHandler;
 		ResourceHandler m_resourceHandler;
 
-		std::shared_ptr<OgreBites::TrayManager> m_trayManager = nullptr;
+		OgreBites::TrayManager *m_trayManager = nullptr;
 		std::unique_ptr<MenuState> m_menu = nullptr;
 };
 
