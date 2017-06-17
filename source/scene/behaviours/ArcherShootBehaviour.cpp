@@ -18,11 +18,11 @@
 
 void ArcherShootBehaviour::update(SceneObject &object) {
 	auto &animationListComponent = object.get<AnimationListComponent>();
-	//        if (Mouse::isButtonPressed(Mouse::Button::Left) && animationListComponent.isAnimationFinished("Attack")) {
-      	if (GamePad::isKeyPressed(GameKey::A) && animationListComponent.isAnimationFinished("Attack")) {
+	// if (Mouse::isButtonPressed(Mouse::Button::Left) && animationListComponent.isAnimationFinished("Attack")) {
+	if (GamePad::isKeyPressed(GameKey::A) && animationListComponent.isAnimationFinished("Attack")) {
 		if (animationListComponent.getActiveAnimation(0) != std::string("Attack"))
 			m_previousActiveAnimation = animationListComponent.getActiveAnimation(0);
-		animationListComponent.setActiveAnimation(0, "Attack", true);
+		animationListComponent.setActiveAnimation(0, "Attack", true)->timer.setTime(6);
 	}
 }
 
