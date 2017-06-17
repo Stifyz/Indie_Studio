@@ -19,9 +19,6 @@ class Background {
 		void init(const std::string &fileName, const std::string &sceneName);
 		void set(const std::string &, const std::string &);
 		void update();
-
-	private:
-		std::unique_ptr<Ogre::Rectangle2D> m_rect = nullptr;
 };
 
 #endif // !BACKGROUND_HPP_

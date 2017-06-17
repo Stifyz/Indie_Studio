@@ -30,22 +30,24 @@ void Background::init(const std::string &fileName, const std::string &sceneName)
 
 void Background::set(const std::string &fileName, const std::string &sceneName) {
 	// Create background m_rectangle covering the whole screen
-	m_rect.reset(new Ogre::Rectangle2D(true));
-	m_rect->setCorners(-1.0, 1.0, 1.0, -1.0);
-	m_rect->setMaterial(fileName + "_" + sceneName);
+	Ogre::Rectangle2D *rect = new Ogre::Rectangle2D(true);
+	rect->setCorners(-1.0, 1.0, 1.0, -1.0);
+	rect->setMaterial(fileName + "_" + sceneName);
 
 	// Render the background before everything else
-	m_rect->setRenderQueueGroup(0);
+	rect->setRenderQueueGroup(0);
 
 	// Use infinite AAB to always stay visible
 	Ogre::AxisAlignedBox aabInf;
 	aabInf.setInfinite();
-	m_rect->setBoundingBox(aabInf);
+	rect->setBoundingBox(aabInf);
 
 	// Attach background to the scene
 	Ogre::SceneManager *sceneManager = OgreData::getInstance().sceneManager();
 	Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode("Background");
-	node->attachObject(m_rect.get());
+	node->attachObject(rect);
 }
 
-void Background::update(){}
+void Background::update() {
+}
+
