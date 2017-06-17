@@ -20,6 +20,7 @@
 #include "ResourceHandler.hpp"
 
 #include "ArcherFactory.hpp"
+#include "BerserkerFactory.hpp"
 #include "CameraFactory.hpp"
 #include "HeartFactory.hpp"
 #include "SinbadFactory.hpp"
@@ -32,6 +33,8 @@ GameState::GameState() : m_room(ResourceHandler::getInstance().get<Room>("test_r
 	m_camera = &m_scene.addObject(CameraFactory::create(*m_sinbad));
 
 	m_scene.addObject(HeartFactory::create(Ogre::Vector3(30, 1.5, 30)));
+
+	m_scene.addObject(BerserkerFactory::create());
 
 	m_scene.addCollisionChecker([&] (SceneObject &object) {
 		m_room.checkCollisions(object);
