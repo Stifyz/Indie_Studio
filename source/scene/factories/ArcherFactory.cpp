@@ -31,14 +31,14 @@ SceneObject ArcherFactory::create() {
 	auto &bodyNodeComponent = object.set<SceneNodeComponent>(Ogre::Vector3(30, ARCHER_HEIGHT, 30), Ogre::Vector3(0.3, 0.3, 0.3));
 	auto &entityListComponent = object.set<EntityListComponent>(bodyNodeComponent.node);
 
+	Ogre::Entity *bodyEntity = entityListComponent.addEntity("ArcherBody", "Archer.mesh", true);
+	bodyEntity->setMaterialName("Archer");
+
 	auto &behaviourComponent = object.set<BehaviourComponent>();
 	auto &archerShootBehaviour = behaviourComponent.addBehaviour<ArcherShootBehaviour>("Shoot");
 
 	auto &movementComponent = object.set<MovementComponent>(new GamePadMovement);
 	movementComponent.behaviour.reset(new PlayerMovementBehaviour({"Idle"}, {"Walk"}));
-
-	Ogre::Entity *bodyEntity = entityListComponent.addEntity("ArcherBody", "Archer.mesh", true);
-	bodyEntity->setMaterialName("Archer");
 
 	const char *animNames[] = {"Attack", "Walk", "Idle", "Hit", "Die"};
 
