@@ -5,7 +5,7 @@
 // Login   <maxime.maisonnas@epitech.eu>
 //
 // Started on  Mon May 22 17:31:31 2017 Maxime Maisonnas
-// Last update Sun Jun 18 01:54:05 2017 Maxime Maisonnas
+// Last update Sun Jun 18 04:26:22 2017 Maxime Maisonnas
 //
 
 #ifndef ENCAPS_CLIENT_HPP_
@@ -46,8 +46,8 @@ private:
   bool                m_listenStandardInput;
   fd_set              m_fdR;
   t_socket            m_sock;
-  std::string         m_ip;
   int                 m_port;
+  std::string         m_ip;
   int                 m_id;
 };
 

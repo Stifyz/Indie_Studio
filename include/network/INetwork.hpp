@@ -5,7 +5,7 @@
 // Login   <maxime.maisonnas@epitech.eu>
 //
 // Started on  Sun Jun 18 01:40:46 2017 Maxime Maisonnas
-// Last update Sun Jun 18 01:54:01 2017 Maxime Maisonnas
+// Last update Sun Jun 18 04:27:43 2017 Maxime Maisonnas
 //
 
 #ifndef INETWORK_HPP_

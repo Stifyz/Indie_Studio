@@ -19,9 +19,11 @@
 #include <OgreTrays.h>
 
 #include "ApplicationStateStack.hpp"
+#include "Client.hpp"
 #include "GameClock.hpp"
 #include "KeyboardHandler.hpp"
 #include "ResourceHandler.hpp"
+#include "Server.hpp"
 
 class Application : public OgreBites::ApplicationContext, public OgreBites::InputListener {
 	public:
@@ -50,6 +52,9 @@ class Application : public OgreBites::ApplicationContext, public OgreBites::Inpu
 		ResourceHandler m_resourceHandler;
 
 		OgreBites::TrayManager *m_trayManager = nullptr;
+
+		std::unique_ptr<INetwork> m_network{nullptr};
+		std::unique_ptr<std::thread> m_networkThread{nullptr};
 };
 
 #endif // APPLICATION_HPP_

@@ -5,7 +5,7 @@
 // Login   <maxime.maisonnas@epitech.eu>
 //
 // Started on  Sun Jun 18 00:53:21 2017 Maxime Maisonnas
-// Last update Sun Jun 18 01:54:35 2017 Maxime Maisonnas
+// Last update Sun Jun 18 04:44:33 2017 Maxime Maisonnas
 //
 
 #include "Server.hpp"
@@ -79,7 +79,8 @@ void    Server::init() {
   if ((m_sock.fd = socket(AF_INET, SOCK_STREAM, m_sock.pe->p_proto)) == -1)
     throw NetErr("can not open socket");
   m_sock.s_in.sin_family = AF_INET;
-  m_sock.s_in.sin_port = 0;
+  // m_sock.s_in.sin_port = 0;
+  m_sock.s_in.sin_port = ntohs(4244);
   m_sock.s_in.sin_addr.s_addr = INADDR_ANY;
   if (bind(m_sock.fd, (struct sockaddr *)&m_sock.s_in, sizeof(m_sock.s_in)) == -1)
     throw NetErr("can not bind port");
@@ -177,7 +178,7 @@ void          Server::send(ICom const &elem) {
 bool          Server::get(ICom &elem) {
   size_t      i = 1;
   size_t      r = 0;
-  char        buff[BUF_SIZE];
+  char        buff[BUFF_SIZE];
   ComStream   ss;
 
   mySelect();
@@ -186,7 +187,7 @@ bool          Server::get(ICom &elem) {
       if (FD_ISSET(it->fd, &m_fdR)) {
         try {
           checkAlive(it->fd, i);
-          if ((r = recv(it->fd, buff, BUF_SIZE, 0)) == 0)
+          if ((r = recv(it->fd, buff, BUFF_SIZE, 0)) == 0)
             throw Stop();
           m_buf->add(buff, r);
           ss.str(m_buf->get());
@@ -207,7 +208,7 @@ bool          Server::get(ICom &elem) {
 bool          Server::get(chat::TextMsg &elem) {
   size_t      i = 1;
   size_t      r = 0;
-  char        buff[BUF_SIZE];
+  char        buff[BUFF_SIZE];
   ComStream   ss;
 
   mySelect();
@@ -216,7 +217,7 @@ bool          Server::get(chat::TextMsg &elem) {
       if (FD_ISSET(it->fd, &m_fdR)) {
         try {
           checkAlive(it->fd, i);
-          if ((r = recv(it->fd, buff, BUF_SIZE, 0)) == 0)
+          if ((r = recv(it->fd, buff, BUFF_SIZE, 0)) == 0)
             throw Stop();
           m_buf->add(buff, r);
           ss.str(m_buf->get());
@@ -232,7 +233,7 @@ bool          Server::get(chat::TextMsg &elem) {
     i++;
   }
   if (m_listenStandardInput && FD_ISSET(0, &m_fdR)) {
-    if ((r = read(0, buff, BUF_SIZE)) == 0)
+    if ((r = read(0, buff, BUFF_SIZE)) == 0)
       throw Error("invalid input");
     m_buf->add(buff, r);
     elem = chat::TextMsg(0, m_buf->get(), chat::PUBLIC);

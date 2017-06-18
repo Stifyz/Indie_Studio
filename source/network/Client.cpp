@@ -5,7 +5,7 @@
 // Login   <maxime.maisonnas@epitech.eu>
 //
 // Started on  Mon May 22 17:31:35 2017 Maxime Maisonnas
-// Last update Sun Jun 18 02:08:59 2017 Maxime Maisonnas
+// Last update Sun Jun 18 04:26:19 2017 Maxime Maisonnas
 //
 
 #include "Client.hpp"
@@ -46,7 +46,7 @@ void    Client::quit(void) {
 
 void          Client::init() {
   std::string id;
-  char        buff[BUF_SIZE];
+  char        buff[BUFF_SIZE];
   size_t      r = 0;
 
   if (!(m_sock.pe = getprotobyname("TCP")))
@@ -58,7 +58,7 @@ void          Client::init() {
   m_sock.s_in.sin_addr.s_addr = (m_ip == "" ? INADDR_ANY : inet_addr(m_ip.c_str()));
   if (connect(m_sock.fd, (struct sockaddr *)&m_sock.s_in, sizeof(m_sock.s_in)) == -1)
     throw NetErr("could not connect to given port");
-  if ((r = recv(m_sock.fd, buff, BUF_SIZE, 0)) == 0)
+  if ((r = recv(m_sock.fd, buff, BUFF_SIZE, 0)) == 0)
     throw Stop();
   m_buf->add(buff, r);
   id = m_buf->get();
@@ -104,11 +104,11 @@ void          Client::send(ICom const &elem) {
 bool          Client::get(ICom &elem) {
   ComStream   ss;
   size_t      r;
-  char        buff[BUF_SIZE];
+  char        buff[BUFF_SIZE];
 
   checkAlive();
   try {
-    if ((r = recv(m_sock.fd, buff, BUF_SIZE, 0)) == 0)
+    if ((r = recv(m_sock.fd, buff, BUFF_SIZE, 0)) == 0)
       throw Stop();
     m_buf->add(buff, r);
     ss.str(m_buf->get());
@@ -124,13 +124,13 @@ bool          Client::get(ICom &elem) {
 bool          Client::get(chat::TextMsg &elem) {
   ComStream   ss;
   size_t      r = 0;
-  char        buff[BUF_SIZE];
+  char        buff[BUFF_SIZE];
 
   checkAlive();
   mySelect();
   if (m_listenStandardInput) {
     if (FD_ISSET(0, &m_fdR)) {
-      if ((r = read(0, buff, BUF_SIZE)) == 0)
+      if ((r = read(0, buff, BUFF_SIZE)) == 0)
         throw Error("invalid input");
       m_buf->add(buff, r);
       elem = chat::TextMsg(m_id, m_buf->get(), chat::PUBLIC);
@@ -140,7 +140,7 @@ bool          Client::get(chat::TextMsg &elem) {
   }
   try {
     if (FD_ISSET(m_sock.fd, &m_fdR)) {
-      if ((r = recv(m_sock.fd, buff, BUF_SIZE, 0)) == 0)
+      if ((r = recv(m_sock.fd, buff, BUFF_SIZE, 0)) == 0)
         throw Stop();
       m_buf->add(buff, r);
       ss.str(m_buf->get());

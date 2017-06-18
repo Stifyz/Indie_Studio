@@ -20,15 +20,19 @@
 #include <OgreSceneManager.h>
 #include <OgreTrays.h>
 
+#include "INetwork.hpp"
+
 class OgreData {
 	public:
-		void init(Ogre::Root *root, Ogre::RenderWindow *renderWindow, Ogre::SceneManager *sceneManager, OgreBites::ApplicationContext *app, OgreBites::TrayManager *trayManager) {
+		void init(Ogre::Root *root, Ogre::RenderWindow *renderWindow, Ogre::SceneManager *sceneManager, OgreBites::ApplicationContext *app, OgreBites::TrayManager *trayManager, INetwork *network) {
 			m_root = root;
 			m_renderWindow = renderWindow;
 			m_sceneManager = sceneManager;
 
 			m_app = app;
 			m_trayManager = trayManager;
+
+			m_network = network;
 		}
 
 		Ogre::Root *root() const { return m_root; }
@@ -52,6 +56,8 @@ class OgreData {
 
 		OgreBites::ApplicationContext *m_app = nullptr;
 		OgreBites::TrayManager *m_trayManager = nullptr;
+
+		INetwork *m_network = nullptr;
 };
 
 #endif // OGREDATA_HPP_

@@ -19,8 +19,40 @@
 
 #include "RoomLoader.hpp"
 
+void 		networkLoop(INetwork *network, bool isServer) {
+  chat::TextMsg msg(network->id(), "Yooo !", chat::PUBLIC);
+
+  while (1) {
+		try {
+	    if (network->get(msg)) {
+				if (isServer)
+					network->send(msg);
+	      if ((msg.m_id != network->id() && msg.m_chan != chat::PRIVATE)
+	        || (msg.m_chan == chat::PRIVATE && msg.m_idTarget == network->id()))
+	        msg.writee();
+	    }
+		} catch (std::exception &e) {
+			if (!isServer) {
+				std::cerr << e.what() << '\n';
+				break ;
+			}
+		}
+  }
+}
+
 Application::Application(int const argc, char **argv) : OgreBites::ApplicationContext("Indie Studio") {
 	addInputListener(this);
+
+	if (argc < 2) {
+		m_network.reset(new Server(true));
+		m_networkThread.reset(new std::thread(networkLoop, m_network.get(), true));
+	} else if (argc > 2) {
+		m_network.reset(new Client(std::stoi(argv[1]), true, argv[2]));
+		m_networkThread.reset(new std::thread(networkLoop, m_network.get(), false));
+	} else {
+		m_network.reset(new Client(std::stoi(argv[1]), true));
+		m_networkThread.reset(new std::thread(networkLoop, m_network.get(), false));
+	}
 
 	GamePad::init(m_keyboardHandler);
 
@@ -45,7 +77,7 @@ void Application::setup() {
 	Ogre::RTShader::ShaderGenerator* shadergen = Ogre::RTShader::ShaderGenerator::getSingletonPtr();
 	shadergen->addSceneManager(sceneManager);
 
-	OgreData::getInstance().init(root, mWindow, sceneManager, this, m_trayManager);
+	OgreData::getInstance().init(root, mWindow, sceneManager, this, m_trayManager, m_network.get());
 
 	m_stateStack.push<GameState>();
 }

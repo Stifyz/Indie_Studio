@@ -5,15 +5,13 @@
 // Login   <maxime.maisonnas@epitech.eu>
 //
 // Started on  Sat Jun 17 12:33:33 2017 Maxime Maisonnas
-// Last update Sat Jun 17 23:40:28 2017 Maxime Maisonnas
+// Last update Sun Jun 18 03:32:32 2017 Maxime Maisonnas
 //
 
 #ifndef RINGBUFFER_HPP_
 # define RINGBUFFER_HPP_
 
-# ifndef BUF_SIZE
-#  define BUF_SIZE 8192
-# endif /* !BUF_SIZE */
+# define BUFF_SIZE 8192
 
 # include <string.h>
 
@@ -28,7 +26,7 @@ public:
   std::string   get(void);
 
 private:
-  char          m_buffer[BUF_SIZE];
+  char          m_buffer[BUFF_SIZE];
   char          *m_rPtr;
   char          *m_wPtr;
 };
