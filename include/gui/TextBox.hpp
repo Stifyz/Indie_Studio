@@ -2,25 +2,21 @@
 |*                                                          *|
 |* Copyright (C) (2017) by zimmer_n
 |*                                                          *|
-|* OptionMenuState.hpp for project :
+|* TextBox.hpp for project :
 |*                                                          *|
-|* Created: 2017-06-15 11:31
+|* Created: 2017-06-18 01:23
 |*                                                          *|
 \************************************************************/
 
-#ifndef OPTIONMENUSTATE_HPP_
-#define OPTIONMENUSTATE_HPP_
+#ifndef TEXTBOX_HPP_
+#define TEXTBOX_HPP_
 
-#include "ApplicationState.hpp"
-#include "Background.hpp"
-
-class OptionMenuState : public ApplicationState {
+class TextBox {
 	public:
-		OptionMenuState(ApplicationState *parent);
+		TextBox();
 
-		void update() override;
+	private:
 
-		void buttonHit(OgreBites::Button *button) override;
 };
 
-#endif // !OPTIONMENUSTATE_HPP_
+#endif // !TEXTBOX_HPP_

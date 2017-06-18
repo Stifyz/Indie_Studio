@@ -11,10 +11,10 @@
 #include "GameState.hpp"
 #include "MainMenuState.hpp"
 #include "OptionMenuState.hpp"
-#include "OgreData.hpp"
+
 #include <Ogre.h>
 
-MainMenuState::MainMenuState() {
+MainMenuState::MainMenuState() : ApplicationState("MainMenu") {
 	m_background.init("backgroundmenu3.tga", "Menu");
 	m_background.set("backgroundmenu3.tga", "Menu");
 
@@ -27,12 +27,9 @@ MainMenuState::MainMenuState() {
 	Ogre::RenderWindow *renderWindow = OgreData::getInstance().renderWindow();
 	renderWindow->addViewport(m_camera);
 
-	OgreBites::TrayManager *trayManager = OgreData::getInstance().trayManager();
-	trayManager->setListener(this);
-
-	trayManager->createButton(OgreBites::TL_CENTER, "start", "Start Game", 200);
-	// trayManager->createButton(OgreBites::TL_CENTER, "option", "Option", 200);
-	trayManager->createButton(OgreBites::TL_CENTER, "quit", "Quit", 200);
+	m_trayManager->createButton(OgreBites::TL_CENTER, "start", "Start Game", 200);
+	m_trayManager->createButton(OgreBites::TL_CENTER, "option", "Option", 200);
+	m_trayManager->createButton(OgreBites::TL_CENTER, "quit", "Quit", 200);
 }
 
 void MainMenuState::update() {
@@ -41,25 +38,25 @@ void MainMenuState::update() {
 
 void MainMenuState::buttonHit(OgreBites::Button *button) {
 	if (button->getName() == "start") {
-		OgreBites::TrayManager *trayManager = OgreData::getInstance().trayManager();
-		trayManager->destroyAllWidgetsInTray(OgreBites::TrayLocation::TL_CENTER);
+		// m_trayManager->destroyAllWidgetsInTray(OgreBites::TrayLocation::TL_CENTER);
 		auto *sceneManager = OgreData::getInstance().sceneManager();
 		Ogre::MaterialManager::getSingleton().remove("backgroundmenu3.tga_Main");
 		sceneManager->destroyAllCameras();
-		sceneManager->destroyAllMovableObjects();
+		// m_trayManager.reset(nullptr);
+		// sceneManager->destroyAllMovableObjects();
 		Ogre::RenderWindow *renderWindow = OgreData::getInstance().renderWindow();
 		renderWindow->removeAllViewports();
 		m_stateStack->pop();
 		m_stateStack->push<GameState>();
 	}
-	// if (button->getName() == "option") {
-	// 	OgreBites::TrayManager *trayManager = OgreData::getInstance().trayManager();
-	// 	trayManager->destroyAllWidgetsInTray(OgreBites::TrayLocation::TL_CENTER);
-	// 	m_stateStack->pop();
-	// 	m_stateStack->push<OptionMenuState>();
-	// }
+	else if (button->getName() == "option") {
+		hide();
+		m_stateStack->push<OptionMenuState>(this);
+	}
 	else if (button->getName() == "quit") {
-		OgreData::getInstance().root()->queueEndRendering();
+		DEBUG("before pop");
+		m_stateStack->pop();
+		DEBUG("after pop");
 	}
 }
 

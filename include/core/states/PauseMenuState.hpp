@@ -11,14 +11,11 @@
 #ifndef PAUSEMENUSTATE_HPP_
 #define PAUSEMENUSTATE_HPP_
 
-#include <OgreTrays.h>
-#include <OgreInput.h>
-
 #include "ApplicationState.hpp"
 
-class PauseMenuState : public ApplicationState, public OgreBites::TrayListener {
+class PauseMenuState : public ApplicationState {
 	public:
-		PauseMenuState();
+		PauseMenuState(ApplicationState *parent);
 
 		void update() override;
 

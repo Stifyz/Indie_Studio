@@ -12,14 +12,12 @@
 #define MAINMENUSTATE_HPP_
 
 #include <OgreCamera.h>
-#include <OgreInput.h>
-#include <OgreTrays.h>
 
 #include "ApplicationState.hpp"
 #include "Background.hpp"
 #include "Scene.hpp"
 
-class MainMenuState : public ApplicationState, public OgreBites::TrayListener {
+class MainMenuState : public ApplicationState {
 	public:
 		MainMenuState();
 

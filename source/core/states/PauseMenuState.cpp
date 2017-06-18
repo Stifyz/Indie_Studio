@@ -8,10 +8,9 @@
 |*                                                          *|
 \************************************************************/
 
-#include "OgreData.hpp"
 #include "PauseMenuState.hpp"
 
-PauseMenuState::PauseMenuState() {
+PauseMenuState::PauseMenuState(ApplicationState *parent) : ApplicationState("PauseMenu", parent) {
 	OgreBites::TrayManager *trayManager = OgreData::getInstance().trayManager();
 	trayManager->setListener(this);
 
@@ -24,12 +23,14 @@ void PauseMenuState::update() {
 
 void PauseMenuState::buttonHit(OgreBites::Button *button) {
 	if (button->getName() == "start") {
-		OgreBites::TrayManager *trayManager = OgreData::getInstance().trayManager();
-		trayManager->destroyAllWidgetsInTray(OgreBites::TrayLocation::TL_CENTER);
+		// m_trayManager->destroyAllWidgetsInTray(OgreBites::TrayLocation::TL_CENTER);
 		m_stateStack->pop();
+		m_parent->show();
 	}
 	else if (button->getName() == "quit") {
-		OgreData::getInstance().root()->queueEndRendering();
+		// OgreData::getInstance().root()->queueEndRendering();
+		m_stateStack->pop();
+		m_stateStack->pop();
 	}
 }
 

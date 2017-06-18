@@ -22,13 +22,12 @@
 
 class OgreData {
 	public:
-		void init(Ogre::Root *root, Ogre::RenderWindow *renderWindow, Ogre::SceneManager *sceneManager, OgreBites::ApplicationContext *app, OgreBites::TrayManager *trayManager) {
+		void init(Ogre::Root *root, Ogre::RenderWindow *renderWindow, Ogre::SceneManager *sceneManager, OgreBites::ApplicationContext *app) {
 			m_root = root;
 			m_renderWindow = renderWindow;
 			m_sceneManager = sceneManager;
 
 			m_app = app;
-			m_trayManager = trayManager;
 		}
 
 		Ogre::Root *root() const { return m_root; }
@@ -37,6 +36,8 @@ class OgreData {
 
 		OgreBites::ApplicationContext *app() const { return m_app; }
 		OgreBites::TrayManager *trayManager() const { return m_trayManager; }
+
+		void setTrayManager(OgreBites::TrayManager *trayManager) { m_trayManager = trayManager; }
 
 		static OgreData &getInstance() {
 			static OgreData data;

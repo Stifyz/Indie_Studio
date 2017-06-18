@@ -2,25 +2,23 @@
 |*                                                          *|
 |* Copyright (C) (2017) by zimmer_n
 |*                                                          *|
-|* OptionMenuState.hpp for project :
+|* ChatState.hpp for project :
 |*                                                          *|
-|* Created: 2017-06-15 11:31
+|* Created: 2017-06-18 01:20
 |*                                                          *|
 \************************************************************/
 
-#ifndef OPTIONMENUSTATE_HPP_
-#define OPTIONMENUSTATE_HPP_
+#ifndef CHATSTATE_HPP_
+#define CHATSTATE_HPP_
 
 #include "ApplicationState.hpp"
-#include "Background.hpp"
 
-class OptionMenuState : public ApplicationState {
+class ChatState : public ApplicationState {
 	public:
-		OptionMenuState(ApplicationState *parent);
+		ChatState();
 
-		void update() override;
+	private:
 
-		void buttonHit(OgreBites::Button *button) override;
 };
 
-#endif // !OPTIONMENUSTATE_HPP_
+#endif // !CHATSTATE_HPP_

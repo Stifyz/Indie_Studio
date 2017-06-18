@@ -51,7 +51,6 @@ class Application : public OgreBites::ApplicationContext, public OgreBites::Inpu
 		KeyboardHandler m_keyboardHandler;
 		ResourceHandler m_resourceHandler;
 
-		OgreBites::TrayManager *m_trayManager = nullptr;
 		std::unique_ptr<MenuState> m_menu = nullptr;
 };
 

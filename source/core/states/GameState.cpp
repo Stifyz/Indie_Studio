@@ -15,8 +15,7 @@
 
 #include "GamePad.hpp"
 #include "GameState.hpp"
-#include "MainMenuState.hpp"
-#include "OgreData.hpp"
+#include "PauseMenuState.hpp"
 #include "ResourceHandler.hpp"
 
 #include "ArcherFactory.hpp"
@@ -27,7 +26,10 @@
 #include "HeartFactory.hpp"
 #include "SinbadFactory.hpp"
 
-GameState::GameState() : m_room(ResourceHandler::getInstance().get<Room>("test_room")) {
+GameState::GameState() : ApplicationState("Game"), m_room(ResourceHandler::getInstance().get<Room>("test_room")) {
+	m_trayManager->showFrameStats(OgreBites::TL_BOTTOMLEFT);
+	m_trayManager->showLogo(OgreBites::TL_BOTTOMRIGHT);
+
 	m_room.init();
 
 	m_sinbad = &m_scene.addObject(SinbadFactory::create());
@@ -47,10 +49,10 @@ GameState::GameState() : m_room(ResourceHandler::getInstance().get<Room>("test_r
 
 void GameState::update() {
 	if (GamePad::isKeyPressed(GameKey::Start)) {
-		m_stateStack->push<MainMenuState>();
+		hide();
+		m_stateStack->push<PauseMenuState>(this);
 		return;
 	}
-
 	m_scene.update();
 }
 
