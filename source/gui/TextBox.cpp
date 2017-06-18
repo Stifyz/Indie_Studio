@@ -79,13 +79,15 @@ void TextBox::setText(const std::string &str) {
 }
 
 void TextBox::update() {
+	// remove the line after the 100th
 	auto &s = OgreData::getInstance().chatBuffer();
 	while (std::count(s.begin(), s.end(), '\n') > 100) {
 		s = s.substr(0, s.rfind('\n'));
 	}
 	m_textBox->setText(s);
-	// TO DO Receive here
-	// std::string str;
-	// str = receive();
-	// getLine(str);
+
+	// Keep scroll down in RO box
+	if (m_textBox->getName() == "ChatBox_RO" &&
+			std::count(s.begin(), s.end(), '\n') > m_textBox->getHeightInLines())
+		m_textBox->setScrollPercentage(1);
 }
