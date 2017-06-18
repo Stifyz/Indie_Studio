@@ -21,6 +21,7 @@
 #include "EntityListComponent.hpp"
 #include "GamePadMovement.hpp"
 #include "HealthComponent.hpp"
+#include "LifeBarBehaviour.hpp"
 #include "LifetimeComponent.hpp"
 #include "MovementComponent.hpp"
 #include "PlayerMovementBehaviour.hpp"
@@ -41,7 +42,8 @@ SceneObject DiabolousFactory::create() {
 	Ogre::Entity *bodyEntity = entityListComponent.addEntity("DiabolousBody", "Diabolous.mesh", true);
 	bodyEntity->setMaterialName("Diabolous");
 
-	// auto &behaviourComponent = object.set<BehaviourComponent>();
+	auto &behaviourComponent = object.set<BehaviourComponent>();
+	behaviourComponent.addBehaviour<LifeBarBehaviour>("LifeBar", bodyNodeComponent.root, Ogre::Vector3(0, 6, 0));
 	// auto &diabolousAttackBehaviour = behaviourComponent.addBehaviour<AttackBehaviour>("Fight");
 
 	auto &movementComponent = object.set<MovementComponent>(new GamePadMovement);
