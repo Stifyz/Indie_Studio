@@ -5,7 +5,7 @@
 // Login   <maxime.maisonnas@epitech.eu>
 //
 // Started on  Sun Jun  4 15:13:20 2017 Maxime Maisonnas
-// Last update Sun Jun 18 01:32:46 2017 Maxime Maisonnas
+// Last update Sun Jun 18 16:26:30 2017 Maxime Maisonnas
 //
 
 #ifndef CLASS_1_HPP_
@@ -27,7 +27,6 @@ namespace chat {
     TextMsg         &operator=(TextMsg const &);
 
     virtual void    serialize(ComStream &ss) const;
-
     virtual void    deserialize(ComStream &ss);
 
     void            writee(void);

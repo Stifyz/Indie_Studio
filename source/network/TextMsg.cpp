@@ -5,7 +5,7 @@
 // Login   <maxime.maisonnas@epitech.eu>
 //
 // Started on  Sat Jun 17 18:40:39 2017 Maxime Maisonnas
-// Last update Sun Jun 18 01:32:44 2017 Maxime Maisonnas
+// Last update Sun Jun 18 16:26:17 2017 Maxime Maisonnas
 //
 
 #include "TextMsg.hpp"
@@ -25,11 +25,11 @@ namespace chat {
   }
 
   void    TextMsg::serialize(ComStream &ss) const {
-    ss << m_id << m_msg << m_chan;
+    ss << m_id << m_msg << m_chan << m_idTarget;
   }
 
   void    TextMsg::deserialize(ComStream &ss) {
-    ss >> m_id >> m_msg >> m_chan;
+    ss >> m_id >> m_msg >> m_chan >> m_idTarget;
   }
 
   void    TextMsg::writee(void) {

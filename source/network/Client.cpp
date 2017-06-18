@@ -5,7 +5,7 @@
 // Login   <maxime.maisonnas@epitech.eu>
 //
 // Started on  Mon May 22 17:31:35 2017 Maxime Maisonnas
-// Last update Sun Jun 18 04:26:19 2017 Maxime Maisonnas
+// Last update Sun Jun 18 16:34:06 2017 Maxime Maisonnas
 //
 
 #include "Client.hpp"
@@ -93,16 +93,12 @@ void        Client::mySelect(void) {
     throw NetErr("can not select");
 }
 
-void          Client::send(ICom const &elem) {
-  ComStream   ss;
-
-  elem.serialize(ss);
+void          Client::send(com::Packet const packet) {
   checkAlive();
-  dprintf(m_sock.fd, "%s\n", ss.str().c_str());
+  dprintf(m_sock.fd, "%s\r\n", packet.str().str().c_str());
 }
 
-bool          Client::get(ICom &elem) {
-  ComStream   ss;
+bool          Client::get(com::Packet &packet) {
   size_t      r;
   char        buff[BUFF_SIZE];
 
@@ -111,8 +107,7 @@ bool          Client::get(ICom &elem) {
     if ((r = recv(m_sock.fd, buff, BUFF_SIZE, 0)) == 0)
       throw Stop();
     m_buf->add(buff, r);
-    ss.str(m_buf->get());
-    elem.deserialize(ss);
+    packet.str(m_buf->get());
   } catch (...) {
     close(m_sock.fd);
     m_sock.fd = -1;
@@ -121,7 +116,7 @@ bool          Client::get(ICom &elem) {
   return (true);
 }
 
-bool          Client::get(chat::TextMsg &elem) {
+bool          Client::get(com::Packet &packet, chat::TextMsg &elem) {
   ComStream   ss;
   size_t      r = 0;
   char        buff[BUFF_SIZE];
@@ -134,7 +129,8 @@ bool          Client::get(chat::TextMsg &elem) {
         throw Error("invalid input");
       m_buf->add(buff, r);
       elem = chat::TextMsg(m_id, m_buf->get(), chat::PUBLIC);
-      send(elem);
+      packet.set(m_id, com::CHAT, elem);
+      send(packet);
       return (false);
     }
   }
@@ -143,8 +139,7 @@ bool          Client::get(chat::TextMsg &elem) {
       if ((r = recv(m_sock.fd, buff, BUFF_SIZE, 0)) == 0)
         throw Stop();
       m_buf->add(buff, r);
-      ss.str(m_buf->get());
-      elem.deserialize(ss);
+      packet.str(m_buf->get());
       return (true);
     }
   } catch (...) {

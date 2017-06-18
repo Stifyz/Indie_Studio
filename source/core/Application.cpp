@@ -21,15 +21,23 @@
 
 void 		networkLoop(INetwork *network, bool isServer) {
   chat::TextMsg msg(network->id(), "Yooo !", chat::PUBLIC);
+  ComStream cs;
+  com::Packet packet;
 
   while (1) {
 		try {
-	    if (network->get(msg)) {
+	    if (network->get(packet, msg)) {
+        // std::cerr << "get something" << '\n';
 				if (isServer)
-					network->send(msg);
-	      if ((msg.m_id != network->id() && msg.m_chan != chat::PRIVATE)
-	        || (msg.m_chan == chat::PRIVATE && msg.m_idTarget == network->id()))
-	        msg.writee();
+					network->send(packet);
+        if (packet.getType() == com::CHAT) {
+          // std::cerr << "get chat" << '\n';
+          msg.deserialize(packet.getData());
+          // msg.writee();
+  	      if ((msg.m_id != network->id() && msg.m_chan != chat::PRIVATE)
+  	        || (msg.m_chan == chat::PRIVATE && msg.m_idTarget == network->id()))
+  	        msg.writee();
+        }
 	    }
 		} catch (std::exception &e) {
 			if (!isServer) {

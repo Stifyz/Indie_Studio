@@ -5,7 +5,7 @@
 // Login   <maxime.maisonnas@epitech.eu>
 //
 // Started on  Sun Jun 18 00:53:06 2017 Maxime Maisonnas
-// Last update Sun Jun 18 04:26:26 2017 Maxime Maisonnas
+// Last update Sun Jun 18 16:04:10 2017 Maxime Maisonnas
 //
 
 #ifndef ENCAPS_SERVER_HPP_
@@ -38,9 +38,9 @@ public:
   Server(bool const listenStandardInput = false);
   virtual ~Server();
 
-  virtual void send(ICom const &);
-  virtual bool get(ICom &);
-  virtual bool get(chat::TextMsg &);
+  virtual void send(com::Packet const);
+  virtual bool get(com::Packet &);
+  virtual bool get(com::Packet &, chat::TextMsg &);
   virtual void mySelect(void);
   virtual int id(void) const { return (0); }
   void quit(void);

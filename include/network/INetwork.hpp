@@ -5,22 +5,22 @@
 // Login   <maxime.maisonnas@epitech.eu>
 //
 // Started on  Sun Jun 18 01:40:46 2017 Maxime Maisonnas
-// Last update Sun Jun 18 04:27:43 2017 Maxime Maisonnas
+// Last update Sun Jun 18 16:04:01 2017 Maxime Maisonnas
 //
 
 #ifndef INETWORK_HPP_
 # define INETWORK_HPP_
 
-# include "ICom.hpp"
+# include "Packet.hpp"
 # include "TextMsg.hpp"
 
 class INetwork {
 public:
   virtual ~INetwork() = default;
 
-  virtual void send(ICom const &) = 0;
-  virtual bool get(ICom &) = 0;
-  virtual bool get(chat::TextMsg &) = 0;
+  virtual void send(com::Packet const) = 0;
+  virtual bool get(com::Packet &) = 0;
+  virtual bool get(com::Packet &, chat::TextMsg &) = 0;
   virtual void mySelect(void) = 0;
   virtual int id(void) const = 0;
 };

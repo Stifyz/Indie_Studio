@@ -5,7 +5,7 @@
 // Login   <maxime.maisonnas@epitech.eu>
 //
 // Started on  Sun Jun 18 00:53:21 2017 Maxime Maisonnas
-// Last update Sun Jun 18 04:44:33 2017 Maxime Maisonnas
+// Last update Sun Jun 18 16:36:16 2017 Maxime Maisonnas
 //
 
 #include "Server.hpp"
@@ -79,8 +79,7 @@ void    Server::init() {
   if ((m_sock.fd = socket(AF_INET, SOCK_STREAM, m_sock.pe->p_proto)) == -1)
     throw NetErr("can not open socket");
   m_sock.s_in.sin_family = AF_INET;
-  // m_sock.s_in.sin_port = 0;
-  m_sock.s_in.sin_port = ntohs(4244);
+  m_sock.s_in.sin_port = 0;
   m_sock.s_in.sin_addr.s_addr = INADDR_ANY;
   if (bind(m_sock.fd, (struct sockaddr *)&m_sock.s_in, sizeof(m_sock.s_in)) == -1)
     throw NetErr("can not bind port");
@@ -160,22 +159,20 @@ bool        Server::checkAlive(int &fd, int const &index) {
   return (true);
 }
 
-void          Server::send(ICom const &elem) {
+void          Server::send(com::Packet const packet) {
   size_t      i = 1;
-  ComStream   ss;
 
-  elem.serialize(ss);
   mySelect();
   for (std::vector<t_socket>::iterator it = m_clients.begin(); it != m_clients.end(); it++) {
     if (it->fd != -1) {
       if (checkAlive(it->fd, i))
-        dprintf(it->fd, "%s\n", ss.str().c_str());
+        dprintf(it->fd, "%s\r\n", packet.str().str().c_str());
     }
     i++;
   }
 }
 
-bool          Server::get(ICom &elem) {
+bool          Server::get(com::Packet &packet) {
   size_t      i = 1;
   size_t      r = 0;
   char        buff[BUFF_SIZE];
@@ -190,8 +187,7 @@ bool          Server::get(ICom &elem) {
           if ((r = recv(it->fd, buff, BUFF_SIZE, 0)) == 0)
             throw Stop();
           m_buf->add(buff, r);
-          ss.str(m_buf->get());
-          elem.deserialize(ss);
+          packet.str(m_buf->get());
           return (true);
         } catch (...) {
           std::cerr << "Client " << i << " has disconnected\n";
@@ -205,7 +201,7 @@ bool          Server::get(ICom &elem) {
   return (false);
 }
 
-bool          Server::get(chat::TextMsg &elem) {
+bool          Server::get(com::Packet &packet, chat::TextMsg &elem) {
   size_t      i = 1;
   size_t      r = 0;
   char        buff[BUFF_SIZE];
@@ -220,8 +216,7 @@ bool          Server::get(chat::TextMsg &elem) {
           if ((r = recv(it->fd, buff, BUFF_SIZE, 0)) == 0)
             throw Stop();
           m_buf->add(buff, r);
-          ss.str(m_buf->get());
-          elem.deserialize(ss);
+          packet.str(m_buf->get());
           return (true);
         } catch (...) {
           std::cerr << "Client " << i << " has disconnected\n";
@@ -236,7 +231,8 @@ bool          Server::get(chat::TextMsg &elem) {
     if ((r = read(0, buff, BUFF_SIZE)) == 0)
       throw Error("invalid input");
     m_buf->add(buff, r);
-    elem = chat::TextMsg(0, m_buf->get(), chat::PUBLIC);
+    elem = chat::TextMsg(id(), m_buf->get(), chat::PUBLIC);
+    packet.set(id(), com::CHAT, elem);
     return (true);
   }
   return (false);

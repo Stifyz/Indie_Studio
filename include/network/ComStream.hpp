@@ -5,7 +5,7 @@
 // Login   <maxime.maisonnas@epitech.eu>
 //
 // Started on  Sun Jun  4 17:08:11 2017 Maxime Maisonnas
-// Last update Fri Jun  9 14:42:42 2017 Maxime Maisonnas
+// Last update Sun Jun 18 15:14:54 2017 Maxime Maisonnas
 //
 
 #ifndef COM_STREAM_HPP_
@@ -14,6 +14,7 @@
 # include <sstream>
 # include <string.h>
 # include <unistd.h>
+
 # include "Error.hpp"
 
 class             ComStream {

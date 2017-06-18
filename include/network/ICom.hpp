@@ -5,7 +5,7 @@
 // Login   <maxime.maisonnas@epitech.eu>
 //
 // Started on  Sat May 20 17:43:18 2017 Maxime Maisonnas
-// Last update Sun Jun 18 01:35:06 2017 Maxime Maisonnas
+// Last update Sun Jun 18 15:14:58 2017 Maxime Maisonnas
 //
 
 #ifndef ICOM_HPP_
@@ -23,8 +23,15 @@
 
 # include <string>
 
-# include "Error.hpp"
 # include "ComStream.hpp"
+
+namespace com {
+  enum TYPE {
+    ACTION = 0,
+    DIRECTION = 1,
+    CHAT = 2
+  };
+};
 
 typedef struct        s_socket {
   struct protoent			*pe;
@@ -36,12 +43,12 @@ typedef struct        s_socket {
 }                     t_socket;
 
 /* Interface pour communiquer via le réseau */
-class             ICom {
+class ICom {
 public:
   virtual ~ICom() = default;
 
-  virtual void    serialize(ComStream &) const = 0;
-  virtual void    deserialize(ComStream &) = 0;
+  virtual void serialize(ComStream &) const = 0;
+  virtual void deserialize(ComStream &) = 0;
 };
 
 #endif /* end of include guard: ICOM_HPP_ */

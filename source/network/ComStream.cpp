@@ -5,7 +5,7 @@
 // Login   <maxime.maisonnas@epitech.eu>
 //
 // Started on  Sun Jun  4 17:08:08 2017 Maxime Maisonnas
-// Last update Thu Jun 15 21:59:49 2017 Maxime Maisonnas
+// Last update Sun Jun 18 16:29:23 2017 Maxime Maisonnas
 //
 
 #include "ComStream.hpp"
@@ -57,7 +57,7 @@ ComStream           &ComStream::operator>>(std::string &val) {
 
 
 std::string   ComStream::str(void) const {
-  return (m_stream + '\r');
+  return (m_stream);
 }
 
 void   ComStream::str(std::string const &str) {
