@@ -20,7 +20,7 @@
 
 class ArcherFactory {
 	public:
-		static SceneObject create();
+		static SceneObject create(int const x, int const y);
 };
 
 #endif // ARCHERFACTORY_HPP_

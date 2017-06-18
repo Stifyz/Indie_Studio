@@ -21,6 +21,7 @@
 void MovementSystem::process(SceneObject &object) {
 	Ogre::SceneNode *root = object.get<SceneNodeComponent>().root;
 	Ogre::SceneNode *node = object.get<SceneNodeComponent>().node;
+	VectorCom tqt;
 
 	if(object.has<MovementComponent>()) {
 		auto &movement = object.get<MovementComponent>();
@@ -49,7 +50,6 @@ void MovementSystem::process(SceneObject &object) {
 			movement.behaviour->update(object);
 
 		root->setPosition(root->getPosition() + movement.v * movement.speed);
-		// std::cerr << "setPosition" << '\n';
 		// OgreData::getInstance().network().send();
 
 		movement.v = 0;

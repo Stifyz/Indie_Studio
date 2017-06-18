@@ -31,7 +31,7 @@ GameState::GameState() : m_room(ResourceHandler::getInstance().get<Room>("test_r
 	m_room.init();
 
 	m_sinbad = &m_scene.addObject(SinbadFactory::create());
-	m_scene.addObject(ArcherFactory::create());
+	m_scene.addObject(ArcherFactory::create(30, 30));
 	m_camera = &m_scene.addObject(CameraFactory::create(*m_sinbad));
 
 	m_scene.addObject(HeartFactory::create(Ogre::Vector3(30, 1.5, 30)));
@@ -53,4 +53,3 @@ void GameState::update() {
 
 	m_scene.update();
 }
-

@@ -20,6 +20,8 @@
 #include "Movement.hpp"
 #include "OgreVector3.h"
 
+#include "VectorCom.hpp"
+
 class MovementComponent {
 	public:
 		MovementComponent(Movement *_movement) : movement(_movement) {}

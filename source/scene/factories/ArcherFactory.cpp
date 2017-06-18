@@ -24,11 +24,11 @@
 #include "PlayerMovementBehaviour.hpp"
 #include "SceneNodeComponent.hpp"
 
-SceneObject ArcherFactory::create() {
+SceneObject ArcherFactory::create(int const x, int const y) {
 	SceneObject object("Archer");
 	object.set<CollisionComponent>();
 
-	auto &bodyNodeComponent = object.set<SceneNodeComponent>(Ogre::Vector3(30, ARCHER_HEIGHT, 30), Ogre::Vector3(0.3, 0.3, 0.3));
+	auto &bodyNodeComponent = object.set<SceneNodeComponent>(Ogre::Vector3(x, ARCHER_HEIGHT, y), Ogre::Vector3(0.3, 0.3, 0.3));
 	auto &entityListComponent = object.set<EntityListComponent>(bodyNodeComponent.node);
 
 	Ogre::Entity *bodyEntity = entityListComponent.addEntity("ArcherBody", "Archer.mesh", true);
@@ -54,4 +54,3 @@ SceneObject ArcherFactory::create() {
 
 	return object;
 }
-

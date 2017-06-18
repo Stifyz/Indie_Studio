@@ -5,7 +5,7 @@
 // Login   <maxime.maisonnas@epitech.eu>
 //
 // Started on  Sat May 20 17:43:18 2017 Maxime Maisonnas
-// Last update Sun Jun 18 15:14:58 2017 Maxime Maisonnas
+// Last update Sun Jun 18 17:56:28 2017 Maxime Maisonnas
 //
 
 #ifndef ICOM_HPP_
@@ -27,9 +27,10 @@
 
 namespace com {
   enum TYPE {
-    ACTION = 0,
+    POSITION = 0,
     DIRECTION = 1,
-    CHAT = 2
+    CHAT = 2,
+    NEW_PERSO = 3
   };
 };
 

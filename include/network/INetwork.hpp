@@ -5,7 +5,7 @@
 // Login   <maxime.maisonnas@epitech.eu>
 //
 // Started on  Sun Jun 18 01:40:46 2017 Maxime Maisonnas
-// Last update Sun Jun 18 16:04:01 2017 Maxime Maisonnas
+// Last update Sun Jun 18 18:25:34 2017 Maxime Maisonnas
 //
 
 #ifndef INETWORK_HPP_
@@ -22,7 +22,7 @@ public:
   virtual bool get(com::Packet &) = 0;
   virtual bool get(com::Packet &, chat::TextMsg &) = 0;
   virtual void mySelect(void) = 0;
-  virtual int id(void) const = 0;
+  virtual unsigned int id(void) const = 0;
 };
 
 #endif /* end of include guard: INETWORK_HPP_ */

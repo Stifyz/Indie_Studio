@@ -19,11 +19,14 @@
 
 #include "RoomLoader.hpp"
 
-bool loop = true;
+#include "NewCharacterCom.hpp"
+#include "VectorCom.hpp"
+
+static bool loop = true;
 
 void 		networkLoop(INetwork *network, bool isServer) {
   chat::TextMsg msg(network->id(), "Yooo !", chat::PUBLIC);
-  ComStream cs;
+  NewCharacterCom charac;
   com::Packet packet;
 
   while (loop) {
@@ -31,17 +34,21 @@ void 		networkLoop(INetwork *network, bool isServer) {
 	    if (network->get(packet)) {
 				if (isServer)
 					network->send(packet);
-        if (packet.getType() == com::CHAT) {
+        if (packet.getType() == com::CHAT && packet.getId() != network->id()) {
           msg.deserialize(packet.getData());
   	      if ((msg.m_id != network->id() && msg.m_chan != chat::PRIVATE)
   	        || (msg.m_chan == chat::PRIVATE && msg.m_idTarget == network->id()))
   	        msg.writee();
         }
+        if (packet.getType() == com::NEW_PERSO && packet.getId() != network->id()) {
+          charac.deserialize(packet.getData());
+          // ICI
+        }
 	    }
 		} catch (std::exception &e) {
 			if (!isServer) {
 				std::cerr << e.what() << '\n';
-				break ;
+				loop = false;
 			}
 		}
   }
