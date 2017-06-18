@@ -51,12 +51,8 @@ SceneObject DiabolousFactory::create() {
 	}
 
 	animationListComponent.setLoop("Attack", false);
-<<<<<<< Updated upstream
-	animationListComponent.setActiveAnimation(0, "Walk");
-=======
 	animationListComponent.setLoop("Hit", false);
-	animationListComponent.setActiveAnimation(0, "Wings");
->>>>>>> Stashed changes
+	animationListComponent.setActiveAnimation(0, "Idle");
 
 	return object;
 }
