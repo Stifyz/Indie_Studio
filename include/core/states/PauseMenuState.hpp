@@ -2,31 +2,24 @@
 |*                                                          *|
 |* Copyright (C) (2017) by zimmer_n
 |*                                                          *|
-|* MainMenuState.hpp for project :
+|* PauseMenuState.hpp for project :
 |*                                                          *|
-|* Created: 2017-06-15 13:25
+|* Created: 2017-06-15 11:13
 |*                                                          *|
 \************************************************************/
 
-#ifndef MAINMENUSTATE_HPP_
-#define MAINMENUSTATE_HPP_
-
-#include <OgreCamera.h>
+#ifndef PAUSEMENUSTATE_HPP_
+#define PAUSEMENUSTATE_HPP_
 
 #include "ApplicationState.hpp"
-#include "Background.hpp"
-#include "Scene.hpp"
 
-class MainMenuState : public ApplicationState {
+class PauseMenuState : public ApplicationState {
 	public:
-		MainMenuState();
+		PauseMenuState(ApplicationState *parent);
 
 		void update() override;
 
 		void buttonHit(OgreBites::Button *button) override;
-	private:
-		Background m_background;
-		Ogre::Camera *m_camera;
 };
 
-#endif // !MAINMENUSTATE_HPP_
+#endif // !PAUSEMENUSTATE_HPP_

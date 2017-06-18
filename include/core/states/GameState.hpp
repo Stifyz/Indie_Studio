@@ -15,7 +15,9 @@
 #define GAMESTATE_HPP_
 
 #include "ApplicationState.hpp"
+#include "HudManager.hpp"
 #include "Scene.hpp"
+#include "TextBox.hpp"
 
 #include "Room.hpp"
 
@@ -26,11 +28,14 @@ class GameState : public ApplicationState {
 		void update() override;
 
 	private:
+		HudManager m_hud;
+
 		Room &m_room;
 
 		Scene m_scene;
 		SceneObject *m_sinbad = nullptr;
 		SceneObject *m_camera = nullptr;
+		std::unique_ptr<TextBox> m_textBox = nullptr;
 };
 
 #endif // GAMESTATE_HPP_

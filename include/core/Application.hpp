@@ -21,7 +21,9 @@
 #include "ApplicationStateStack.hpp"
 #include "GameClock.hpp"
 #include "KeyboardHandler.hpp"
+#include "MenuState.hpp"
 #include "ResourceHandler.hpp"
+// #include "Ui.hpp"
 
 class Application : public OgreBites::ApplicationContext, public OgreBites::InputListener {
 	public:
@@ -49,7 +51,7 @@ class Application : public OgreBites::ApplicationContext, public OgreBites::Inpu
 		KeyboardHandler m_keyboardHandler;
 		ResourceHandler m_resourceHandler;
 
-		OgreBites::TrayManager *m_trayManager = nullptr;
+		// std::unique_ptr<MenuState> m_menu = nullptr;
 };
 
 #endif // APPLICATION_HPP_

@@ -2,31 +2,27 @@
 |*                                                          *|
 |* Copyright (C) (2017) by zimmer_n
 |*                                                          *|
-|* MainMenuState.hpp for project :
+|* ChatState.hpp for project :
 |*                                                          *|
-|* Created: 2017-06-15 13:25
+|* Created: 2017-06-18 01:20
 |*                                                          *|
 \************************************************************/
 
-#ifndef MAINMENUSTATE_HPP_
-#define MAINMENUSTATE_HPP_
-
-#include <OgreCamera.h>
+#ifndef CHATSTATE_HPP_
+#define CHATSTATE_HPP_
 
 #include "ApplicationState.hpp"
-#include "Background.hpp"
-#include "Scene.hpp"
+#include "TextBox.hpp"
 
-class MainMenuState : public ApplicationState {
+class ChatState : public ApplicationState {
 	public:
-		MainMenuState();
+		ChatState(ApplicationState *parent);
 
-		void update() override;
-
-		void buttonHit(OgreBites::Button *button) override;
+		void update();
+		void buttonHit(OgreBites::Button *button);
 	private:
-		Background m_background;
-		Ogre::Camera *m_camera;
+		TextBox m_textBox;
+		bool firstTurn = true;
 };
 
-#endif // !MAINMENUSTATE_HPP_
+#endif // !CHATSTATE_HPP_
