@@ -12,6 +12,7 @@
  * =====================================================================================
  */
 #include "ArrowFactory.hpp"
+#include "AnimationListComponent.hpp"
 #include "CollisionComponent.hpp"
 #include "EasyBehaviour.hpp"
 #include "EasyMovement.hpp"
@@ -24,7 +25,7 @@ SceneObject ArrowFactory::create(const Ogre::Vector3 &pos, const Ogre::Vector3 &
 	static unsigned long int arrowID = 0;
 
 	SceneObject object{"Arrow" + std::to_string(arrowID++)};
-	object.set<CollisionComponent>();
+	object.set<CollisionComponent>().addAction(&ArrowFactory::arrowAction);
 	object.set<LifetimeComponent>(500);
 
 	auto &movementComponent = object.set<MovementComponent>(new EasyMovement([v] (SceneObject &object) {
@@ -42,5 +43,13 @@ SceneObject ArrowFactory::create(const Ogre::Vector3 &pos, const Ogre::Vector3 &
 	entityListComponent.addEntity(object.name() + "Body", "Arrow.mesh", true);
 
 	return object;
+}
+
+void ArrowFactory::arrowAction(SceneObject &arrow, SceneObject &object, bool inCollision) {
+	if (inCollision && object.name() == "Diabolous") {
+		auto &animationListComponent = object.get<AnimationListComponent>();
+		if (animationListComponent.isAnimationFinished("Hit"))
+			animationListComponent.setActiveAnimation(0, "Hit", true);
+	}
 }
 

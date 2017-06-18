@@ -32,6 +32,10 @@ void PlayerMovementBehaviour::updateAnimation(SceneObject &object) {
 	auto &movementComponent = object.get<MovementComponent>();
 	auto &animationListComponent = object.get<AnimationListComponent>();
 
+	if (std::string("Hit") == animationListComponent.getActiveAnimation(0) && animationListComponent.isAnimationFinished("Hit")) {
+		animationListComponent.setActiveAnimation(0, (movementComponent.isMoving) ? m_walkAnimations.at(0) : m_idleAnimations.at(0));
+	}
+
 	if (m_oldMovingState != movementComponent.isMoving) {
 		const AnimList &activeAnimList = (movementComponent.isMoving) ? m_walkAnimations : m_idleAnimations;
 		const AnimList &inactiveAnimList = (!movementComponent.isMoving) ? m_walkAnimations : m_idleAnimations;

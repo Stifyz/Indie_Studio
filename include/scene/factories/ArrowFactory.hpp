@@ -21,6 +21,9 @@
 class ArrowFactory {
 	public:
 		static SceneObject create(const Ogre::Vector3 &pos, const Ogre::Vector3 &v);
+
+	private:
+		static void arrowAction(SceneObject &arrow, SceneObject &object, bool inCollision);
 };
 
 #endif // ARROWFACTORY_HPP_
