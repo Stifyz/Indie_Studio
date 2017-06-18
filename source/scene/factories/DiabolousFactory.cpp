@@ -34,8 +34,8 @@ SceneObject DiabolousFactory::create() {
 	Ogre::Entity *bodyEntity = entityListComponent.addEntity("DiabolousBody", "Diabolous.mesh", true);
 	bodyEntity->setMaterialName("Diabolous");
 
-	auto &behaviourComponent = object.set<BehaviourComponent>();
-	auto &diabolousAttackBehaviour = behaviourComponent.addBehaviour<AttackBehaviour>("Fight");
+	// auto &behaviourComponent = object.set<BehaviourComponent>();
+	// auto &diabolousAttackBehaviour = behaviourComponent.addBehaviour<AttackBehaviour>("Fight");
 
 	auto &movementComponent = object.set<MovementComponent>(new GamePadMovement);
 	movementComponent.behaviour.reset(new PlayerMovementBehaviour({"Idle"}, {"Walk"}));
@@ -43,14 +43,16 @@ SceneObject DiabolousFactory::create() {
 	const char *animNames[] = {"Attack", "Walk", "Idle", "Hit", "Die"};
 
 	auto &animationListComponent = object.set<AnimationListComponent>();
-	animationListComponent.setAnimationEndCallback(std::bind(&AttackBehaviour::animationEndCallback, &diabolousAttackBehaviour, std::placeholders::_1, std::placeholders::_2));
+	// animationListComponent.setAnimationEndCallback(std::bind(&AttackBehaviour::animationEndCallback, &diabolousAttackBehaviour, std::placeholders::_1, std::placeholders::_2));
 	for (const char *animName : animNames) {
 		Animation &anim = animationListComponent.add(bodyEntity, animName);
        	anim.speed = (anim.name != "Attack") ? 1.75f : 1.0f;
+       	anim.speed = (anim.name != "Attack") ? ((anim.name == "Hit") ? 3.0f : 1.75f) : 1.0f;
 	}
 
 	animationListComponent.setLoop("Attack", false);
-	animationListComponent.setActiveAnimation(0, "Walk");
+	animationListComponent.setLoop("Hit", false);
+	animationListComponent.setActiveAnimation(0, "Idle");
 
 	return object;
 }
