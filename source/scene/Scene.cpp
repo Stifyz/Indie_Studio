@@ -49,6 +49,14 @@ void Scene::checkCollisionsFor(SceneObject &object) {
 	for(SceneObject &object2 : m_objects) {
 		if(&object != &object2) {
 			CollisionSystem::checkCollision(object, object2);
+
+			if (object.has<SceneObjectList>())
+				for (SceneObject &child : object.get<SceneObjectList>())
+					CollisionSystem::checkCollision(child, object2);
+
+			if (object2.has<SceneObjectList>())
+				for (SceneObject &child : object2.get<SceneObjectList>())
+					CollisionSystem::checkCollision(object, child);
 		}
 	}
 }

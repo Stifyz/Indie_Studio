@@ -13,6 +13,7 @@
  */
 #include "AnimationSystem.hpp"
 #include "BehaviourSystem.hpp"
+#include "LifetimeSystem.hpp"
 #include "MovementSystem.hpp"
 #include "SceneSystem.hpp"
 
@@ -21,11 +22,17 @@ void SceneSystem::reset(SceneObjectList &objectList) {
 }
 
 void SceneSystem::update(SceneObjectList &objectList) {
+	LifetimeSystem::process(objectList);
+
 	for(auto &object : objectList) updateObject(object);
 }
 
 void SceneSystem::resetObject(SceneObject &object) {
 	BehaviourSystem::reset(object);
+
+	if(object.has<SceneObjectList>()) {
+		reset(object.get<SceneObjectList>());
+	}
 }
 
 void SceneSystem::updateObject(SceneObject &object) {

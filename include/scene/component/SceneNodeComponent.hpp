@@ -22,10 +22,11 @@
 
 class SceneNodeComponent {
 	public:
-		SceneNodeComponent(Ogre::SceneNode *_root, Ogre::SceneNode *_node) {
+		SceneNodeComponent(Ogre::SceneNode *_root, Ogre::SceneNode *_node = nullptr) {
 			root = _root;
 			node = root->createChildSceneNode();
-			node->setAutoTracking(true, _node);
+			if (_node)
+				node->setAutoTracking(true, _node);
 		}
 
 		SceneNodeComponent(const Ogre::Vector3 &pos, const Ogre::Vector3 &scale = Ogre::Vector3::UNIT_SCALE) {
