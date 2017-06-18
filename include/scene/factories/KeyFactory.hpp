@@ -1,0 +1,26 @@
+/*
+ * =====================================================================================
+ *
+ *       Filename:  KeyFactory.hpp
+ *
+ *    Description:
+ *
+ *        Created:  17/06/2017 15:31:07
+ *
+ *         Author:  Quentin Bazin, <quent42340@gmail.com>
+ *
+ * =====================================================================================
+ */
+#ifndef KEYFACTORY_HPP_
+#define KEYFACTORY_HPP_
+
+#include <OgreVector3.h>
+
+#include "SceneObject.hpp"
+
+class KeyFactory {
+	public:
+		static SceneObject create(const Ogre::Vector3 &pos);
+};
+
+#endif // KEYFACTORY_HPP_

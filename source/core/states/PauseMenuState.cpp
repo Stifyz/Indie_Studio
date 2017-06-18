@@ -8,13 +8,14 @@
 |*                                                          *|
 \************************************************************/
 
+#include "AudioPlayer.hpp"
 #include "PauseMenuState.hpp"
 
 PauseMenuState::PauseMenuState(ApplicationState *parent) : ApplicationState("PauseMenu", parent) {
 	OgreBites::TrayManager *trayManager = OgreData::getInstance().trayManager();
 	trayManager->setListener(this);
 
-	trayManager->createButton(OgreBites::TL_CENTER, "start", "Pause Game", 200);
+	trayManager->createButton(OgreBites::TL_CENTER, "start", "Resume Game", 200);
 	trayManager->createButton(OgreBites::TL_CENTER, "quit", "Quit", 200);
 }
 
@@ -22,6 +23,8 @@ void PauseMenuState::update() {
 }
 
 void PauseMenuState::buttonHit(OgreBites::Button *button) {
+	AudioPlayer::playEffect("menu_select1");
+
 	if (button->getName() == "start") {
 		// m_trayManager->destroyAllWidgetsInTray(OgreBites::TrayLocation::TL_CENTER);
 		m_stateStack->pop();

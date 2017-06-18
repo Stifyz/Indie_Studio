@@ -16,11 +16,14 @@
 
 #include <OgreVector3.h>
 
-#include "SceneObject.hpp"
+#include "CollisionComponent.hpp"
 
 class HeartFactory {
 	public:
 		static SceneObject create(const Ogre::Vector3 &pos);
+
+	private:
+		static void heartAction(SceneObject &heart, SceneObject &object, const CollisionInfo &info);
 };
 
 #endif // HEARTFACTORY_HPP_

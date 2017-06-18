@@ -17,6 +17,8 @@
 #include "LifetimeSystem.hpp"
 #include "MovementSystem.hpp"
 #include "SceneSystem.hpp"
+#include "SpawnerSystem.hpp"
+#include "RadarSystem.hpp"
 
 void SceneSystem::reset(SceneObjectList &objectList) {
 	for(auto &object : objectList) resetObject(object);
@@ -24,8 +26,20 @@ void SceneSystem::reset(SceneObjectList &objectList) {
 
 void SceneSystem::update(SceneObjectList &objectList) {
 	LifetimeSystem::process(objectList);
+	SpawnerSystem::process(objectList);
+	RadarSystem::process(objectList);
 
-	for(auto &object : objectList) updateObject(object);
+	unsigned long int enemyCount = 0;
+	unsigned long int playerCount = 0;
+	for(auto &object : objectList) {
+		if (object.type() == "Enemy")  ++enemyCount;
+		if (object.type() == "Player") ++playerCount;
+
+		updateObject(object);
+	}
+
+	objectList.setEnemyCount(enemyCount);
+	objectList.setPlayerCount(playerCount);
 }
 
 void SceneSystem::resetObject(SceneObject &object) {
@@ -37,11 +51,9 @@ void SceneSystem::resetObject(SceneObject &object) {
 }
 
 void SceneSystem::updateObject(SceneObject &object) {
-	BehaviourSystem::process(object);
 	AnimationSystem::process(object);
-
-	if (!object.has<LifetimeComponent>() || !object.get<LifetimeComponent>().dead(object))
-		MovementSystem::process(object);
+	BehaviourSystem::process(object);
+	MovementSystem::process(object);
 
 	if(object.has<SceneObjectList>()) {
 		update(object.get<SceneObjectList>());

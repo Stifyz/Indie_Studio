@@ -14,13 +14,16 @@
 #ifndef SINBADFACTORY_HPP_
 #define SINBADFACTORY_HPP_
 
-#include "SceneObject.hpp"
+#include "CollisionComponent.hpp"
 
 #define CHAR_HEIGHT (5 / 1.8)
 
 class SinbadFactory {
 	public:
 		static SceneObject create();
+
+	private:
+		static void swordAction(SceneObject &sinbad, SceneObject &object, const CollisionInfo &infos);
 };
 
 #endif // SINBADFACTORY_HPP_

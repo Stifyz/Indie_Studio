@@ -17,17 +17,15 @@
 void AttackBehaviour::update(SceneObject &object) {
 	auto &animationListComponent = object.get<AnimationListComponent>();
 	// if (Mouse::isButtonPressed(Mouse::Button::Left) && animationListComponent.isAnimationFinished("Attack")) {
-	if (GamePad::isKeyPressed(GameKey::A) && animationListComponent.isAnimationFinished("Attack")) {
-		if (animationListComponent.getActiveAnimation(0) != std::string("Attack"))
+	if ((!m_conditionCallback || m_conditionCallback(object)) && animationListComponent.isAnimationFinished(m_animName.c_str())) {
+		if (animationListComponent.getActiveAnimation(0) != m_animName)
 			m_previousActiveAnimation = animationListComponent.getActiveAnimation(0);
-		animationListComponent.setActiveAnimation(0, "Attack", true)->timer.setTime(6);
+		animationListComponent.setActiveAnimation(0, m_animName.c_str(), true)->timer.setTime(6);
 		action(object);
 	}
 }
 
 void AttackBehaviour::animationEndCallback(AnimationListComponent &animationListComponent, const Animation &animation) const {
-	if (animation.name == "Attack") {
-		animationListComponent.setActiveAnimation(0, m_previousActiveAnimation);
-	}
+	animationListComponent.setActiveAnimation(0, m_previousActiveAnimation);
 }
 

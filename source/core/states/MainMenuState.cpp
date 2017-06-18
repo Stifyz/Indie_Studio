@@ -8,15 +8,16 @@
 |*                                                          *|
 \************************************************************/
 
+#include <Ogre.h>
+
+#include "AudioPlayer.hpp"
 #include "GameState.hpp"
 #include "MainMenuState.hpp"
 #include "OptionMenuState.hpp"
 
-#include <Ogre.h>
-
 MainMenuState::MainMenuState() : ApplicationState("MainMenu") {
-	m_background.init("backgroundmenu3.tga", "Menu");
-	m_background.set("backgroundmenu3.tga", "Menu");
+	m_background.init("MainMenu.png", "Menu");
+	m_background.set();
 
 	auto *sceneManager = OgreData::getInstance().sceneManager();
 	m_camera = sceneManager->createCamera("Camera_Menu");
@@ -28,8 +29,10 @@ MainMenuState::MainMenuState() : ApplicationState("MainMenu") {
 	renderWindow->addViewport(m_camera);
 
 	m_trayManager->createButton(OgreBites::TL_CENTER, "start", "Start Game", 200);
-	m_trayManager->createButton(OgreBites::TL_CENTER, "option", "Option", 200);
+	// m_trayManager->createButton(OgreBites::TL_CENTER, "option", "Option", 200);
 	m_trayManager->createButton(OgreBites::TL_CENTER, "quit", "Quit", 200);
+
+	AudioPlayer::playMusic("title_screen");
 }
 
 void MainMenuState::update() {
@@ -37,13 +40,12 @@ void MainMenuState::update() {
 }
 
 void MainMenuState::buttonHit(OgreBites::Button *button) {
+	AudioPlayer::playEffect("menu_select1");
+
 	if (button->getName() == "start") {
-		// m_trayManager->destroyAllWidgetsInTray(OgreBites::TrayLocation::TL_CENTER);
 		auto *sceneManager = OgreData::getInstance().sceneManager();
-		Ogre::MaterialManager::getSingleton().remove("backgroundmenu3.tga_Main");
 		sceneManager->destroyAllCameras();
-		// m_trayManager.reset(nullptr);
-		// sceneManager->destroyAllMovableObjects();
+
 		Ogre::RenderWindow *renderWindow = OgreData::getInstance().renderWindow();
 		renderWindow->removeAllViewports();
 		m_stateStack->pop();

@@ -11,13 +11,17 @@
  *
  * =====================================================================================
  */
+#include <cstdlib>
+#include <ctime>
+
 #include "Application.hpp"
+#include "AudioLoader.hpp"
 #include "GamePad.hpp"
 #include "GameState.hpp"
 #include "MainMenuState.hpp"
 #include "OgreData.hpp"
 
-#include "RoomLoader.hpp"
+#include "MapLoader.hpp"
 
 #include "NewCharacterCom.hpp"
 #include "VectorCom.hpp"
@@ -55,6 +59,8 @@ void 		networkLoop(INetwork *network, bool isServer) {
 }
 
 Application::Application(int const argc, char **argv) : OgreBites::ApplicationContext("Indie Studio") {
+	srand(time(nullptr));
+
 	addInputListener(this);
 
 	if (argc < 2) {
@@ -69,9 +75,6 @@ Application::Application(int const argc, char **argv) : OgreBites::ApplicationCo
 	}
 
 	GamePad::init(m_keyboardHandler);
-
-	ResourceHandler::setInstance(&m_resourceHandler);
-	ResourceHandler::loadConfigFile<RoomLoader>("res/config/rooms.xml");
 }
 
 Application::~Application() {
@@ -85,6 +88,10 @@ void Application::setup() {
 	OgreBites::ApplicationContext::setup();
 	Ogre::Root *root = getRoot();
 
+	ResourceHandler::setInstance(&m_resourceHandler);
+	ResourceHandler::loadConfigFile<AudioLoader>("res/config/audio.xml");
+	ResourceHandler::loadConfigFile<MapLoader>("res/config/maps.xml");
+
 	Ogre::SceneManager *sceneManager = root->createSceneManager(Ogre::ST_GENERIC);
 	sceneManager->addRenderQueueListener(mOverlaySystem);
 	// sceneManager->setAmbientLight(Ogre::ColourValue(0.2, 0.2, 0.2, 1.0));
@@ -94,8 +101,8 @@ void Application::setup() {
 
 	OgreData::getInstance().init(root, mWindow, sceneManager, this, m_trayManager, m_network.get());
 
-	m_stateStack.push<GameState>();
-	// m_stateStack.push<MainMenuState>();
+	// m_stateStack.push<GameState>();
+	m_stateStack.push<MainMenuState>();
 }
 
 void Application::run() {

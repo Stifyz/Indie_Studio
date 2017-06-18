@@ -55,7 +55,8 @@ bool TextBox::write(bool isFirstTurn) {
 	}
 	else if (c == 13) {
 		INetwork *network = OgreData::getInstance().network();
-		chat::TextMsg msg(network->id(), m_textBox->getCaption(), chat::PUBLIC);
+		std::string name = OgreData::getInstance().name();
+		chat::TextMsg msg(network->id(), std::string('[' + name + "]: " + std::string(m_textBox->getCaption())), chat::PUBLIC);
 		network->send(com::Packet(network->id(), com::CHAT, msg));
 		newLine("Me : " + m_textBox->getCaption());
 		m_textBox->setCaption("");

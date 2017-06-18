@@ -17,12 +17,14 @@
 #include "LifeBarBehaviour.hpp"
 #include "OgreData.hpp"
 
+static unsigned long int lifeBarCount = 0;
+
 LifeBarBehaviour::LifeBarBehaviour(Ogre::SceneNode *root, const Ogre::Vector3 &pos) {
 	Ogre::ColourValue color(0, 1, 0, 1);
 
 	Ogre::SceneNode* myNode = root->createChildSceneNode();
 	Ogre::SceneManager *sceneManager = OgreData::getInstance().sceneManager();
-	Ogre::BillboardSet* lifeBar = sceneManager->createBillboardSet("lifeBar");
+	Ogre::BillboardSet* lifeBar = sceneManager->createBillboardSet("LifeBar" + std::to_string(lifeBarCount++));
 
 	m_billboard = lifeBar->createBillboard(pos);
 	m_billboard->setColour(Ogre::ColourValue(0, 1, 0, 1));

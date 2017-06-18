@@ -24,6 +24,10 @@
 
 #define ANIM_FADE_SPEED 7.5f
 
+class Animation;
+class AnimationListComponent;
+using AnimationEndCallback = std::function<void(AnimationListComponent &, const Animation &)>;
+
 class Animation {
 	public:
 		Animation(Ogre::Entity *entity, const char *name_) : name(name_) {
@@ -41,11 +45,11 @@ class Animation {
 		float speed = 1.0f;
 
 		Timer timer;
+
+		AnimationEndCallback animationEndCallback;
 };
 
 class AnimationListComponent {
-	using AnimationEndCallback = std::function<void(AnimationListComponent &, const Animation &)>;
-
 	public:
 		Animation &add(Ogre::Entity *entity, const char *animName) {
 			m_animationList.emplace(animName, Animation{entity, animName});
@@ -74,6 +78,9 @@ class AnimationListComponent {
 			auto activeAnimIterator = m_activeAnimations.find(id);
 			if (activeAnimIterator != m_activeAnimations.end() && activeAnimIterator->second) {
 				auto oldAnimIterator = m_animationList.find(activeAnimIterator->second);
+				oldAnimIterator->second.timer.reset();
+				oldAnimIterator->second.timer.stop();
+
 				oldAnimIterator->second.fadingIn = false;
 				oldAnimIterator->second.fadingOut = true;
 			}
@@ -91,7 +98,7 @@ class AnimationListComponent {
 				animIterator->second.fadingIn = true;
 				animIterator->second.fadingOut = false;
 				if (reset)
-					animIterator->second.state->setTimePosition(0);
+					animIterator->second.state->setTimePosition(0.0001);
 				return &animIterator->second;
 			}
 
@@ -107,7 +114,20 @@ class AnimationListComponent {
 			Ogre::Real timePos = animIterator->second.state->getTimePosition();
 			Ogre::Real length = animIterator->second.state->getLength();
 
-			return timePos == 0 || timePos >= length;
+			return timePos == 0.0 || timePos >= length;
+		}
+
+		bool isAnimationBetween(const char *name, const unsigned int minPercentage, const unsigned int maxPercentage) {
+			auto animIterator = m_animationList.find(name);
+			if (animIterator == m_animationList.end()) {
+				throw EXCEPTION("Animation not found:", name);
+			}
+
+			Ogre::Real timePos = animIterator->second.state->getTimePosition();
+			Ogre::Real length = animIterator->second.state->getLength();
+
+			return timePos >= (float)length / 100.0f * minPercentage
+			    && timePos <= (float)length / 100.0f * maxPercentage;
 		}
 
 		const Animation &getAnimation(const char *name) const {
@@ -130,8 +150,8 @@ class AnimationListComponent {
 				}
 				anim.timer.start();
 
-				if (anim.state->getTimePosition() >= anim.state->getLength() && m_animationEndCallback)
-					m_animationEndCallback(*this, anim);
+				if (anim.state->getTimePosition() >= anim.state->getLength() && anim.animationEndCallback)
+					anim.animationEndCallback(*this, anim);
 			}
 		}
 
@@ -156,14 +176,14 @@ class AnimationListComponent {
 
 		void setLoop(const char *name, bool loop) { m_animationList.at(name).state->setLoop(loop); }
 
-		void setAnimationEndCallback(const AnimationEndCallback &animationEndCallback) { m_animationEndCallback = animationEndCallback; }
+		void setAnimationEndCallback(const std::string &name, const AnimationEndCallback &animationEndCallback) {
+			m_animationList.at(name).animationEndCallback = animationEndCallback;
+		}
 
 	private:
 		std::map<std::string, Animation> m_animationList;
 
 		std::map<unsigned int, const char *> m_activeAnimations;
-
-		AnimationEndCallback m_animationEndCallback;
 };
 
 #endif // ANIMATIONLISTCOMPONENT_HPP_

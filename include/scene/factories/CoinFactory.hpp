@@ -16,11 +16,14 @@
 
 #include <OgreVector3.h>
 
-#include "SceneObject.hpp"
+#include "CollisionComponent.hpp"
 
 class CoinFactory {
 	public:
 		static SceneObject create(const Ogre::Vector3 &pos);
+
+	private:
+		static void coinAction(SceneObject &heart, SceneObject &object, const CollisionInfo &info);
 };
 
 #endif // COINFACTORY_HPP_

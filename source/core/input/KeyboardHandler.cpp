@@ -16,7 +16,7 @@
 #include "KeyboardHandler.hpp"
 
 KeyboardHandler::KeyboardHandler() {
-	XMLFile doc("res/config/keys.xml");
+	XMLFile doc("res/config/keyboard_keys.xml");
 	tinyxml2::XMLElement *keys = doc.FirstChildElement("keys").ToElement();
 
 	addKey(keys, GameKey::Left,  "Left");

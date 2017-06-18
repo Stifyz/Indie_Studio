@@ -13,13 +13,24 @@
 
 #include <OgreTrays.h>
 
+#include "SceneObject.hpp"
+
+class HealthComponent;
+class ScoreComponent;
+
 class HudManager {
 	public:
 		void init(OgreBites::TrayManager *);
 
-	private:
-		OgreBites::TrayManager *m_trayManager;
+		void addPlayer(const SceneObject &player);
 
+		void update();
+
+	private:
+		std::vector<std::pair<HealthComponent *, ScoreComponent *>> m_players;
+
+		OgreBites::TrayManager *m_trayManager;
+		std::vector<OgreBites::ProgressBar *> m_infoBars;
 };
 
 #endif // !HUDMANAGER_HPP_

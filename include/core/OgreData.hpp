@@ -44,6 +44,7 @@ class OgreData {
 
 		INetwork *network() const { return m_network; }
 		std::string &chatBuffer() { return m_chatBuffer; }
+		std::string &name() { return m_playerName; }
 
 		void setTrayManager(OgreBites::TrayManager *trayManager) { m_trayManager = trayManager; }
 
@@ -79,6 +80,7 @@ class OgreData {
 		OgreBites::KeyboardEvent m_lastReleased;
 
 		std::string m_chatBuffer;
+		std::string m_playerName;
 
 		bool m_isLastPressed = false;
 		bool m_isLastReleased = false;

@@ -19,16 +19,23 @@
 
 void CollisionSystem::checkCollision(SceneObject &object1, SceneObject &object2) {
 	if(object1.has<CollisionComponent>() && object2.has<CollisionComponent>()) {
-		bool inCollision = CollisionSystem::inCollision(object1, object2);
+		auto &collisionComponent1 = object1.get<CollisionComponent>();
+		auto &collisionComponent2 = object2.get<CollisionComponent>();
 
-		object1.get<CollisionComponent>().collisionActions(object1, object2, inCollision);
-		object2.get<CollisionComponent>().collisionActions(object2, object1, inCollision);
+		for (const std::string &entityName1 : collisionComponent1.entitiesToCheck()) {
+			for (const std::string &entityName2 : collisionComponent2.entitiesToCheck()) {
+				CollisionInfo info = CollisionSystem::inCollision(object1, object2, entityName1, entityName2);
+
+				object1.get<CollisionComponent>().collisionActions(object1, object2, info);
+				object2.get<CollisionComponent>().collisionActions(object2, object1, info);
+			}
+		}
 	}
 }
 
-bool CollisionSystem::inCollision(SceneObject &object1, SceneObject &object2) {
-	Ogre::Entity *entity1 = object1.get<EntityListComponent>().getEntity(object1.name() + "Body");
-	Ogre::Entity *entity2 = object2.get<EntityListComponent>().getEntity(object2.name() + "Body");
+CollisionInfo CollisionSystem::inCollision(SceneObject &object1, SceneObject &object2, const std::string &entityName1, const std::string &entityName2) {
+	Ogre::Entity *entity1 = object1.get<EntityListComponent>().getEntity(object1.name() + entityName1);
+	Ogre::Entity *entity2 = object2.get<EntityListComponent>().getEntity(object2.name() + entityName2);
 
 	// FIXME: I should use spheres here but how to apply 'v'?
 	Ogre::AxisAlignedBox box1 = entity1->getWorldBoundingBox();
@@ -46,10 +53,6 @@ bool CollisionSystem::inCollision(SceneObject &object1, SceneObject &object2) {
 		box2.getMaximum() += v;
 	}
 
-	if(box1.intersects(box2)) {
-		return true;
-	}
-
-	return false;
+	return CollisionInfo{box1.intersects(box2), entityName1, entityName2};
 }
 

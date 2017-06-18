@@ -16,9 +16,15 @@
 
 class Background {
 	public:
-		void init(const std::string &fileName, const std::string &sceneName);
-		void set(const std::string &, const std::string &);
+		~Background() { delete m_rect; }
+		void init(const std::string &filename, const std::string &objectName);
+		void set();
 		void update();
+
+	private:
+		std::string m_filename;
+		std::string m_objectName;
+		Ogre::Rectangle2D *m_rect;
 };
 
 #endif // !BACKGROUND_HPP_

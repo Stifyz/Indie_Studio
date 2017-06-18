@@ -38,9 +38,9 @@ namespace chat {
 
     ss << m_id;
     if (m_id == 0)
-      msg = "Server : ";
+      msg = "Ogre: ";
     else {
-      msg = "Client " + ss.str() + " : ";
+      msg = "Archer: ";
     }
     msg += m_msg;
     return (msg);

@@ -14,24 +14,38 @@
 #ifndef HEALTHCOMPONENT_HPP_
 #define HEALTHCOMPONENT_HPP_
 
-#include "IntTypes.hpp"
+#include "Timer.hpp"
 
 class HealthComponent {
 	public:
-		HealthComponent(u8 maxLife, u8 life = 0)
-			: m_maxLife(maxLife), m_life(life ? life : maxLife) {}
+		HealthComponent(const u16 maxLife, const u16 life = 0, const u16 hurtTime = 0)
+			: m_maxLife(maxLife), m_life(life ? life : maxLife), m_hurtTime(hurtTime) {}
 
-		void setLife(u8 newLife) { m_life = (newLife > m_maxLife) ? m_maxLife : newLife; }
-		void addLife(u8 lifeAdded) { setLife(m_life + lifeAdded); }
-		void removeLife(u8 lifeRemoved) { (lifeRemoved > m_life) ? setLife(0) : setLife(m_life - lifeRemoved); }
+		void setLife(const u16 newLife) { m_life = (newLife > m_maxLife) ? m_maxLife : newLife; }
+		void addLife(const u16 lifeAdded) { setLife(m_life + lifeAdded); }
+		void removeLife(const u16 lifeRemoved) {
+			if (!m_hurtTime || !m_hurtTimer.isStarted() || m_hurtTimer.time() > m_hurtTime) {
+				(lifeRemoved > m_life) ? setLife(0) : setLife(m_life - lifeRemoved);
 
-		u8 life() const { return m_life; }
-		u8 maxLife() const { return m_maxLife; }
+				if (m_hurtTime) {
+					m_hurtTimer.reset();
+					m_hurtTimer.start();
+				}
+			}
+		}
+
+		u16 life() const { return m_life; }
+		u16 maxLife() const { return m_maxLife; }
+
+		Timer hurtTimer() { return m_hurtTimer; }
 
 	private:
-		u8 m_maxLife = 0;
-		u8 m_life = 0;
+		const u16 m_maxLife = 0;
+		u16 m_life = 0;
 
+		const u16 m_hurtTime = 0;
+
+		Timer m_hurtTimer;
 };
 
 #endif // HEALTHCOMPONENT_HPP_

@@ -11,8 +11,9 @@
  *
  * =====================================================================================
  */
-#include "ArrowFactory.hpp"
 #include "AnimationListComponent.hpp"
+#include "ArrowFactory.hpp"
+#include "AudioPlayer.hpp"
 #include "CollisionComponent.hpp"
 #include "EasyBehaviour.hpp"
 #include "EasyMovement.hpp"
@@ -22,10 +23,10 @@
 #include "MovementComponent.hpp"
 #include "SceneNodeComponent.hpp"
 
-SceneObject ArrowFactory::create(const Ogre::Vector3 &pos, const Ogre::Vector3 &v) {
-	static unsigned long int arrowID = 0;
+static unsigned long int arrowCount = 0;
 
-	SceneObject object{"Arrow" + std::to_string(arrowID++)};
+SceneObject ArrowFactory::create(const Ogre::Vector3 &pos, const Ogre::Vector3 &v) {
+	SceneObject object{"Arrow" + std::to_string(arrowCount++)};
 	object.set<CollisionComponent>().addAction(&ArrowFactory::arrowAction);
 	object.set<LifetimeComponent>(500);
 
@@ -46,22 +47,24 @@ SceneObject ArrowFactory::create(const Ogre::Vector3 &pos, const Ogre::Vector3 &
 	return object;
 }
 
-void ArrowFactory::arrowAction(SceneObject &arrow, SceneObject &object, bool inCollision) {
-	if (inCollision) {
-		if (object.name() == "Diabolous" && !object.get<LifetimeComponent>().dead(object)) {
-			auto &animationListComponent = object.get<AnimationListComponent>();
+void ArrowFactory::arrowAction(SceneObject &arrow, SceneObject &object, const CollisionInfo &info) {
+	if (info.inCollision) {
+		if (object.type() == "Enemy" && !object.get<LifetimeComponent>().dead(object)) {
 			auto &healthComponent = object.get<HealthComponent>();
 			healthComponent.removeLife(25);
 
 			if (healthComponent.life() == 0) {
-				animationListComponent.setActiveAnimation(0, "Die", true)->timer.setTime(6);
+				AudioPlayer::playEffect("vocal_monster2");
+				if (object.has<AnimationListComponent>())
+					object.get<AnimationListComponent>().setActiveAnimation(0, "Die", true)->timer.setTime(6);
+				object.remove<MovementComponent>();
 			}
-			else if (animationListComponent.isAnimationFinished("Hit")) {
-				animationListComponent.setActiveAnimation(0, "Hit", true)->timer.setTime(6);
+			else if (object.has<AnimationListComponent>() && object.get<AnimationListComponent>().isAnimationFinished("Hit")) {
+				object.get<AnimationListComponent>().setActiveAnimation(0, "Hit", true)->timer.setTime(6);
 			}
 		}
 
-		if (object.type() == "Enemy" || object.name() == "Wall")
+		if ((object.type() == "Enemy" && object.get<HealthComponent>().life()) || object.name() == "Wall")
 			arrow.get<LifetimeComponent>().kill();
 	}
 }

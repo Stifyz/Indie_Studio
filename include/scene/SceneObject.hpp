@@ -25,12 +25,6 @@ class SceneObject {
 		SceneObject(const std::string &name = "null", const std::string &type = "null")
 			: m_name(name), m_type(type) {}
 
-		SceneObject(const SceneObject &) = delete;
-		SceneObject(SceneObject &&) = default;
-
-		SceneObject &operator=(const SceneObject &) = delete;
-		SceneObject &operator=(SceneObject &&) = default;
-
 		template<typename T, typename... Args>
 		T &set(Args &&...args) {
 			m_components[typeid(T).hash_code()] = std::make_shared<T>(std::forward<Args>(args)...);
@@ -46,7 +40,7 @@ class SceneObject {
 		T &get() const {
 			auto it = m_components.find(typeid(T).hash_code());
 			if(it == m_components.end()) {
-				throw EXCEPTION("SceneObject", (void*)this, "doesn't have a component of type:", typeid(T).name());
+				throw EXCEPTION("SceneObject", (void*)this, "(\"" + m_name + "\", \"" + m_type + "\") doesn't have a component of type:", typeid(T).name());
 			}
 
 			return *std::static_pointer_cast<T>(it->second);

@@ -14,13 +14,13 @@
 #ifndef COLLISIONSYSTEM_HPP_
 #define COLLISIONSYSTEM_HPP_
 
-#include "SceneObject.hpp"
+#include "CollisionComponent.hpp"
 
 class CollisionSystem {
 	public:
 		static void checkCollision(SceneObject &object1, SceneObject &object2);
 
-		static bool inCollision(SceneObject &object1, SceneObject &object2);
+		static CollisionInfo inCollision(SceneObject &object1, SceneObject &object2, const std::string &entityName1, const std::string &entityName2);
 };
 
 #endif // COLLISIONSYSTEM_HPP_

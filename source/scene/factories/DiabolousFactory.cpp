@@ -14,50 +14,63 @@
 #include <functional>
 
 #include "AnimationListComponent.hpp"
-#include "AttackBehaviour.hpp"
+#include "DiabolousAttackBehaviour.hpp"
 #include "DiabolousFactory.hpp"
 #include "BehaviourComponent.hpp"
 #include "CollisionComponent.hpp"
+#include "DamageComponent.hpp"
+#include "EnemyMovement.hpp"
 #include "EntityListComponent.hpp"
-#include "GamePadMovement.hpp"
 #include "HealthComponent.hpp"
 #include "LifeBarBehaviour.hpp"
 #include "LifetimeComponent.hpp"
 #include "MovementComponent.hpp"
 #include "PlayerMovementBehaviour.hpp"
+#include "RadarComponent.hpp"
 #include "SceneNodeComponent.hpp"
 
-SceneObject DiabolousFactory::create() {
-	SceneObject object("Diabolous", "Enemy");
+#include "GamePadMovement.hpp"
+
+static unsigned long int diabolousCount = 0;
+
+SceneObject DiabolousFactory::create(const Ogre::Vector3 &pos) {
+	SceneObject object("Diabolous" + std::to_string(diabolousCount++), "Enemy");
 	object.set<CollisionComponent>();
+	object.set<RadarComponent>("any", "Player");
+	object.set<DamageComponent>(5);
 
 	auto &healthComponent = object.set<HealthComponent>(100);
 	object.set<LifetimeComponent>([&] (SceneObject &object) {
 		return healthComponent.life() == 0;
 	});
 
-	auto &bodyNodeComponent = object.set<SceneNodeComponent>(Ogre::Vector3(40, DIABOLOUS_HEIGHT, 30), Ogre::Vector3(0.3, 0.3, 0.3));
+	auto &bodyNodeComponent = object.set<SceneNodeComponent>(pos, Ogre::Vector3(0.3, 0.3, 0.3));
 	auto &entityListComponent = object.set<EntityListComponent>(bodyNodeComponent.node);
-
-	Ogre::Entity *bodyEntity = entityListComponent.addEntity("DiabolousBody", "Diabolous.mesh", true);
-	bodyEntity->setMaterialName("Diabolous");
+	Ogre::Entity *bodyEntity = entityListComponent.addEntity(object.name() + "Body", "Diabolous.mesh", true);
 
 	auto &behaviourComponent = object.set<BehaviourComponent>();
 	behaviourComponent.addBehaviour<LifeBarBehaviour>("LifeBar", bodyNodeComponent.root, Ogre::Vector3(0, 6, 0));
-	// auto &diabolousAttackBehaviour = behaviourComponent.addBehaviour<AttackBehaviour>("Fight");
 
-	auto &movementComponent = object.set<MovementComponent>(new GamePadMovement);
+	auto &attackBehaviour = behaviourComponent.addBehaviour<DiabolousAttackBehaviour>("Attack");
+	attackBehaviour.setCondition([] (SceneObject &object) {
+		return object.get<RadarComponent>().neareastObjectDistance <= 5;
+	});
+
+	// auto &movementComponent = object.set<MovementComponent>(new GamePadMovement);
+	auto &movementComponent = object.set<MovementComponent>(new EnemyMovement);
 	movementComponent.behaviour.reset(new PlayerMovementBehaviour({"Idle"}, {"Walk"}));
+	movementComponent.speed = 0.02f;
 
 	const char *animNames[] = {"Attack", "Walk", "Idle", "Hit", "Die"};
 
 	auto &animationListComponent = object.set<AnimationListComponent>();
-	// animationListComponent.setAnimationEndCallback(std::bind(&AttackBehaviour::animationEndCallback, &diabolousAttackBehaviour, std::placeholders::_1, std::placeholders::_2));
 	for (const char *animName : animNames) {
 		Animation &anim = animationListComponent.add(bodyEntity, animName);
-       	anim.speed = (anim.name != "Attack") ? 1.75f : 1.0f;
-       	anim.speed = (anim.name != "Attack") ? ((anim.name == "Hit") ? 3.0f : 1.75f) : 1.0f;
+       	anim.speed = (anim.name != "Attack") ? 1.75f : 5.0f;
+       	anim.speed = (anim.name != "Attack") ? ((anim.name == "Hit") ? 3.0f : 1.75f) : anim.speed;
 	}
+
+	animationListComponent.setAnimationEndCallback("Attack", std::bind(&AttackBehaviour::animationEndCallback, &attackBehaviour, std::placeholders::_1, std::placeholders::_2));
 
 	animationListComponent.setLoop("Attack", false);
 	animationListComponent.setLoop("Die", false);

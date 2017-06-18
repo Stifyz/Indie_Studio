@@ -1,0 +1,13 @@
+<!-- Key names are defined here: https://wiki.libsdl.org/SDL_Keycode -->
+<keys>
+	<Left  key="Q"/>
+	<Right key="D"/>
+	<Up    key="Z"/>
+	<Down  key="S"/>
+
+	<A key="Space"/>
+	<B key="Left Shift"/>
+
+	<Start  key="Escape"/>
+	<Select key="Tab"/>
+</keys>

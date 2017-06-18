@@ -34,9 +34,9 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -std=c++11")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wfatal-errors")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-variadic-macros")
 
-if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libstdc++ -static-libgcc")
-endif()
+# if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+# 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libstdc++ -static-libgcc")
+# endif()
 
 #------------------------------------------------------------------------------
 # Packages
@@ -52,6 +52,19 @@ include_directories(${TINYXML2_INCLUDE_DIRS})
 link_directories(${TINYXML2_LIBRARY_DIRS})
 
 #------------------------------------------------------------------------------
+# - SDL2, SDL2_image, SDL2_mixer
+#------------------------------------------------------------------------------
+include(FindPkgConfig)
+
+pkg_search_module(SDL2MIXER REQUIRED SDL2_mixer)
+
+if(NOT SDL2MIXER_FOUND)
+	message(FATAL_ERROR "SDL2_mixer not found!")
+endif(NOT SDL2MIXER_FOUND)
+
+include_directories(${SDL2MIXER_INCLUDE_DIRS})
+
+#------------------------------------------------------------------------------
 # - Ogre3D
 #------------------------------------------------------------------------------
 find_package(OGRE 1.10 REQUIRED)
@@ -63,7 +76,7 @@ include_directories(${OGRE_INCLUDE_DIRS})
 link_directories(${OGRE_LIBRARY_DIRS})
 
 #------------------------------------------------------------------------------
-# Doxygen
+# - Doxygen
 #------------------------------------------------------------------------------
 option(BUILD_DOCUMENTATION "Use Doxygen to create the HTML based API documentation" ON)
 if(BUILD_DOCUMENTATION)
@@ -80,5 +93,6 @@ endif()
 #------------------------------------------------------------------------------
 target_link_libraries(${CMAKE_PROJECT_NAME}
                       ${TINYXML2_LIBRARIES}
-                      ${OGRE_LIBRARIES})
+                      ${OGRE_LIBRARIES}
+                      ${SDL2MIXER_LIBRARIES})
 

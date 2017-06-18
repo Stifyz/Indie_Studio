@@ -21,7 +21,7 @@
 
 #include "INetwork.hpp"
 
-#include "Room.hpp"
+#include "Map.hpp"
 
 class GameState : public ApplicationState {
 	public:
@@ -29,12 +29,12 @@ class GameState : public ApplicationState {
 
 		void update() override;
 
-		void networkLoop(INetwork *network);
+                void networkLoop(INetwork *network);
 
 	private:
 		HudManager m_hud;
 
-		Room &m_room;
+		Map &m_map;
 
 		Scene m_scene;
 		SceneObject *m_sinbad = nullptr;

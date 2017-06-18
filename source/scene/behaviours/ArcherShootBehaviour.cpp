@@ -37,5 +37,7 @@ void ArcherShootBehaviour::action(SceneObject &object) {
 
 	pos = pos * Ogre::Vector3::UNIT_Y + sceneNodeComponent.root->getPosition() + entity->getSkeleton()->getBone("string_ctrl")->getPosition();
 	sceneObjectList.addObject(ArrowFactory::create(pos, direction));
+
+	AudioPlayer::playEffect("attack_archer1");
 }
 

@@ -29,7 +29,7 @@ class KeyboardHandler : public InputHandler {
 	private:
 		void addKey(tinyxml2::XMLElement *keys, GameKey key, const char *name);
 
-		std::map<GameKey, SDL_Keycode> m_keys;
+		std::map<GameKey, int> m_keys;
 };
 
 #endif // KEYBOARDHANDLER_HPP_

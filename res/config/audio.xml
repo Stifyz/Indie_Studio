@@ -1,0 +1,22 @@
+<audio>
+	<music name="game_theme"/>
+	<music name="title_screen"/>
+
+	<soundeffect name="attack_archer1"/>
+	<soundeffect name="attack_melee1"/>
+	<soundeffect name="attack_sword1"/>
+	<soundeffect name="attack_monster1"/>
+	<soundeffect name="vocal_monster1"/>
+	<soundeffect name="vocal_monster2"/>
+	<soundeffect name="footstep1"/>
+	<soundeffect name="gold1"/>
+	<soundeffect name="achievement1"/>
+	<soundeffect name="lose1"/>
+	<soundeffect name="win1"/>
+	<soundeffect name="menu_select1"/>
+	<soundeffect name="break1"/>
+	<soundeffect name="eat1"/>
+	<soundeffect name="damage1"/>
+	<soundeffect name="key1"/>
+	<soundeffect name="taking_potion1"/>
+</audio>

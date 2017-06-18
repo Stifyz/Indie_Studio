@@ -14,13 +14,15 @@
 #ifndef DIABOLOUSFACTORY_HPP_
 #define DIABOLOUSFACTORY_HPP_
 
+#include <OgreVector3.h>
+
 #include "SceneObject.hpp"
 
 #define DIABOLOUS_HEIGHT (5 / 1.8)
 
 class DiabolousFactory {
 	public:
-		static SceneObject create();
+		static SceneObject create(const Ogre::Vector3 &pos);
 };
 
 #endif // DIABOLOUSFACTORY_HPP_

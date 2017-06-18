@@ -21,11 +21,13 @@
 #include "EntityListComponent.hpp"
 #include "GamePadMovement.hpp"
 #include "HealthComponent.hpp"
+#include "HudBehaviour.hpp"
 #include "LifetimeComponent.hpp"
 #include "MovementComponent.hpp"
 #include "PlayerMovementBehaviour.hpp"
 #include "SceneObjectList.hpp"
 #include "SceneNodeComponent.hpp"
+#include "ScoreComponent.hpp"
 
 SceneObject ArcherFactory::create() {
 	SceneObject object("Archer", "Player");
@@ -36,6 +38,7 @@ SceneObject ArcherFactory::create() {
 	object.set<LifetimeComponent>([&] (SceneObject &object) {
 		return healthComponent.life() == 0;
 	});
+	object.set<ScoreComponent>();
 
 	auto &bodyNodeComponent = object.set<SceneNodeComponent>(Ogre::Vector3(30, ARCHER_HEIGHT, 30), Ogre::Vector3(0.3, 0.3, 0.3));
 	auto &entityListComponent = object.set<EntityListComponent>(bodyNodeComponent.node);
@@ -44,7 +47,13 @@ SceneObject ArcherFactory::create() {
 	bodyEntity->setMaterialName("Archer");
 
 	auto &behaviourComponent = object.set<BehaviourComponent>();
-	auto &archerShootBehaviour = behaviourComponent.addBehaviour<ArcherShootBehaviour>("Shoot");
+	auto &archerShootBehaviour = behaviourComponent.addBehaviour<ArcherShootBehaviour>("Attack");
+	archerShootBehaviour.setCondition([] (SceneObject &object) {
+		return GamePad::isKeyPressed(GameKey::A);
+	});
+
+	auto *trayManager = OgreData::getInstance().trayManager();
+	behaviourComponent.addBehaviour<HudBehaviour>("hud", trayManager->createProgressBar(OgreBites::TL_LEFT, "PlayerBar_" + object.name(), object.name(), 200, 100));
 
 	auto &movementComponent = object.set<MovementComponent>(new GamePadMovement);
 	movementComponent.behaviour.reset(new PlayerMovementBehaviour({"Idle"}, {"Walk"}));
@@ -52,14 +61,16 @@ SceneObject ArcherFactory::create() {
 	const char *animNames[] = {"Attack", "Walk", "Idle", "Hit", "Die"};
 
 	auto &animationListComponent = object.set<AnimationListComponent>();
-	animationListComponent.setAnimationEndCallback(std::bind(&AttackBehaviour::animationEndCallback, &archerShootBehaviour, std::placeholders::_1, std::placeholders::_2));
 	for (const char *animName : animNames) {
 		Animation &anim = animationListComponent.add(bodyEntity, animName);
 		anim.speed = (anim.name != "Attack") ? 1.75f : 5.0f;
 	}
+
+	animationListComponent.setAnimationEndCallback("Attack", std::bind(&AttackBehaviour::animationEndCallback, &archerShootBehaviour, std::placeholders::_1, std::placeholders::_2));
 
 	animationListComponent.setLoop("Attack", false);
 	animationListComponent.setActiveAnimation(0, "Idle");
 
 	return object;
 }
+

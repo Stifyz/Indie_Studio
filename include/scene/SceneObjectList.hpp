@@ -23,22 +23,16 @@ class SceneObjectList {
 	using const_iterator = std::deque<SceneObject>::const_iterator;
 
 	public:
-		SceneObject &addObject(SceneObject &&object, bool addToBack = true) {
-			if (addToBack) {
-				m_objects.emplace_back(std::move(object));
-				return m_objects.back();
-			}
-			else {
-				m_objects.emplace_front(std::move(object));
-				return m_objects.front();
-			}
+		SceneObject &addObject(SceneObject &&object) {
+			m_objects.emplace_back(std::move(object));
+			return m_objects.back();
 		}
 
 		void pop() { m_objects.pop_back(); }
 
 		SceneObject &operator[](size_t n) { return m_objects[n]; }
 
-		void remove(size_t n) { m_objects.erase(m_objects.begin() + n); }
+		void remove(const size_t n) { m_objects.erase(m_objects.begin() + n); }
 
 		iterator begin() noexcept { return m_objects.begin(); }
 		iterator end() noexcept { return m_objects.end(); }
@@ -48,8 +42,17 @@ class SceneObjectList {
 
 		size_t size() const { return m_objects.size(); }
 
+		unsigned long int enemyCount() const { return m_enemyCount; }
+		unsigned long int playerCount() const { return m_playerCount; }
+
+		void setEnemyCount(const unsigned long int enemyCount) { m_enemyCount = enemyCount; }
+		void setPlayerCount(const unsigned long int playerCount) { m_playerCount = playerCount; }
+
 	private:
 		std::deque<SceneObject> m_objects;
+
+		unsigned long int m_enemyCount = 1;
+		unsigned long int m_playerCount = 1;
 };
 
 #endif // SCENEOBJECTLIST_HPP_

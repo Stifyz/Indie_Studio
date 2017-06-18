@@ -19,6 +19,8 @@
 
 class ArcherShootBehaviour : public AttackBehaviour {
 	public:
+		ArcherShootBehaviour() : AttackBehaviour("Attack") {}
+
 		void action(SceneObject &object) override;
 };
 

@@ -16,14 +16,14 @@
 
 #include <OgreVector3.h>
 
-#include "SceneObject.hpp"
+#include "CollisionComponent.hpp"
 
 class ArrowFactory {
 	public:
 		static SceneObject create(const Ogre::Vector3 &pos, const Ogre::Vector3 &v);
 
 	private:
-		static void arrowAction(SceneObject &arrow, SceneObject &object, bool inCollision);
+		static void arrowAction(SceneObject &arrow, SceneObject &object, const CollisionInfo &info);
 };
 
 #endif // ARROWFACTORY_HPP_

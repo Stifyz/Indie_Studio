@@ -26,6 +26,8 @@ class GameClock {
 
 		static u32 getTicks(bool realTime = false);
 
+		static const u8 timestep = 6;
+
 	private:
 		void measureLastFrameDuration();
 
@@ -35,7 +37,6 @@ class GameClock {
 		u32 m_lag = 0;
 		u32 m_timeDropped = 0;
 
-		u8 m_timestep = 6;
 		u8 m_numUpdates = 0;
 };
 
