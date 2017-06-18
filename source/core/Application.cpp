@@ -52,9 +52,15 @@ void Application::run() {
 	while (!m_stateStack.empty() && !root->endRenderingQueued()) {
 		Ogre::WindowEventUtilities::messagePump();
 
+		if (mWindow->isClosed())
+			break ;
+
 		m_clock.updateGame([&] {
 			m_stateStack.top()->update();
 		});
+
+		if (mWindow->isClosed())
+			break ;
 
 		m_clock.drawGame([&] {
 			if (!m_stateStack.empty() && mWindow && mWindow->isActive() && !root->renderOneFrame())
@@ -64,6 +70,9 @@ void Application::run() {
 		m_stateStack.clear();
 	}
 
+	while (!m_stateStack.empty())
+		m_stateStack.pop();
+	m_stateStack.clear();
 	OgreData::getInstance().setTrayManager(nullptr);
 }
 

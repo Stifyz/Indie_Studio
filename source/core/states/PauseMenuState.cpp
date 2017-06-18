@@ -29,8 +29,8 @@ void PauseMenuState::buttonHit(OgreBites::Button *button) {
 	}
 	else if (button->getName() == "quit") {
 		// OgreData::getInstance().root()->queueEndRendering();
-		m_stateStack->pop();
-		m_stateStack->pop();
+		while (!m_stateStack->empty())
+			m_stateStack->pop();
 	}
 }
 

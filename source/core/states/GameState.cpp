@@ -31,6 +31,8 @@ GameState::GameState() : ApplicationState("Game"), m_room(ResourceHandler::getIn
 	m_trayManager->showFrameStats(OgreBites::TL_BOTTOMLEFT);
 	// m_trayManager->showLogo(OgreBites::TL_BOTTOMRIGHT);
 
+	// m_hud.init(m_trayManager.get());
+
 	m_textBox.reset(new TextBox);
 	m_textBox->init(m_trayManager->createTextBox(OgreBites::TL_BOTTOMRIGHT, "ChatBox_RO", "Chat", 200, 150));
 
