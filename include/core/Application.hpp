@@ -51,7 +51,7 @@ class Application : public OgreBites::ApplicationContext, public OgreBites::Inpu
 		KeyboardHandler m_keyboardHandler;
 		ResourceHandler m_resourceHandler;
 
-		std::unique_ptr<MenuState> m_menu = nullptr;
+		// std::unique_ptr<MenuState> m_menu = nullptr;
 };
 
 #endif // APPLICATION_HPP_

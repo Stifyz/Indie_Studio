@@ -50,7 +50,6 @@ void Application::run() {
 	root->clearEventTimes();
 
 	while (!m_stateStack.empty() && !root->endRenderingQueued()) {
-		DEBUG("begin loop");
 		Ogre::WindowEventUtilities::messagePump();
 
 		m_clock.updateGame([&] {
@@ -71,16 +70,22 @@ void Application::run() {
 bool Application::keyPressed(const OgreBites::KeyboardEvent &evt) {
 	OgreBites::TrayManager *trayManager = OgreData::getInstance().trayManager();
 
-	if (trayManager)
-		trayManager->keyPressed(evt);
+	if (trayManager) {
+		if (!OgreData::getInstance().keyboardIsTextMod)
+			trayManager->keyPressed(evt);
+		OgreData::getInstance().setLastPressed(evt);
+	}
 	return true;
 }
 
 bool Application::keyReleased(const OgreBites::KeyboardEvent& evt) {
 	OgreBites::TrayManager *trayManager = OgreData::getInstance().trayManager();
 
-	if (trayManager)
-		trayManager->keyReleased(evt);
+	if (trayManager) {
+		if (!OgreData::getInstance().keyboardIsTextMod)
+			trayManager->keyReleased(evt);
+		OgreData::getInstance().setLastReleased(evt);
+}
 	return true;
 }
 

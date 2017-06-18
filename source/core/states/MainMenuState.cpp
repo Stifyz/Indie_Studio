@@ -54,9 +54,7 @@ void MainMenuState::buttonHit(OgreBites::Button *button) {
 		m_stateStack->push<OptionMenuState>(this);
 	}
 	else if (button->getName() == "quit") {
-		DEBUG("before pop");
 		m_stateStack->pop();
-		DEBUG("after pop");
 	}
 }
 

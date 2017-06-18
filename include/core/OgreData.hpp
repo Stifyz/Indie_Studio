@@ -37,6 +37,8 @@ class OgreData {
 		OgreBites::ApplicationContext *app() const { return m_app; }
 		OgreBites::TrayManager *trayManager() const { return m_trayManager; }
 
+		std::string &chatBuffer() { return m_chatBuffer; }
+
 		void setTrayManager(OgreBites::TrayManager *trayManager) { m_trayManager = trayManager; }
 
 		static OgreData &getInstance() {
@@ -44,8 +46,38 @@ class OgreData {
 			return data;
 		}
 
+		bool keyboardIsTextMod = false;
+
+		void setLastPressed(OgreBites::KeyboardEvent evt) {
+			m_lastPressed = evt;
+			m_isLastPressed = true;
+		}
+		void setLastReleased(OgreBites::KeyboardEvent evt) {
+			m_lastReleased = evt;
+			m_isLastReleased = true;
+		}
+		const OgreBites::KeyboardEvent *getLastPressed() {
+			if (!m_isLastPressed)
+				return nullptr;
+			m_isLastPressed = false;
+			return &m_lastPressed;
+		}
+		const OgreBites::KeyboardEvent *getLastReleased() {
+			if (!m_isLastReleased)
+				return nullptr;
+			m_isLastReleased = false;
+			return &m_lastReleased;
+		}
 	private:
+		OgreBites::KeyboardEvent m_lastPressed;
+		OgreBites::KeyboardEvent m_lastReleased;
+
+		std::string m_chatBuffer;
+
+		bool m_isLastPressed = false;
+		bool m_isLastReleased = false;
 		OgreData() = default;
+
 
 		Ogre::Root *m_root = nullptr;
 		Ogre::RenderWindow *m_renderWindow = nullptr;

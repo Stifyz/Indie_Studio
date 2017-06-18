@@ -12,13 +12,17 @@
 #define CHATSTATE_HPP_
 
 #include "ApplicationState.hpp"
+#include "TextBox.hpp"
 
 class ChatState : public ApplicationState {
 	public:
-		ChatState();
+		ChatState(ApplicationState *parent);
 
+		void update();
+		void buttonHit(OgreBites::Button *button);
 	private:
-
+		TextBox m_textBox;
+		bool firstTurn = true;
 };
 
 #endif // !CHATSTATE_HPP_
