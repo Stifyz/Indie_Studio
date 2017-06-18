@@ -26,7 +26,7 @@ SceneObject HeartFactory::create(const Ogre::Vector3 &pos) {
       	bodyNodeComponent.node->pitch(Ogre::Degree(90));
 
 	auto &entityListComponent = object.set<EntityListComponent>(bodyNodeComponent.node);
-	entityListComponent.addEntity("HeartBody", "Torch.mesh", true);
+	entityListComponent.addEntity("HeartBody", "Heart.mesh", true);
 
 	auto &behaviourComponent = object.set<BehaviourComponent>();
 	behaviourComponent.addBehaviour<EasyBehaviour>("Animation", [] (SceneObject &object) {

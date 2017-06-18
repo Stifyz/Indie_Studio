@@ -49,7 +49,9 @@ void ArrowFactory::arrowAction(SceneObject &arrow, SceneObject &object, bool inC
 	if (inCollision && object.name() == "Diabolous") {
 		auto &animationListComponent = object.get<AnimationListComponent>();
 		if (animationListComponent.isAnimationFinished("Hit"))
-			animationListComponent.setActiveAnimation(0, "Hit", true);
+			animationListComponent.setActiveAnimation(0, "Hit", true)->timer.setTime(6);
+
+		arrow.get<LifetimeComponent>().kill();
 	}
 }
 

@@ -47,7 +47,7 @@ SceneObject DiabolousFactory::create() {
 	for (const char *animName : animNames) {
 		Animation &anim = animationListComponent.add(bodyEntity, animName);
        	anim.speed = (anim.name != "Attack") ? 1.75f : 1.0f;
-       	anim.speed = (anim.name != "Attack") ? ((anim.name == "Hit") ? 4.0f : 1.75f) : 1.0f;
+       	anim.speed = (anim.name != "Attack") ? ((anim.name == "Hit") ? 3.0f : 1.75f) : 1.0f;
 	}
 
 	animationListComponent.setLoop("Attack", false);
