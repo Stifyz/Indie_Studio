@@ -15,18 +15,18 @@
 #include "CollisionComponent.hpp"
 #include "EasyBehaviour.hpp"
 #include "EntityListComponent.hpp"
-#include "HeartFactory.hpp"
+#include "CoinFactory.hpp"
 #include "SceneNodeComponent.hpp"
 
-SceneObject HeartFactory::create(const Ogre::Vector3 &pos) {
-	SceneObject object{"Heart"};
+SceneObject CoinFactory::create(const Ogre::Vector3 &pos) {
+	SceneObject object{"Coin"};
 	object.set<CollisionComponent>();
 
 	auto &bodyNodeComponent = object.set<SceneNodeComponent>(pos, Ogre::Vector3(3, 3, 3));
       	bodyNodeComponent.node->pitch(Ogre::Degree(90));
 
 	auto &entityListComponent = object.set<EntityListComponent>(bodyNodeComponent.node);
-	entityListComponent.addEntity("HeartBody", "Heart.mesh", true);
+	entityListComponent.addEntity("CoinBody", "coin.001.mesh", true);
 
 	auto &behaviourComponent = object.set<BehaviourComponent>();
 	behaviourComponent.addBehaviour<EasyBehaviour>("Animation", [] (SceneObject &object) {
