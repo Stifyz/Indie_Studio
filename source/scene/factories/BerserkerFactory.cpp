@@ -46,7 +46,7 @@ SceneObject BerserkerFactory::create() {
 	animationListComponent.setAnimationEndCallback(std::bind(&AttackBehaviour::animationEndCallback, &berserkerAttackBehaviour, std::placeholders::_1, std::placeholders::_2));
 	for (const char *animName : animNames) {
 		Animation &anim = animationListComponent.add(bodyEntity, animName);
-       	anim.speed = (anim.name != "Attack") ? 1.75f : 1.0f;
+       	anim.speed = (anim.name != "Attack") ? 1.5f : 1.5f;
 	}
 
 	animationListComponent.setLoop("Attack", false);

@@ -16,6 +16,7 @@
 #include "EasyBehaviour.hpp"
 #include "EasyMovement.hpp"
 #include "EntityListComponent.hpp"
+#include "LifetimeComponent.hpp"
 #include "MovementComponent.hpp"
 #include "SceneNodeComponent.hpp"
 
@@ -24,12 +25,11 @@ SceneObject ArrowFactory::create(const Ogre::Vector3 &pos, const Ogre::Vector3 &
 
 	SceneObject object{"Arrow" + std::to_string(arrowID++)};
 	object.set<CollisionComponent>();
+	object.set<LifetimeComponent>(500);
 
 	auto &movementComponent = object.set<MovementComponent>(new EasyMovement([v] (SceneObject &object) {
 		object.get<MovementComponent>().v = v;
 	}));
-
-	// FIXME: LIFETIME COMPONENT
 
 	movementComponent.speed = 0.3f;
 	movementComponent.behaviour.reset(new EasyBehaviour([] (SceneObject &object) {
