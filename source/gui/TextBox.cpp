@@ -57,7 +57,7 @@ bool TextBox::write(bool isFirstTurn) {
 		INetwork *network = OgreData::getInstance().network();
 		chat::TextMsg msg(network->id(), m_textBox->getCaption(), chat::PUBLIC);
 		network->send(com::Packet(network->id(), com::CHAT, msg));
-		newLine(m_textBox->getCaption());
+		newLine("Me : " + m_textBox->getCaption());
 		m_textBox->setCaption("");
 	}
 	else if (c < ' ' || c > 126 || (c > 64 && c < 91))
