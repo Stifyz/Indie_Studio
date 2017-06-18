@@ -42,6 +42,8 @@ class OgreData {
 		OgreBites::ApplicationContext *app() const { return m_app; }
 		OgreBites::TrayManager *trayManager() const { return m_trayManager; }
 
+		INetwork *network() const { return m_network; }
+
 		static OgreData &getInstance() {
 			static OgreData data;
 			return data;
