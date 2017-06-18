@@ -19,7 +19,7 @@
 
 #include "RoomLoader.hpp"
 
-Application::Application() : OgreBites::ApplicationContext("Indie Studio") {
+Application::Application(int const argc, char **argv) : OgreBites::ApplicationContext("Indie Studio") {
 	addInputListener(this);
 
 	GamePad::init(m_keyboardHandler);
@@ -104,5 +104,3 @@ bool Application::frameRenderingQueued(const Ogre::FrameEvent &evt) {
 	m_trayManager->frameRendered(evt);
 	return true;
 }
-
-

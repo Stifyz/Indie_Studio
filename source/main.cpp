@@ -18,7 +18,7 @@
 
 int main(int argc, char **argv) {
 	try {
-		Application app;
+		Application app(argc, argv);
 
 		app.initApp();
 		app.run();
@@ -39,5 +39,3 @@ int main(int argc, char **argv) {
 
 	return 0;
 }
-
-

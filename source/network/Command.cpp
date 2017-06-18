@@ -5,7 +5,7 @@
 // Login   <maxime.maisonnas@epitech.eu>
 //
 // Started on  Sat Jun 17 16:12:19 2017 Maxime Maisonnas
-// Last update Sat Jun 17 16:32:46 2017 Maxime Maisonnas
+// Last update Sun Jun 18 01:35:35 2017 Maxime Maisonnas
 //
 
 #include "Command.hpp"
@@ -16,8 +16,6 @@ namespace cmd {
     if (act != MOVE && m_idTarget == -1)
       throw Error("invalid target ID");
   }
-
-  Command::~Command() {}
 
   void    Command::serialize(ComStream &cs) const {
     cs << m_id << (int)m_action << (int)m_direction << m_idTarget;

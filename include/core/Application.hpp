@@ -25,7 +25,7 @@
 
 class Application : public OgreBites::ApplicationContext, public OgreBites::InputListener {
 	public:
-		Application();
+		Application(int const argc, char **argv);
 
 		void setup() override;
 

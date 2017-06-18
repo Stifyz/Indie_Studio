@@ -5,7 +5,7 @@
 // Login   <maxime.maisonnas@epitech.eu>
 //
 // Started on  Sun Jun 18 00:53:06 2017 Maxime Maisonnas
-// Last update Sun Jun 18 00:56:45 2017 Maxime Maisonnas
+// Last update Sun Jun 18 02:13:37 2017 Maxime Maisonnas
 //
 
 #ifndef ENCAPS_SERVER_HPP_
@@ -22,7 +22,7 @@
 # include <sys/types.h>
 # include <ifaddrs.h>
 
-# include "TextMsg.hpp"
+# include "INetwork.hpp"
 # include "RingBuffer.hpp"
 
 # ifndef TIME_OUT_S
@@ -33,25 +33,25 @@
 #  define TIME_OUT_U 50
 # endif /* !TIME_OUT_U */
 
-class                   Server {
+class                   Server : public INetwork {
 public:
   Server(bool const listenStandardInput = false);
-  ~Server();
+  virtual ~Server();
 
-  void                  init();
-  void                  send(ICom const &elem);
-  bool                  get(ICom &elem);
-  bool                  get(chat::TextMsg &elem);
-  void                  quit(void);
-  int                   id(void) const { return (0); }
+  virtual void send(ICom const &);
+  virtual bool get(ICom &);
+  virtual bool get(chat::TextMsg &);
+  virtual void mySelect(void);
+  virtual int id(void) const { return (0); }
+  void quit(void);
 
-protected:
-  void                  getIp(void);
-  void                  addConnection(void);
-  void                  mySelect(void);
-  void                  initFdSet(void);
-  int                   getFdSelect(void) const;
-  bool                  checkAlive(int &, int const &);
+private:
+  void init();
+  void getIp(void);
+  void addConnection(void);
+  void initFdSet(void);
+  int getFdSelect(void) const;
+  bool checkAlive(int &, int const &);
 
   RingBuffer            *m_buf;
   int                   m_port;

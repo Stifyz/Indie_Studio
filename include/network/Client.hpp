@@ -5,7 +5,7 @@
 // Login   <maxime.maisonnas@epitech.eu>
 //
 // Started on  Mon May 22 17:31:31 2017 Maxime Maisonnas
-// Last update Sun Jun 18 00:52:41 2017 Maxime Maisonnas
+// Last update Sun Jun 18 01:54:05 2017 Maxime Maisonnas
 //
 
 #ifndef ENCAPS_CLIENT_HPP_
@@ -15,9 +15,7 @@
 # include <string.h>
 # include <csignal>
 
-# include "ICom.hpp"
-# include "Error.hpp"
-# include "TextMsg.hpp"
+# include "INetwork.hpp"
 # include "RingBuffer.hpp"
 
 # ifndef TIME_OUT_CLIENT_S
@@ -28,21 +26,21 @@
 #  define TIME_OUT_CLIENT_U 500
 # endif /* !TIME_OUT_CLIENT_U */
 
-class                 Client {
+class Client : public INetwork {
 public:
-  Client(bool listenStandardInput = false);
-  ~Client();
+  Client(int port, bool listenStandardInput = false, std::string const &ip = "");
+  virtual ~Client();
 
-  void                init(int port, std::string const &ip = "");
-  void                send(ICom const &);
-  bool                get(ICom &);
-  bool                get(chat::TextMsg &);
-  void                quit(void);
-  int                 id(void) const { return (m_id); }
+  virtual void send(ICom const &);
+  virtual bool get(ICom &);
+  virtual bool get(chat::TextMsg &);
+  virtual void mySelect(void);
+  virtual int id(void) const { return (m_id); }
+  void quit(void);
 
-protected:
-  void                checkAlive(void);
-  void                mySelect(void);
+private:
+  void init(void);
+  void checkAlive(void);
 
   RingBuffer          *m_buf;
   bool                m_listenStandardInput;

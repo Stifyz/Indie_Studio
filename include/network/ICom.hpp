@@ -5,7 +5,7 @@
 // Login   <maxime.maisonnas@epitech.eu>
 //
 // Started on  Sat May 20 17:43:18 2017 Maxime Maisonnas
-// Last update Sun Jun 18 00:40:58 2017 Maxime Maisonnas
+// Last update Sun Jun 18 01:35:06 2017 Maxime Maisonnas
 //
 
 #ifndef ICOM_HPP_
@@ -38,7 +38,7 @@ typedef struct        s_socket {
 /* Interface pour communiquer via le réseau */
 class             ICom {
 public:
-  virtual ~ICom() {}
+  virtual ~ICom() = default;
 
   virtual void    serialize(ComStream &) const = 0;
   virtual void    deserialize(ComStream &) = 0;

@@ -5,7 +5,7 @@
 // Login   <maxime.maisonnas@epitech.eu>
 //
 // Started on  Sat Jun 17 15:22:23 2017 Maxime Maisonnas
-// Last update Sat Jun 17 16:35:29 2017 Maxime Maisonnas
+// Last update Sun Jun 18 01:35:29 2017 Maxime Maisonnas
 //
 
 #ifndef COMMAND_HPP_
@@ -29,7 +29,6 @@ namespace cmd {
   class             Command : public ICom {
   public:
     Command(int const, ACTION const, DIRECTION const, int const idTarget = -1);
-    virtual ~Command();
 
     virtual void    serialize(ComStream &) const;
     virtual void    deserialize(ComStream &);

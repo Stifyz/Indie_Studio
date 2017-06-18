@@ -5,7 +5,7 @@
 // Login   <maxime.maisonnas@epitech.eu>
 //
 // Started on  Sun Jun 18 00:53:21 2017 Maxime Maisonnas
-// Last update Sun Jun 18 00:54:45 2017 Maxime Maisonnas
+// Last update Sun Jun 18 01:54:35 2017 Maxime Maisonnas
 //
 
 #include "Server.hpp"
@@ -26,6 +26,7 @@ Server::Server(bool const listenStandardInput)
   m_buf = new RingBuffer();
   serv = this;
   std::signal(SIGINT, myFctStopServer);
+  init();
 }
 
 Server::~Server() {

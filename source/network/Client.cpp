@@ -5,7 +5,7 @@
 // Login   <maxime.maisonnas@epitech.eu>
 //
 // Started on  Mon May 22 17:31:35 2017 Maxime Maisonnas
-// Last update Sun Jun 18 00:54:49 2017 Maxime Maisonnas
+// Last update Sun Jun 18 02:08:59 2017 Maxime Maisonnas
 //
 
 #include "Client.hpp"
@@ -20,11 +20,13 @@ void    myFctStopClient(int sig) {
   exit(0);
 }
 
-Client::Client(bool listenStandardInput) : m_listenStandardInput(listenStandardInput) {
+Client::Client(int port, bool listenStandardInput, std::string const &ip)
+              : m_listenStandardInput(listenStandardInput), m_port(port), m_ip(ip) {
   m_sock.fd = -1;
   cli = this;
   m_buf = new RingBuffer();
   std::signal(SIGINT, myFctStopClient);
+  init();
 }
 
 Client::~Client() {
@@ -42,20 +44,18 @@ void    Client::quit(void) {
   }
 }
 
-void          Client::init(int port, std::string const &ip) {
+void          Client::init() {
   std::string id;
   char        buff[BUF_SIZE];
   size_t      r = 0;
 
-  m_port = port;
-  m_ip = ip;
   if (!(m_sock.pe = getprotobyname("TCP")))
     throw NetErr("could not get protocol");
   if ((m_sock.fd = socket(AF_INET, SOCK_STREAM, m_sock.pe->p_proto)) == -1)
     throw NetErr("could not open socket");
   m_sock.s_in.sin_family = AF_INET;
-  m_sock.s_in.sin_port = htons(port);
-  m_sock.s_in.sin_addr.s_addr = (ip == "" ? INADDR_ANY : inet_addr(ip.c_str()));
+  m_sock.s_in.sin_port = htons(m_port);
+  m_sock.s_in.sin_addr.s_addr = (m_ip == "" ? INADDR_ANY : inet_addr(m_ip.c_str()));
   if (connect(m_sock.fd, (struct sockaddr *)&m_sock.s_in, sizeof(m_sock.s_in)) == -1)
     throw NetErr("could not connect to given port");
   if ((r = recv(m_sock.fd, buff, BUF_SIZE, 0)) == 0)
