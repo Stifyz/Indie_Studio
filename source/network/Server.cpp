@@ -5,7 +5,7 @@
 // Login   <maxime.maisonnas@epitech.eu>
 //
 // Started on  Sun Jun 18 00:53:21 2017 Maxime Maisonnas
-// Last update Sun Jun 18 16:36:16 2017 Maxime Maisonnas
+// Last update Sun Jun 18 16:45:56 2017 Maxime Maisonnas
 //
 
 #include "Server.hpp"
@@ -79,7 +79,7 @@ void    Server::init() {
   if ((m_sock.fd = socket(AF_INET, SOCK_STREAM, m_sock.pe->p_proto)) == -1)
     throw NetErr("can not open socket");
   m_sock.s_in.sin_family = AF_INET;
-  m_sock.s_in.sin_port = 0;
+  m_sock.s_in.sin_port = htons(4242);
   m_sock.s_in.sin_addr.s_addr = INADDR_ANY;
   if (bind(m_sock.fd, (struct sockaddr *)&m_sock.s_in, sizeof(m_sock.s_in)) == -1)
     throw NetErr("can not bind port");

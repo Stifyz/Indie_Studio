@@ -32,6 +32,7 @@ void MovementSystem::process(SceneObject &object) {
 		if (movement.v.x || movement.v.z) {
 			node->resetOrientation();
 			node->setDirection(-movement.v);
+			std::cerr << "setDirection" << '\n';
 			// OgreData::getInstance().network().send();
 		}
 	}
@@ -48,6 +49,7 @@ void MovementSystem::process(SceneObject &object) {
 			movement.behaviour->update(object);
 
 		root->setPosition(root->getPosition() + movement.v * movement.speed);
+		// std::cerr << "setPosition" << '\n';
 		// OgreData::getInstance().network().send();
 
 		movement.v = 0;

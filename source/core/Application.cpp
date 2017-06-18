@@ -19,21 +19,20 @@
 
 #include "RoomLoader.hpp"
 
+bool loop = true;
+
 void 		networkLoop(INetwork *network, bool isServer) {
   chat::TextMsg msg(network->id(), "Yooo !", chat::PUBLIC);
   ComStream cs;
   com::Packet packet;
 
-  while (1) {
+  while (loop) {
 		try {
-	    if (network->get(packet, msg)) {
-        // std::cerr << "get something" << '\n';
+	    if (network->get(packet)) {
 				if (isServer)
 					network->send(packet);
         if (packet.getType() == com::CHAT) {
-          // std::cerr << "get chat" << '\n';
           msg.deserialize(packet.getData());
-          // msg.writee();
   	      if ((msg.m_id != network->id() && msg.m_chan != chat::PRIVATE)
   	        || (msg.m_chan == chat::PRIVATE && msg.m_idTarget == network->id()))
   	        msg.writee();
@@ -52,13 +51,13 @@ Application::Application(int const argc, char **argv) : OgreBites::ApplicationCo
 	addInputListener(this);
 
 	if (argc < 2) {
-		m_network.reset(new Server(true));
+		m_network.reset(new Server(false));
 		m_networkThread.reset(new std::thread(networkLoop, m_network.get(), true));
 	} else if (argc > 2) {
-		m_network.reset(new Client(std::stoi(argv[1]), true, argv[2]));
+		m_network.reset(new Client(std::stoi(argv[1]), false, argv[2]));
 		m_networkThread.reset(new std::thread(networkLoop, m_network.get(), false));
 	} else {
-		m_network.reset(new Client(std::stoi(argv[1]), true));
+		m_network.reset(new Client(std::stoi(argv[1]), false));
 		m_networkThread.reset(new std::thread(networkLoop, m_network.get(), false));
 	}
 
@@ -66,6 +65,11 @@ Application::Application(int const argc, char **argv) : OgreBites::ApplicationCo
 
 	ResourceHandler::setInstance(&m_resourceHandler);
 	ResourceHandler::loadConfigFile<RoomLoader>("res/config/rooms.xml");
+}
+
+Application::~Application() {
+  loop = false;
+  m_networkThread.get()->join();
 }
 
 void Application::setup() {
