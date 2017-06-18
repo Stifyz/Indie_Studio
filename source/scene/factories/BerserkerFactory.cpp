@@ -14,8 +14,8 @@
 #include <functional>
 
 #include "AnimationListComponent.hpp"
+#include "AttackBehaviour.hpp"
 #include "BerserkerFactory.hpp"
-#include "BerserkerAttackBehaviour.hpp"
 #include "BehaviourComponent.hpp"
 #include "CollisionComponent.hpp"
 #include "EntityListComponent.hpp"
@@ -35,7 +35,7 @@ SceneObject BerserkerFactory::create() {
 	bodyEntity->setMaterialName("Berserker");
 
 	auto &behaviourComponent = object.set<BehaviourComponent>();
-       	auto &berserkerAttackBehaviour = behaviourComponent.addBehaviour<BerserkerAttackBehaviour>("Fight");
+	auto &berserkerAttackBehaviour = behaviourComponent.addBehaviour<AttackBehaviour>("Attack");
 
 	auto &movementComponent = object.set<MovementComponent>(new GamePadMovement);
 	movementComponent.behaviour.reset(new PlayerMovementBehaviour({"Idle"}, {"Walk"}));
@@ -43,7 +43,7 @@ SceneObject BerserkerFactory::create() {
 	const char *animNames[] = {"Attack", "Walk", "Idle", "Hit", "Die"};
 
 	auto &animationListComponent = object.set<AnimationListComponent>();
-       	animationListComponent.setAnimationEndCallback(std::bind(&BerserkerAttackBehaviour::animationEndCallback, &berserkerAttackBehaviour, std::placeholders::_1, std::placeholders::_2));
+	animationListComponent.setAnimationEndCallback(std::bind(&AttackBehaviour::animationEndCallback, &berserkerAttackBehaviour, std::placeholders::_1, std::placeholders::_2));
 	for (const char *animName : animNames) {
 		Animation &anim = animationListComponent.add(bodyEntity, animName);
        	anim.speed = (anim.name != "Attack") ? 1.75f : 1.0f;

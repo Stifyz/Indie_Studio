@@ -1,7 +1,7 @@
 /*
  * =====================================================================================
  *
- *       Filename:  BerserkerFactory.cpp
+ *       Filename:  BossFactory.cpp
  *
  *    Description:
  *
@@ -14,8 +14,8 @@
 #include <functional>
 
 #include "AnimationListComponent.hpp"
+#include "AttackBehaviour.hpp"
 #include "BossFactory.hpp"
-#include "DiabolousAttackBehaviour.hpp"
 #include "BehaviourComponent.hpp"
 #include "CollisionComponent.hpp"
 #include "EntityListComponent.hpp"
@@ -35,7 +35,7 @@ SceneObject BossFactory::create() {
 	bodyEntity->setMaterialName("Diabolous");
 
 	auto &behaviourComponent = object.set<BehaviourComponent>();
-       	auto &diabolousAttackBehaviour = behaviourComponent.addBehaviour<DiabolousAttackBehaviour>("Fight");
+	auto &diabolousAttackBehaviour = behaviourComponent.addBehaviour<AttackBehaviour>("Fight");
 
 	auto &movementComponent = object.set<MovementComponent>(new GamePadMovement);
 	movementComponent.behaviour.reset(new PlayerMovementBehaviour({"Wings"}, {"Walk"}));
@@ -43,7 +43,7 @@ SceneObject BossFactory::create() {
 	const char *animNames[] = {"Attack", "Walk", "Wings", "Hit", "Die"};
 
 	auto &animationListComponent = object.set<AnimationListComponent>();
-       	animationListComponent.setAnimationEndCallback(std::bind(&DiabolousAttackBehaviour::animationEndCallback, &diabolousAttackBehaviour, std::placeholders::_1, std::placeholders::_2));
+	animationListComponent.setAnimationEndCallback(std::bind(&AttackBehaviour::animationEndCallback, &diabolousAttackBehaviour, std::placeholders::_1, std::placeholders::_2));
 	for (const char *animName : animNames) {
 		Animation &anim = animationListComponent.add(bodyEntity, animName);
        	anim.speed = (anim.name != "Attack") ? 1.75f : 1.0f;

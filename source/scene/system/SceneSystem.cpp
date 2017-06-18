@@ -26,6 +26,10 @@ void SceneSystem::update(SceneObjectList &objectList) {
 
 void SceneSystem::resetObject(SceneObject &object) {
 	BehaviourSystem::reset(object);
+
+	if(object.has<SceneObjectList>()) {
+		reset(object.get<SceneObjectList>());
+	}
 }
 
 void SceneSystem::updateObject(SceneObject &object) {

@@ -29,12 +29,11 @@ class EntityListComponent {
 			m_rootNode = rootNode;
 		}
 
-		Ogre::Entity *addEntity(const char *name, const char *meshFilename, const bool attachObjectToRoot = false) {
+		Ogre::Entity *addEntity(const std::string &name, const char *meshFilename, const bool attachObjectToRoot = false) {
 			Ogre::SceneManager *sceneManager = OgreData::getInstance().sceneManager();
 			Ogre::Entity *entity = sceneManager->createEntity(name, meshFilename);
 			if (attachObjectToRoot)
 				m_rootNode->attachObject(entity);
-			DEBUG("Entity added:", name);
 			m_entityList.emplace(name, entity);
 			return entity;
 		}
