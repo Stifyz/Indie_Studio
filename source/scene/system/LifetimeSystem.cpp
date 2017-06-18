@@ -23,7 +23,6 @@ void LifetimeSystem::process(SceneObjectList &objects) {
 		&& objects[i].get<LifetimeComponent>().dead(objects[i])) {
 			if (objects[i].type() == "Player" || objects[i].type() == "Enemy") {
 				if (!objects[i].get<AnimationListComponent>().isAnimationFinished("Die")) {
-					DEBUG("Anim still not finished");
 					continue;
 				}
 			}

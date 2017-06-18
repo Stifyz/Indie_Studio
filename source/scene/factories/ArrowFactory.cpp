@@ -50,13 +50,14 @@ void ArrowFactory::arrowAction(SceneObject &arrow, SceneObject &object, bool inC
 	if (inCollision) {
 		if (object.name() == "Diabolous" && !object.get<LifetimeComponent>().dead(object)) {
 			auto &animationListComponent = object.get<AnimationListComponent>();
-			if (animationListComponent.isAnimationFinished("Hit"))
-				animationListComponent.setActiveAnimation(0, "Hit", true)->timer.setTime(6);
-
 			auto &healthComponent = object.get<HealthComponent>();
 			healthComponent.removeLife(25);
+
 			if (healthComponent.life() == 0) {
 				animationListComponent.setActiveAnimation(0, "Die", true)->timer.setTime(6);
+			}
+			else if (animationListComponent.isAnimationFinished("Hit")) {
+				animationListComponent.setActiveAnimation(0, "Hit", true)->timer.setTime(6);
 			}
 		}
 
