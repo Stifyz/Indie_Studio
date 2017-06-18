@@ -38,9 +38,9 @@ SceneObject BossFactory::create() {
 	auto &diabolousAttackBehaviour = behaviourComponent.addBehaviour<AttackBehaviour>("Fight");
 
 	auto &movementComponent = object.set<MovementComponent>(new GamePadMovement);
-	movementComponent.behaviour.reset(new PlayerMovementBehaviour({"Wings"}, {"Walk"}));
+	movementComponent.behaviour.reset(new PlayerMovementBehaviour({"Attack"}, {"Walk"}));
 
-	const char *animNames[] = {"Attack", "Walk", "Wings", "Hit", "Die"};
+	const char *animNames[] = {"Attack", "Walk", "Idle", "Hit", "Die"};
 
 	auto &animationListComponent = object.set<AnimationListComponent>();
 	animationListComponent.setAnimationEndCallback(std::bind(&AttackBehaviour::animationEndCallback, &diabolousAttackBehaviour, std::placeholders::_1, std::placeholders::_2));
@@ -50,7 +50,7 @@ SceneObject BossFactory::create() {
 	}
 
 	animationListComponent.setLoop("Attack", false);
-	animationListComponent.setActiveAnimation(0, "Wings");
+	animationListComponent.setActiveAnimation(0, "Idle");
 
 	return object;
 }
