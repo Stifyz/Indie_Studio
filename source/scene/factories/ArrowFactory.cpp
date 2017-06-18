@@ -17,6 +17,7 @@
 #include "EasyBehaviour.hpp"
 #include "EasyMovement.hpp"
 #include "EntityListComponent.hpp"
+#include "HealthComponent.hpp"
 #include "LifetimeComponent.hpp"
 #include "MovementComponent.hpp"
 #include "SceneNodeComponent.hpp"
@@ -46,12 +47,22 @@ SceneObject ArrowFactory::create(const Ogre::Vector3 &pos, const Ogre::Vector3 &
 }
 
 void ArrowFactory::arrowAction(SceneObject &arrow, SceneObject &object, bool inCollision) {
-	if (inCollision && object.name() == "Diabolous") {
-		auto &animationListComponent = object.get<AnimationListComponent>();
-		if (animationListComponent.isAnimationFinished("Hit"))
-			animationListComponent.setActiveAnimation(0, "Hit", true)->timer.setTime(6);
+	if (inCollision) {
+		if (object.name() == "Diabolous" && !object.get<LifetimeComponent>().dead(object)) {
+			auto &animationListComponent = object.get<AnimationListComponent>();
+			auto &healthComponent = object.get<HealthComponent>();
+			healthComponent.removeLife(25);
 
-		arrow.get<LifetimeComponent>().kill();
+			if (healthComponent.life() == 0) {
+				animationListComponent.setActiveAnimation(0, "Die", true)->timer.setTime(6);
+			}
+			else if (animationListComponent.isAnimationFinished("Hit")) {
+				animationListComponent.setActiveAnimation(0, "Hit", true)->timer.setTime(6);
+			}
+		}
+
+		if (object.type() == "Enemy" || object.name() == "Wall")
+			arrow.get<LifetimeComponent>().kill();
 	}
 }
 

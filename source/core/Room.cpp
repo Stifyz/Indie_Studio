@@ -13,6 +13,7 @@
  */
 #include <Ogre.h>
 
+#include "CollisionComponent.hpp"
 #include "EntityListComponent.hpp"
 #include "MovementComponent.hpp"
 #include "OgreData.hpp"
@@ -111,12 +112,15 @@ void Room::checkCollisions(SceneObject &object) {
 			Ogre::Sphere entityHitbox = entity->getWorldBoundingSphere();
 			entityHitbox.setRadius(entityHitbox.getRadius() / 3.0);
 
+			SceneObject wallObj("Wall");
+
 			auto &v = object.get<MovementComponent>().v;
 			wallHitbox.getMinimum() -= v * Ogre::Vector3::UNIT_X;
 			wallHitbox.getMaximum() -= v * Ogre::Vector3::UNIT_X;
 
 			if (entityHitbox.intersects(wallHitbox)) {
 				object.get<MovementComponent>().v.x = 0;
+				object.get<CollisionComponent>().collisionActions(object, wallObj, true);
 			}
 
 			wallHitbox = wall->getWorldBoundingBox();
@@ -126,6 +130,7 @@ void Room::checkCollisions(SceneObject &object) {
 
 			if (entityHitbox.intersects(wallHitbox)) {
 				object.get<MovementComponent>().v.z = 0;
+				object.get<CollisionComponent>().collisionActions(object, wallObj, true);
 			}
 		}
 	}

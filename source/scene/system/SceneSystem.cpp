@@ -13,6 +13,7 @@
  */
 #include "AnimationSystem.hpp"
 #include "BehaviourSystem.hpp"
+#include "LifetimeComponent.hpp"
 #include "LifetimeSystem.hpp"
 #include "MovementSystem.hpp"
 #include "SceneSystem.hpp"
@@ -36,9 +37,11 @@ void SceneSystem::resetObject(SceneObject &object) {
 }
 
 void SceneSystem::updateObject(SceneObject &object) {
-	AnimationSystem::process(object);
 	BehaviourSystem::process(object);
-	MovementSystem::process(object);
+	AnimationSystem::process(object);
+
+	if (!object.has<LifetimeComponent>() || !object.get<LifetimeComponent>().dead(object))
+		MovementSystem::process(object);
 
 	if(object.has<SceneObjectList>()) {
 		update(object.get<SceneObjectList>());

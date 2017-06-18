@@ -98,14 +98,20 @@ class AnimationListComponent {
 			return nullptr;
 		}
 
-		bool isAnimationFinished(const char *name, unsigned int percentage = 100) {
+		bool isAnimationFinished(const char *name) {
 			auto animIterator = m_animationList.find(name);
 			if (animIterator == m_animationList.end()) {
 				throw EXCEPTION("Animation not found:", name);
 			}
 
 			Ogre::Real timePos = animIterator->second.state->getTimePosition();
-			return timePos == 0 || timePos >= animIterator->second.state->getLength() / percentage * 100;
+			Ogre::Real length = animIterator->second.state->getLength();
+
+			return timePos == 0 || timePos >= length;
+		}
+
+		const Animation &getAnimation(const char *name) const {
+			return m_animationList.at(name);
 		}
 
 		const char *getActiveAnimation(const unsigned int id) const {

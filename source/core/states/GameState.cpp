@@ -24,6 +24,7 @@
 #include "DiabolousFactory.hpp"
 #include "BossFactory.hpp"
 #include "CameraFactory.hpp"
+#include "CoinFactory.hpp"
 #include "HeartFactory.hpp"
 #include "SinbadFactory.hpp"
 
@@ -43,6 +44,7 @@ GameState::GameState() : ApplicationState("Game"), m_room(ResourceHandler::getIn
 	m_camera = &m_scene.addObject(CameraFactory::create(*m_sinbad));
 
 	m_scene.addObject(HeartFactory::create(Ogre::Vector3(30, 1.5, 30)));
+	m_scene.addObject(CoinFactory::create(Ogre::Vector3(20, 4, 20)));
 
 	m_scene.addObject(BerserkerFactory::create());
 	m_scene.addObject(DiabolousFactory::create());
