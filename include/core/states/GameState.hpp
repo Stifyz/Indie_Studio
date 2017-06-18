@@ -16,6 +16,7 @@
 
 #include "ApplicationState.hpp"
 #include "Scene.hpp"
+#include "TextBox.hpp"
 
 #include "Room.hpp"
 
@@ -31,6 +32,7 @@ class GameState : public ApplicationState {
 		Scene m_scene;
 		SceneObject *m_sinbad = nullptr;
 		SceneObject *m_camera = nullptr;
+		std::unique_ptr<TextBox> m_textBox = nullptr;
 };
 
 #endif // GAMESTATE_HPP_

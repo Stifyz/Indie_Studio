@@ -5,7 +5,7 @@
 // Login   <maxime.maisonnas@epitech.eu>
 //
 // Started on  Sat Jun 17 18:40:39 2017 Maxime Maisonnas
-// Last update Sun Jun 18 16:26:17 2017 Maxime Maisonnas
+// Last update Sun Jun 18 20:42:39 2017 Maxime Maisonnas
 //
 
 #include "TextMsg.hpp"
@@ -30,6 +30,20 @@ namespace chat {
 
   void    TextMsg::deserialize(ComStream &ss) {
     ss >> m_id >> m_msg >> m_chan >> m_idTarget;
+  }
+
+  std::string   TextMsg::getMsg(void) const {
+    std::string msg("");
+    std::stringstream ss;
+
+    ss << m_id;
+    if (m_id == 0)
+      msg = "Server : ";
+    else {
+      msg = "Client " + ss.str() + " : ";
+    }
+    msg += m_msg;
+    return (msg);
   }
 
   void    TextMsg::writee(void) {

@@ -5,7 +5,7 @@
 // Login   <maxime.maisonnas@epitech.eu>
 //
 // Started on  Sun Jun  4 15:13:20 2017 Maxime Maisonnas
-// Last update Sun Jun 18 19:36:24 2017 Maxime Maisonnas
+// Last update Sun Jun 18 20:37:41 2017 Maxime Maisonnas
 //
 
 #ifndef CLASS_1_HPP_
@@ -29,12 +29,14 @@ namespace chat {
     virtual void    serialize(ComStream &ss) const;
     virtual void    deserialize(ComStream &ss);
 
+    std::string     getMsg(void) const;
+
     void            writee(void);
 
     unsigned int    m_id;
     std::string     m_msg;
     int             m_chan;
-    unsigned int    m_idTarget;
+    int             m_idTarget;
   };
 };
 

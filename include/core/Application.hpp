@@ -22,8 +22,10 @@
 #include "Client.hpp"
 #include "GameClock.hpp"
 #include "KeyboardHandler.hpp"
+#include "MenuState.hpp"
 #include "ResourceHandler.hpp"
 #include "Server.hpp"
+// #include "Ui.hpp"
 
 class Application : public OgreBites::ApplicationContext, public OgreBites::InputListener {
 	public:
@@ -56,6 +58,7 @@ class Application : public OgreBites::ApplicationContext, public OgreBites::Inpu
 
 		std::unique_ptr<INetwork> m_network{nullptr};
 		std::unique_ptr<std::thread> m_networkThread{nullptr};
+		// std::unique_ptr<MenuState> m_menu = nullptr;
 };
 
 #endif // APPLICATION_HPP_

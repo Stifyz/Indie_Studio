@@ -14,8 +14,8 @@
 #include <functional>
 
 #include "AnimationListComponent.hpp"
+#include "AttackBehaviour.hpp"
 #include "DiabolousFactory.hpp"
-#include "DiabolousAttackBehaviour.hpp"
 #include "BehaviourComponent.hpp"
 #include "CollisionComponent.hpp"
 #include "EntityListComponent.hpp"
@@ -34,23 +34,25 @@ SceneObject DiabolousFactory::create() {
 	Ogre::Entity *bodyEntity = entityListComponent.addEntity("DiabolousBody", "Diabolous.mesh", true);
 	bodyEntity->setMaterialName("Diabolous");
 
-	auto &behaviourComponent = object.set<BehaviourComponent>();
-       	auto &diabolousAttackBehaviour = behaviourComponent.addBehaviour<DiabolousAttackBehaviour>("Fight");
+	// auto &behaviourComponent = object.set<BehaviourComponent>();
+	// auto &diabolousAttackBehaviour = behaviourComponent.addBehaviour<AttackBehaviour>("Fight");
 
 	auto &movementComponent = object.set<MovementComponent>(new GamePadMovement);
-	movementComponent.behaviour.reset(new PlayerMovementBehaviour({"Wings"}, {"Walk"}));
+	movementComponent.behaviour.reset(new PlayerMovementBehaviour({"Idle"}, {"Walk"}));
 
-	const char *animNames[] = {"Attack", "Walk", "Wings", "Hit", "Die"};
+	const char *animNames[] = {"Attack", "Walk", "Idle", "Hit", "Die"};
 
 	auto &animationListComponent = object.set<AnimationListComponent>();
-       	animationListComponent.setAnimationEndCallback(std::bind(&DiabolousAttackBehaviour::animationEndCallback, &diabolousAttackBehaviour, std::placeholders::_1, std::placeholders::_2));
+	// animationListComponent.setAnimationEndCallback(std::bind(&AttackBehaviour::animationEndCallback, &diabolousAttackBehaviour, std::placeholders::_1, std::placeholders::_2));
 	for (const char *animName : animNames) {
 		Animation &anim = animationListComponent.add(bodyEntity, animName);
        	anim.speed = (anim.name != "Attack") ? 1.75f : 1.0f;
+       	anim.speed = (anim.name != "Attack") ? ((anim.name == "Hit") ? 3.0f : 1.75f) : 1.0f;
 	}
 
 	animationListComponent.setLoop("Attack", false);
-	animationListComponent.setActiveAnimation(0, "Wings");
+	animationListComponent.setLoop("Hit", false);
+	animationListComponent.setActiveAnimation(0, "Idle");
 
 	return object;
 }

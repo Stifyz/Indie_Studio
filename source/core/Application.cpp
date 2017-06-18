@@ -32,13 +32,15 @@ void 		networkLoop(INetwork *network, bool isServer) {
   while (loop) {
 		try {
 	    if (network->get(packet)) {
+        std::cerr << "got something" << '\n';
 				if (isServer)
 					network->send(packet);
         if (packet.getType() == com::CHAT && packet.getId() != network->id()) {
           msg.deserialize(packet.getData());
   	      if ((msg.m_id != network->id() && msg.m_chan != chat::PRIVATE)
-  	        || (msg.m_chan == chat::PRIVATE && msg.m_idTarget == network->id()))
-  	        msg.writee();
+  	        || (msg.m_chan == chat::PRIVATE && static_cast<unsigned int>(msg.m_idTarget) == network->id())) {
+              OgreData::getInstance().chatBuffer() += '\n' + msg.getMsg();
+            }
         }
         if (packet.getType() == com::NEW_PERSO && packet.getId() != network->id()) {
           charac.deserialize(packet.getData());
@@ -87,18 +89,12 @@ void Application::setup() {
 	sceneManager->addRenderQueueListener(mOverlaySystem);
 	// sceneManager->setAmbientLight(Ogre::ColourValue(0.2, 0.2, 0.2, 1.0));
 
-	m_trayManager = new OgreBites::TrayManager("TrayManager", mWindow);
-	m_trayManager->showFrameStats(OgreBites::TL_BOTTOMLEFT);
-	m_trayManager->showLogo(OgreBites::TL_BOTTOMRIGHT);
-	m_trayManager->refreshCursor();
-	m_trayManager->showCursor();
-
 	Ogre::RTShader::ShaderGenerator* shadergen = Ogre::RTShader::ShaderGenerator::getSingletonPtr();
 	shadergen->addSceneManager(sceneManager);
 
 	OgreData::getInstance().init(root, mWindow, sceneManager, this, m_trayManager, m_network.get());
 
-	m_stateStack.push<GameState>();
+	m_stateStack.push<MainMenuState>();
 }
 
 void Application::run() {
@@ -106,7 +102,7 @@ void Application::run() {
 	root->getRenderSystem()->_initRenderTargets();
 	root->clearEventTimes();
 
-	while (!root->endRenderingQueued()) {
+	while (!m_stateStack.empty() && !root->endRenderingQueued()) {
 		Ogre::WindowEventUtilities::messagePump();
 
 		m_clock.updateGame([&] {
@@ -114,44 +110,74 @@ void Application::run() {
 		});
 
 		m_clock.drawGame([&] {
-			if (mWindow && mWindow->isActive() && !root->renderOneFrame())
+			if (!m_stateStack.empty() && mWindow && mWindow->isActive() && !root->renderOneFrame())
 				getRoot()->queueEndRendering();
 			}
 		);
+		m_stateStack.clear();
 	}
+
+	OgreData::getInstance().setTrayManager(nullptr);
 }
 
 bool Application::keyPressed(const OgreBites::KeyboardEvent &evt) {
-	m_trayManager->keyPressed(evt);
+	OgreBites::TrayManager *trayManager = OgreData::getInstance().trayManager();
+
+	if (trayManager) {
+		if (!OgreData::getInstance().keyboardIsTextMod)
+			trayManager->keyPressed(evt);
+		OgreData::getInstance().setLastPressed(evt);
+	}
 	return true;
 }
 
 bool Application::keyReleased(const OgreBites::KeyboardEvent& evt) {
-	m_trayManager->keyReleased(evt);
+	OgreBites::TrayManager *trayManager = OgreData::getInstance().trayManager();
+
+	if (trayManager) {
+		if (!OgreData::getInstance().keyboardIsTextMod)
+			trayManager->keyReleased(evt);
+		OgreData::getInstance().setLastReleased(evt);
+}
 	return true;
 }
 
 bool Application::mouseMoved(const OgreBites::MouseMotionEvent& evt) {
-	m_trayManager->mouseMoved(evt);
+	OgreBites::TrayManager *trayManager = OgreData::getInstance().trayManager();
+
+	if (trayManager)
+		trayManager->mouseMoved(evt);
 	return true;
 }
 
 bool Application::mouseWheelRolled(const OgreBites::MouseWheelEvent& evt) {
-	m_trayManager->mouseWheelRolled(evt);
+	OgreBites::TrayManager *trayManager = OgreData::getInstance().trayManager();
+
+	if (trayManager)
+		trayManager->mouseWheelRolled(evt);
 	return true;
 }
 
 bool Application::mousePressed(const OgreBites::MouseButtonEvent& evt) {
-	m_trayManager->mousePressed(evt);
+	OgreBites::TrayManager *trayManager = OgreData::getInstance().trayManager();
+
+	if (trayManager)
+		trayManager->mousePressed(evt);
 	return true;
 }
 
 bool Application::mouseReleased(const OgreBites::MouseButtonEvent& evt) {
-	m_trayManager->mouseReleased(evt);
+	OgreBites::TrayManager *trayManager = OgreData::getInstance().trayManager();
+
+	if (trayManager)
+		trayManager->mouseReleased(evt);
 	return true;
 }
 
 bool Application::frameRenderingQueued(const Ogre::FrameEvent &evt) {
-	m_trayManager->frameRendered(evt);
+	OgreBites::TrayManager *trayManager = OgreData::getInstance().trayManager();
+
+	if (trayManager)
+		trayManager->frameRendered(evt);
 	return true;
 }

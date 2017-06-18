@@ -15,16 +15,11 @@
 #define ARCHERSHOOTBEHAVIOUR_HPP_
 
 #include "AnimationListComponent.hpp"
-#include "Behaviour.hpp"
+#include "AttackBehaviour.hpp"
 
-class ArcherShootBehaviour : public Behaviour {
+class ArcherShootBehaviour : public AttackBehaviour {
 	public:
-		void update(SceneObject &object) override;
-
-		void animationEndCallback(AnimationListComponent &animationListComponent, const Animation &animation) const;
-
-	private:
-		const char *m_previousActiveAnimation = nullptr;
+		void action(SceneObject &object) override;
 };
 
 #endif // ARCHERSHOOTBEHAVIOUR_HPP_
