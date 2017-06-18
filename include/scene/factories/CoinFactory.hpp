@@ -1,26 +1,26 @@
 /*
  * =====================================================================================
  *
- *       Filename:  BerserkerFactory.hpp
+ *       Filename:  HeartFactory.hpp
  *
  *    Description:
  *
- *        Created:  05/06/2017 22:15:18
+ *        Created:  17/06/2017 15:31:07
  *
  *         Author:  Quentin Bazin, <quent42340@gmail.com>
  *
  * =====================================================================================
  */
-#ifndef BOSSFACTORY_HPP_
-#define BOSSFACTORY_HPP_
+#ifndef COINFACTORY_HPP_
+#define COINFACTORY_HPP_
+
+#include <OgreVector3.h>
 
 #include "SceneObject.hpp"
 
-#define DIABOLOUS_HEIGHT (5 / 1.8)
-
-class BossFactory {
+class CoinFactory {
 	public:
-		static SceneObject create();
+		static SceneObject create(const Ogre::Vector3 &pos);
 };
 
-#endif // DIABOLOUSFACTORY_HPP_
+#endif // COINFACTORY_HPP_

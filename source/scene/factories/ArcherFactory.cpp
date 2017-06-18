@@ -20,17 +20,24 @@
 #include "CollisionComponent.hpp"
 #include "EntityListComponent.hpp"
 #include "GamePadMovement.hpp"
+#include "HealthComponent.hpp"
+#include "LifetimeComponent.hpp"
 #include "MovementComponent.hpp"
 #include "PlayerMovementBehaviour.hpp"
 #include "SceneObjectList.hpp"
 #include "SceneNodeComponent.hpp"
 
-SceneObject ArcherFactory::create(int const x, int const y) {
-	SceneObject object("Archer");
+SceneObject ArcherFactory::create() {
+	SceneObject object("Archer", "Player");
 	object.set<SceneObjectList>();
 	object.set<CollisionComponent>();
 
-	auto &bodyNodeComponent = object.set<SceneNodeComponent>(Ogre::Vector3(x, ARCHER_HEIGHT, y), Ogre::Vector3(0.3, 0.3, 0.3));
+	auto &healthComponent = object.set<HealthComponent>(300);
+	object.set<LifetimeComponent>([&] (SceneObject &object) {
+		return healthComponent.life() == 0;
+	});
+
+	auto &bodyNodeComponent = object.set<SceneNodeComponent>(Ogre::Vector3(30, ARCHER_HEIGHT, 30), Ogre::Vector3(0.3, 0.3, 0.3));
 	auto &entityListComponent = object.set<EntityListComponent>(bodyNodeComponent.node);
 
 	Ogre::Entity *bodyEntity = entityListComponent.addEntity("ArcherBody", "Archer.mesh", true);

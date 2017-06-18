@@ -33,7 +33,6 @@ void 		networkLoop(INetwork *network, bool isServer) {
 		try {
       packet.init();
 	    if (network->get(packet)) {
-        std::cerr << "got something" << '\n';
 				if (isServer)
 					network->send(packet);
         if (packet.getType() == com::CHAT && packet.getId() != network->id()) {
@@ -95,7 +94,8 @@ void Application::setup() {
 
 	OgreData::getInstance().init(root, mWindow, sceneManager, this, m_trayManager, m_network.get());
 
-	m_stateStack.push<MainMenuState>();
+	m_stateStack.push<GameState>();
+	// m_stateStack.push<MainMenuState>();
 }
 
 void Application::run() {
@@ -106,9 +106,15 @@ void Application::run() {
 	while (!m_stateStack.empty() && !root->endRenderingQueued()) {
 		Ogre::WindowEventUtilities::messagePump();
 
+		if (mWindow->isClosed())
+			break ;
+
 		m_clock.updateGame([&] {
 			m_stateStack.top()->update();
 		});
+
+		if (mWindow->isClosed())
+			break ;
 
 		m_clock.drawGame([&] {
 			if (!m_stateStack.empty() && mWindow && mWindow->isActive() && !root->renderOneFrame())
@@ -118,6 +124,9 @@ void Application::run() {
 		m_stateStack.clear();
 	}
 
+	while (!m_stateStack.empty())
+		m_stateStack.pop();
+	m_stateStack.clear();
 	OgreData::getInstance().setTrayManager(nullptr);
 }
 

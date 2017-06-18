@@ -15,6 +15,7 @@
 #define GAMESTATE_HPP_
 
 #include "ApplicationState.hpp"
+#include "HudManager.hpp"
 #include "Scene.hpp"
 #include "TextBox.hpp"
 
@@ -31,6 +32,8 @@ class GameState : public ApplicationState {
 		void networkLoop(INetwork *network);
 
 	private:
+		HudManager m_hud;
+
 		Room &m_room;
 
 		Scene m_scene;

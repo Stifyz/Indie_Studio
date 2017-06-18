@@ -20,13 +20,21 @@
 #include "CollisionComponent.hpp"
 #include "EntityListComponent.hpp"
 #include "GamePadMovement.hpp"
+#include "HealthComponent.hpp"
+#include "LifeBarBehaviour.hpp"
+#include "LifetimeComponent.hpp"
 #include "MovementComponent.hpp"
 #include "PlayerMovementBehaviour.hpp"
 #include "SceneNodeComponent.hpp"
 
 SceneObject DiabolousFactory::create() {
-	SceneObject object("Diabolous");
+	SceneObject object("Diabolous", "Enemy");
 	object.set<CollisionComponent>();
+
+	auto &healthComponent = object.set<HealthComponent>(100);
+	object.set<LifetimeComponent>([&] (SceneObject &object) {
+		return healthComponent.life() == 0;
+	});
 
 	auto &bodyNodeComponent = object.set<SceneNodeComponent>(Ogre::Vector3(40, DIABOLOUS_HEIGHT, 30), Ogre::Vector3(0.3, 0.3, 0.3));
 	auto &entityListComponent = object.set<EntityListComponent>(bodyNodeComponent.node);
@@ -34,7 +42,8 @@ SceneObject DiabolousFactory::create() {
 	Ogre::Entity *bodyEntity = entityListComponent.addEntity("DiabolousBody", "Diabolous.mesh", true);
 	bodyEntity->setMaterialName("Diabolous");
 
-	// auto &behaviourComponent = object.set<BehaviourComponent>();
+	auto &behaviourComponent = object.set<BehaviourComponent>();
+	behaviourComponent.addBehaviour<LifeBarBehaviour>("LifeBar", bodyNodeComponent.root, Ogre::Vector3(0, 6, 0));
 	// auto &diabolousAttackBehaviour = behaviourComponent.addBehaviour<AttackBehaviour>("Fight");
 
 	auto &movementComponent = object.set<MovementComponent>(new GamePadMovement);
@@ -51,6 +60,7 @@ SceneObject DiabolousFactory::create() {
 	}
 
 	animationListComponent.setLoop("Attack", false);
+	animationListComponent.setLoop("Die", false);
 	animationListComponent.setLoop("Hit", false);
 	animationListComponent.setActiveAnimation(0, "Idle");
 

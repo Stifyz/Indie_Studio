@@ -5,7 +5,7 @@
 // Login   <maxime.maisonnas@epitech.eu>
 //
 // Started on  Sun Jun 18 15:00:44 2017 Maxime Maisonnas
-// Last update Sun Jun 18 22:23:16 2017 Maxime Maisonnas
+// Last update Sun Jun 18 22:50:17 2017 Maxime Maisonnas
 //
 
 #ifndef PACKET_HPP_
@@ -61,7 +61,6 @@ namespace com {
       int id;
       int type;
 
-      std::cerr << "get data" << '\n';
       m_stream >> id >> type;
       return (m_stream);
     }

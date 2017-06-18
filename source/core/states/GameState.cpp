@@ -21,9 +21,9 @@
 
 #include "ArcherFactory.hpp"
 #include "BerserkerFactory.hpp"
-#include "DiabolousFactory.hpp"
-#include "BossFactory.hpp"
 #include "CameraFactory.hpp"
+#include "CoinFactory.hpp"
+#include "DiabolousFactory.hpp"
 #include "HeartFactory.hpp"
 #include "SinbadFactory.hpp"
 
@@ -31,20 +31,22 @@ GameState::GameState() : ApplicationState("Game"), m_room(ResourceHandler::getIn
 	m_trayManager->showFrameStats(OgreBites::TL_BOTTOMLEFT);
 	// m_trayManager->showLogo(OgreBites::TL_BOTTOMRIGHT);
 
+	// m_hud.init(m_trayManager.get());
+
 	m_textBox.reset(new TextBox);
 	m_textBox->init(m_trayManager->createTextBox(OgreBites::TL_BOTTOMRIGHT, "ChatBox_RO", "Chat", 200, 150));
 
 	m_room.init();
 
 	m_sinbad = &m_scene.addObject(SinbadFactory::create());
-	m_scene.addObject(ArcherFactory::create(30, 30));
+	m_scene.addObject(ArcherFactory::create());
 	m_camera = &m_scene.addObject(CameraFactory::create(*m_sinbad));
 
 	m_scene.addObject(HeartFactory::create(Ogre::Vector3(30, 1.5, 30)));
+	m_scene.addObject(CoinFactory::create(Ogre::Vector3(20, 4, 20)));
 
 	m_scene.addObject(BerserkerFactory::create());
 	m_scene.addObject(DiabolousFactory::create());
-	m_scene.addObject(BossFactory::create());
 
 	m_scene.addCollisionChecker([&] (SceneObject &object) {
 		m_room.checkCollisions(object);
