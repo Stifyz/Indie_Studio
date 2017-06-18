@@ -18,6 +18,8 @@
 #include "Scene.hpp"
 #include "TextBox.hpp"
 
+#include "INetwork.hpp"
+
 #include "Room.hpp"
 
 class GameState : public ApplicationState {
@@ -25,6 +27,8 @@ class GameState : public ApplicationState {
 		GameState();
 
 		void update() override;
+
+		void networkLoop(INetwork *network);
 
 	private:
 		Room &m_room;

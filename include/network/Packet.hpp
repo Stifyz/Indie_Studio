@@ -5,7 +5,7 @@
 // Login   <maxime.maisonnas@epitech.eu>
 //
 // Started on  Sun Jun 18 15:00:44 2017 Maxime Maisonnas
-// Last update Sun Jun 18 16:32:00 2017 Maxime Maisonnas
+// Last update Sun Jun 18 22:23:16 2017 Maxime Maisonnas
 //
 
 #ifndef PACKET_HPP_
@@ -21,6 +21,8 @@ namespace com {
       set(id, type, elem);
     }
 
+    void init(void) { m_stream.str(""); }
+
     void set(unsigned int const id, com::TYPE const type, ICom const &elem) {
       ComStream tmp;
       std::string tmps;
@@ -30,7 +32,6 @@ namespace com {
       m_stream << id << (int)type;
       tmps = m_stream.str() + tmp.str();
       m_stream.str(tmps);
-      // std::cout << "send : " << m_stream.str() << " STOP\n";
     }
 
     unsigned int getId() const {
@@ -54,13 +55,13 @@ namespace com {
 
     void str(std::string const &str) {
       m_stream.str(str);
-      // std::cout << "got : " << m_stream.str() << " STOP\n";
     }
 
     ComStream &getData() {
       int id;
       int type;
 
+      std::cerr << "get data" << '\n';
       m_stream >> id >> type;
       return (m_stream);
     }

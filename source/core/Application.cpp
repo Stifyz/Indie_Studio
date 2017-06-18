@@ -22,15 +22,16 @@
 #include "NewCharacterCom.hpp"
 #include "VectorCom.hpp"
 
-static bool loop = true;
+// static bool loop = true;
 
 void 		networkLoop(INetwork *network, bool isServer) {
   chat::TextMsg msg(network->id(), "Yooo !", chat::PUBLIC);
   NewCharacterCom charac;
   com::Packet packet;
 
-  while (loop) {
+  while (network->loop()) {
 		try {
+      packet.init();
 	    if (network->get(packet)) {
         std::cerr << "got something" << '\n';
 				if (isServer)
@@ -38,11 +39,9 @@ void 		networkLoop(INetwork *network, bool isServer) {
         if (packet.getType() == com::CHAT && packet.getId() != network->id()) {
           msg.deserialize(packet.getData());
   	      if ((msg.m_id != network->id() && msg.m_chan != chat::PRIVATE)
-  	        || (msg.m_chan == chat::PRIVATE && static_cast<unsigned int>(msg.m_idTarget) == network->id())) {
-              OgreData::getInstance().chatBuffer() += '\n' + msg.getMsg();
-            }
-        }
-        if (packet.getType() == com::NEW_PERSO && packet.getId() != network->id()) {
+  	        || (msg.m_chan == chat::PRIVATE && static_cast<unsigned int>(msg.m_idTarget) == network->id()))
+            OgreData::getInstance().chatBuffer() += '\n' + msg.getMsg();
+        } else if (packet.getType() == com::NEW_PERSO && packet.getId() != network->id()) {
           charac.deserialize(packet.getData());
           // ICI
         }
@@ -50,7 +49,7 @@ void 		networkLoop(INetwork *network, bool isServer) {
 		} catch (std::exception &e) {
 			if (!isServer) {
 				std::cerr << e.what() << '\n';
-				loop = false;
+				network->loop(false);
 			}
 		}
   }
@@ -77,8 +76,10 @@ Application::Application(int const argc, char **argv) : OgreBites::ApplicationCo
 }
 
 Application::~Application() {
-  loop = false;
-  m_networkThread.get()->join();
+  if (m_networkThread.get() != nullptr) {
+    m_network.get()->loop(false);
+    m_networkThread.get()->join();
+  }
 }
 
 void Application::setup() {

@@ -5,7 +5,7 @@
 // Login   <maxime.maisonnas@epitech.eu>
 //
 // Started on  Mon May 22 17:31:35 2017 Maxime Maisonnas
-// Last update Sun Jun 18 16:34:06 2017 Maxime Maisonnas
+// Last update Sun Jun 18 22:14:31 2017 Maxime Maisonnas
 //
 
 #include "Client.hpp"
@@ -21,7 +21,7 @@ void    myFctStopClient(int sig) {
 }
 
 Client::Client(int port, bool listenStandardInput, std::string const &ip)
-              : m_listenStandardInput(listenStandardInput), m_port(port), m_ip(ip) {
+              : m_listenStandardInput(listenStandardInput), m_port(port), m_ip(ip), m_loop(true) {
   m_sock.fd = -1;
   cli = this;
   m_buf = new RingBuffer();
@@ -114,38 +114,4 @@ bool          Client::get(com::Packet &packet) {
     throw NetErr("connection lost");
   }
   return (true);
-}
-
-bool          Client::get(com::Packet &packet, chat::TextMsg &elem) {
-  ComStream   ss;
-  size_t      r = 0;
-  char        buff[BUFF_SIZE];
-
-  checkAlive();
-  mySelect();
-  if (m_listenStandardInput) {
-    if (FD_ISSET(0, &m_fdR)) {
-      if ((r = read(0, buff, BUFF_SIZE)) == 0)
-        throw Error("invalid input");
-      m_buf->add(buff, r);
-      elem = chat::TextMsg(m_id, m_buf->get(), chat::PUBLIC);
-      packet.set(m_id, com::CHAT, elem);
-      send(packet);
-      return (false);
-    }
-  }
-  try {
-    if (FD_ISSET(m_sock.fd, &m_fdR)) {
-      if ((r = recv(m_sock.fd, buff, BUFF_SIZE, 0)) == 0)
-        throw Stop();
-      m_buf->add(buff, r);
-      packet.str(m_buf->get());
-      return (true);
-    }
-  } catch (...) {
-    close(m_sock.fd);
-    m_sock.fd = -1;
-    throw NetErr("connection lost");
-  }
-  return (false);
 }

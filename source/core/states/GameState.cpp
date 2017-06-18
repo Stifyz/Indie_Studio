@@ -65,3 +65,7 @@ void GameState::update() {
 	m_scene.update();
 	m_textBox->update();
 }
+
+void GameState::networkLoop(INetwork *network) {
+
+}

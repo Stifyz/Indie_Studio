@@ -5,7 +5,7 @@
 // Login   <maxime.maisonnas@epitech.eu>
 //
 // Started on  Sun Jun 18 00:53:21 2017 Maxime Maisonnas
-// Last update Sun Jun 18 16:45:56 2017 Maxime Maisonnas
+// Last update Sun Jun 18 22:14:48 2017 Maxime Maisonnas
 //
 
 #include "Server.hpp"
@@ -21,7 +21,7 @@ void    myFctStopServer(int sig) {
 }
 
 Server::Server(bool const listenStandardInput)
-              : m_listenStandardInput(listenStandardInput) {
+              : m_listenStandardInput(listenStandardInput), m_loop(true) {
   m_sock.fd = -1;
   m_buf = new RingBuffer();
   serv = this;
@@ -197,43 +197,6 @@ bool          Server::get(com::Packet &packet) {
       }
     }
     i++;
-  }
-  return (false);
-}
-
-bool          Server::get(com::Packet &packet, chat::TextMsg &elem) {
-  size_t      i = 1;
-  size_t      r = 0;
-  char        buff[BUFF_SIZE];
-  ComStream   ss;
-
-  mySelect();
-  for (std::vector<t_socket>::iterator it = m_clients.begin(); it != m_clients.end(); it++) {
-    if (it->fd != -1) {
-      if (FD_ISSET(it->fd, &m_fdR)) {
-        try {
-          checkAlive(it->fd, i);
-          if ((r = recv(it->fd, buff, BUFF_SIZE, 0)) == 0)
-            throw Stop();
-          m_buf->add(buff, r);
-          packet.str(m_buf->get());
-          return (true);
-        } catch (...) {
-          std::cerr << "Client " << i << " has disconnected\n";
-          close(it->fd);
-          it->fd = -1;
-        }
-      }
-    }
-    i++;
-  }
-  if (m_listenStandardInput && FD_ISSET(0, &m_fdR)) {
-    if ((r = read(0, buff, BUFF_SIZE)) == 0)
-      throw Error("invalid input");
-    m_buf->add(buff, r);
-    elem = chat::TextMsg(id(), m_buf->get(), chat::PUBLIC);
-    packet.set(id(), com::CHAT, elem);
-    return (true);
   }
   return (false);
 }

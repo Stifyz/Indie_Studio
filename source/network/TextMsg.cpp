@@ -5,7 +5,7 @@
 // Login   <maxime.maisonnas@epitech.eu>
 //
 // Started on  Sat Jun 17 18:40:39 2017 Maxime Maisonnas
-// Last update Sun Jun 18 20:42:39 2017 Maxime Maisonnas
+// Last update Sun Jun 18 22:16:13 2017 Maxime Maisonnas
 //
 
 #include "TextMsg.hpp"
@@ -44,13 +44,5 @@ namespace chat {
     }
     msg += m_msg;
     return (msg);
-  }
-
-  void    TextMsg::writee(void) {
-    std::cout
-    << "From : " << m_id
-    << "\nMsg : " << m_msg;
-    if (m_chan)
-      std::cout << "to : " << m_idTarget << '\n';
   }
 };
